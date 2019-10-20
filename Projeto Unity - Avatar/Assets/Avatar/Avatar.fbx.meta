@@ -3,12 +3,47 @@ guid: 9fe13ea58d1cf2640bd86378f643e561
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BodySkinMaterial
+    second: {fileID: 2100000, guid: 826112b2016e81a4f99654fb0e923fcf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BootsMaterial
+    second: {fileID: 2100000, guid: 31aa932a354cf724f8132bad43097acc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FaceMaterial
+    second: {fileID: 2100000, guid: 0ab4a9549db0d774ba233c78788f3ca3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HairMaterial
+    second: {fileID: 2100000, guid: c1c576dbf925daf4bac913f63b864062, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HeadSkinMaterial
+    second: {fileID: 2100000, guid: 53654a4a518465440baab79da40a04e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JeansMaterial
+    second: {fileID: 2100000, guid: aa6315bf14267934798d184e0e7aa858, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShirtMaterial
+    second: {fileID: 2100000, guid: 0cdcef8d6948fcb4da0ddb373c88b2d7, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

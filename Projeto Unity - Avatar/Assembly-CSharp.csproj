@@ -62,7 +62,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AvatarSetup.cs" />
+    <Compile Include="Assets\Scripts\Body\Arm.cs" />
+    <Compile Include="Assets\Scripts\Body\Body.cs" />
+    <Compile Include="Assets\Scripts\Body\Finger.cs" />
+    <Compile Include="Assets\Scripts\Body\Hand.cs" />
+    <Compile Include="Assets\Scripts\Body\Head.cs" />
+    <Compile Include="Assets\Scripts\Body\Leg.cs" />
     <Compile Include="Assets\Scripts\MouseDragTargeting.cs" />
+    <Compile Include="Assets\Scripts\SignalingController.cs" />
+    <Compile Include="Assets\Scripts\SignCaptureController.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\ArmConfiguration.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\BodyConfiguration.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\Configuration.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\HandConfiguration.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\HeadConfiguration.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\LegConfiguration.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\MovementDescription.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\MovementDynamic.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\Symbol.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Sarah/Documents/GitHub/TCC-I/Projeto Unity - Avatar/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
