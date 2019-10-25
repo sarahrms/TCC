@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetupAvatar : MonoBehaviour {
-    private RootMotion.FinalIK.FullBodyBipedIK ikScript;
-    private Body body;
+public class AvatarSetup : MonoBehaviour {
+    public RootMotion.FinalIK.FullBodyBipedIK ikScript;
+    public Body body;
 
-    void Start(){
+    void Start(){        
+        ikScript = gameObject.GetComponent<RootMotion.FinalIK.FullBodyBipedIK>();
+
         body = new Body(GameObject.Find("mixamorig:Spine").transform);
-        
-        ikScript = gameObject.AddComponent<RootMotion.FinalIK.FullBodyBipedIK>() as RootMotion.FinalIK.FullBodyBipedIK;
         body.setIkTargets(ikScript);
         body.createColliders();
         body.setMouseDrag();
-        
     }
-   // GameObject skeleton = transform.GetChild(2).gameObject;
 
-    void Update(){
-        
-    }
 }

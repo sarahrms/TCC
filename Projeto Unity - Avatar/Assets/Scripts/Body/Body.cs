@@ -3,7 +3,6 @@
 public class Body {
     public Transform spine;
     public GameObject spineTarget;
-    public Leg rightLeg, leftLeg;
     public Arm rightArm, leftArm;
 
     public Body(Transform spine) {
@@ -18,15 +17,23 @@ public class Body {
         spineTarget.transform.position = spine.position;
         spineTarget.transform.rotation = spine.rotation;
         spineTarget.transform.localScale = spine.localScale;
+        spineTarget.transform.SetParent(spine.parent);
 
         ikScript.solver.bodyEffector.target = spineTarget.transform;
+        ikScript.solver.bodyEffector.positionWeight = 1;
 
         leftArm.setIkTargets(ikScript);
         rightArm.setIkTargets(ikScript);
     }
 
+    public void setMouseDrag() {
+
+    }
+
     public void createColliders() {
-        SphereCollider collider = spine.gameObject.AddComponent<SphereCollider>() as SphereCollider;
-        collider.radius = 4;
+        SphereCollider collider = spine.gameObject.AddComponent<SphereCollider>();
+        collider.radius = 2.5f;
+        leftArm.createColliders();
+        rightArm.createColliders();
     }
 }
