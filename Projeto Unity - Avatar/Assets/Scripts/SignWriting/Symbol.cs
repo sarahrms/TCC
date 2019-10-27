@@ -43,10 +43,10 @@ public enum GROUP {
 [System.Serializable]
 public class Symbol {
 
-    private int id;
-    private TYPE type;
-    private GROUP group;
-    private Configuration configuration;
+    public int id;
+    public TYPE type;
+    public GROUP group;
+    public Configuration configuration;
 
     private static Dictionary<TYPE, List<GROUP>> typeMap;
 

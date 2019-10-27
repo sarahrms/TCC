@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 
 public class Body {
-    public Transform spine;
+    public Transform spine, initial;
     public GameObject spineTarget;
+    public float radius = 3.0f;
     public Arm rightArm, leftArm;
 
     public Body(Transform spine) {
         this.spine = spine;
+        this.initial = spine;
         leftArm = new Arm(GameObject.Find("mixamorig:LeftArm").transform);
         rightArm = new Arm(GameObject.Find("mixamorig:RightArm").transform);
     }
@@ -26,14 +28,35 @@ public class Body {
         rightArm.setIkTargets(ikScript);
     }
 
-    public void setMouseDrag() {
-
-    }
-
     public void createColliders() {
         SphereCollider collider = spine.gameObject.AddComponent<SphereCollider>();
-        collider.radius = 2.5f;
+        collider.radius = radius;
         leftArm.createColliders();
         rightArm.createColliders();
+    }
+
+    public void reset() {
+        spine = initial;
+        spineTarget.transform.position = initial.position;
+        spineTarget.transform.rotation = initial.rotation;
+        spineTarget.transform.localScale = initial.localScale;
+        leftArm.reset();
+        rightArm.reset();
+    }
+    public void createGizmo() {
+        GameObject sphereGizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphereGizmo.transform.SetParent(spine);
+        sphereGizmo.transform.localPosition = new Vector3(0, 0, 0);
+        sphereGizmo.transform.localScale = new Vector3(radius * 2, radius * 2, radius * 2);
+        sphereGizmo.GetComponent<SphereCollider>().enabled = false;
+
+        leftArm.createGizmo();
+        rightArm.createGizmo();
+    }
+    public void setMouseDrag() {
+        MouseDragTargeting mouseDrag = spine.gameObject.AddComponent<MouseDragTargeting>();
+        mouseDrag.target = spineTarget;
+        leftArm.setMouseDrag();
+        rightArm.setMouseDrag();
     }
 }

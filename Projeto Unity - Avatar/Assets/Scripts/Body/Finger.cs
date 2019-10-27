@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Finger {
-    public Transform fingerNail, distalPhalange, intermediatePhalange, proximalPhalange;
+    public Transform fingerNail, distalPhalange, intermediatePhalange, proximalPhalange, initial;
     public GameObject fingerNailTarget;
+    public float radius = 0.25f;
     public Finger(Transform proximalPhalange) {
         this.proximalPhalange = proximalPhalange;
         this.intermediatePhalange = this.proximalPhalange.GetChild(0);
         this.distalPhalange = this.intermediatePhalange.GetChild(0);
         this.fingerNail = this.distalPhalange.GetChild(0);
+        this.initial = fingerNail;
     }
 
     public void setIkTargets(Transform wrist) {
@@ -35,9 +37,26 @@ public class Finger {
         script.solver.bones = bones;
         script.enabled = true;
     }
+    public void createGizmo() {
+        GameObject sphereGizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphereGizmo.transform.SetParent(fingerNail);
+        sphereGizmo.transform.localPosition = new Vector3(0,0,0);
+        sphereGizmo.transform.localScale = new Vector3(radius * 2, radius * 2, radius * 2);
+        sphereGizmo.GetComponent<SphereCollider>().enabled = false;
+    }
     public void createColliders() {
         SphereCollider collider = fingerNail.gameObject.AddComponent<SphereCollider>();
-        collider.radius = 0,5f;
+        collider.radius = radius;
+    }
+    public void reset() {
+        fingerNail = initial;
+        fingerNailTarget.transform.position = initial.position;
+        fingerNailTarget.transform.rotation = initial.rotation;
+        fingerNailTarget.transform.localScale = initial.localScale;
+    }
+    public void setMouseDrag() {
+        MouseDragTargeting mouseDrag = fingerNail.gameObject.AddComponent<MouseDragTargeting>();
+        mouseDrag.target = fingerNailTarget;
     }
 
 }

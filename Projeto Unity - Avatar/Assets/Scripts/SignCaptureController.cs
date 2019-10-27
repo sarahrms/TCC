@@ -2,17 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Capture : MonoBehaviour
-{
+public class SignCaptureController : MonoBehaviour {
+    public Symbol symbol; 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update(){
         
+    }
+
+    public void changeGroup(int id, GROUP selectedGroup) {
+        symbol = new Symbol(id, selectedGroup);
+        switch (symbol.type) {
+            case TYPE.HAND_CONFIGURATION:
+
+
+                break;
+            case TYPE.MOVEMENT_DESCRIPTION:
+
+
+                break;
+            case TYPE.BODY_CONFIGURATION:
+
+
+                break;
+        }
     }
 }

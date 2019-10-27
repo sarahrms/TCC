@@ -16,6 +16,5 @@ public class MouseDragTargeting : MonoBehaviour {
 
     void OnMouseDrag() {
         target.transform.position = mousePositionToWorldPosition() + offset; 
-        Debug.Log(gameObject.name);
     }
 }
