@@ -12,11 +12,15 @@ public class AvatarSetup : MonoBehaviour {
         body.setIkTargets(ikScript);
         body.createColliders();
         body.setMouseDrag();
-        body.createGizmo();
+      //  body.createGizmo();
     }
 
-    public void reset() {
-        body.reset();
+     public void reset() {
+         body.reset();
+     }
+
+    private void Update() {
+        
     }
 
 }

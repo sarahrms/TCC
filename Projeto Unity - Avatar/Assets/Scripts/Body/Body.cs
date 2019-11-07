@@ -29,7 +29,7 @@ public class Body {
     }
 
     public void createColliders() {
-        SphereCollider collider = spine.gameObject.AddComponent<SphereCollider>();
+        SphereCollider collider = spineTarget.gameObject.AddComponent<SphereCollider>();
         collider.radius = radius;
         leftArm.createColliders();
         rightArm.createColliders();
@@ -44,18 +44,12 @@ public class Body {
         rightArm.reset();
     }
     public void createGizmo() {
-        GameObject sphereGizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphereGizmo.transform.SetParent(spine);
-        sphereGizmo.transform.localPosition = new Vector3(0, 0, 0);
-        sphereGizmo.transform.localScale = new Vector3(radius * 2, radius * 2, radius * 2);
-        sphereGizmo.GetComponent<SphereCollider>().enabled = false;
-
-        leftArm.createGizmo();
-        rightArm.createGizmo();
+    
     }
     public void setMouseDrag() {
         MouseDragTargeting mouseDrag = spine.gameObject.AddComponent<MouseDragTargeting>();
-        mouseDrag.target = spineTarget;
+        mouseDrag.target = spineTarget.transform;
+
         leftArm.setMouseDrag();
         rightArm.setMouseDrag();
     }

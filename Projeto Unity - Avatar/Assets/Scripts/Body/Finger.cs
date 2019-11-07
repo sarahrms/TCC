@@ -15,15 +15,17 @@ public class Finger {
     }
 
     public void setIkTargets(Transform wrist) {
-        RootMotion.FinalIK.IKSolver.Bone[] bones = new RootMotion.FinalIK.IKSolver.Bone[4];
+        RootMotion.FinalIK.IKSolver.Bone[] bones = new RootMotion.FinalIK.IKSolver.Bone[5];
         bones[0] = new RootMotion.FinalIK.IKSolver.Bone();
-        bones[0].transform = proximalPhalange;
+        bones[0].transform = wrist;
         bones[1] = new RootMotion.FinalIK.IKSolver.Bone();
-        bones[1].transform = intermediatePhalange;
+        bones[1].transform = proximalPhalange;
         bones[2] = new RootMotion.FinalIK.IKSolver.Bone();
-        bones[2].transform = distalPhalange;
+        bones[2].transform = intermediatePhalange;
         bones[3] = new RootMotion.FinalIK.IKSolver.Bone();
-        bones[3].transform = fingerNail;
+        bones[3].transform = distalPhalange;
+        bones[4] = new RootMotion.FinalIK.IKSolver.Bone();
+        bones[4].transform = fingerNail;
   
         fingerNailTarget = new GameObject();
         fingerNailTarget.name = proximalPhalange.name + "target";
@@ -38,14 +40,10 @@ public class Finger {
         script.enabled = true;
     }
     public void createGizmo() {
-        GameObject sphereGizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphereGizmo.transform.SetParent(fingerNail);
-        sphereGizmo.transform.localPosition = new Vector3(0,0,0);
-        sphereGizmo.transform.localScale = new Vector3(radius * 2, radius * 2, radius * 2);
-        sphereGizmo.GetComponent<SphereCollider>().enabled = false;
+      
     }
     public void createColliders() {
-        SphereCollider collider = fingerNail.gameObject.AddComponent<SphereCollider>();
+        SphereCollider collider = fingerNailTarget.gameObject.AddComponent<SphereCollider>();
         collider.radius = radius;
     }
     public void reset() {
@@ -56,7 +54,7 @@ public class Finger {
     }
     public void setMouseDrag() {
         MouseDragTargeting mouseDrag = fingerNail.gameObject.AddComponent<MouseDragTargeting>();
-        mouseDrag.target = fingerNailTarget;
+        mouseDrag.target = fingerNailTarget.transform;
     }
 
 }

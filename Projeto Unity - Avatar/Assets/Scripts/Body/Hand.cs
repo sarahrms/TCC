@@ -38,18 +38,10 @@ public class Hand {
         }
     }
     public void createGizmo() {
-        GameObject sphereGizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphereGizmo.transform.SetParent(wrist);
-        sphereGizmo.transform.localPosition = new Vector3(0, 0, 0);
-        sphereGizmo.transform.localScale = new Vector3(radius * 2, radius * 2, radius * 2);
-        sphereGizmo.GetComponent<SphereCollider>().enabled = false;
 
-        foreach (Finger finger in fingers) {
-            finger.createGizmo();
-        }
     }
     public void createColliders() {
-        SphereCollider collider = wrist.gameObject.AddComponent<SphereCollider>();
+        SphereCollider collider = wristTarget.gameObject.AddComponent<SphereCollider>();
         collider.radius = radius;
 
         foreach (Finger finger in fingers) {
@@ -68,7 +60,7 @@ public class Hand {
     }
     public void setMouseDrag() {
         MouseDragTargeting mouseDrag = wrist.gameObject.AddComponent<MouseDragTargeting>();
-        mouseDrag.target = wristTarget;
+        mouseDrag.target = wristTarget.transform;
 
         foreach (Finger finger in fingers) {
             finger.setMouseDrag();

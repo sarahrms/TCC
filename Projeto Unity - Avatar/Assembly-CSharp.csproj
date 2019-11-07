@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Body\Finger.cs" />
     <Compile Include="Assets\Scripts\Body\Hand.cs" />
     <Compile Include="Assets\Scripts\Body\Head.cs" />
+    <Compile Include="Assets\Scripts\CameraDrag.cs" />
     <Compile Include="Assets\Scripts\CanvasController.cs" />
     <Compile Include="Assets\Scripts\MouseDragTargeting.cs" />
     <Compile Include="Assets\Scripts\SignalingController.cs" />

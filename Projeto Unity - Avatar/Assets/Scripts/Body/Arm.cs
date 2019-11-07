@@ -30,22 +30,17 @@ public class Arm {
         hand.setIkTargets(ikScript);        
     }
     public void createGizmo() {
-        GameObject sphereGizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphereGizmo.transform.SetParent(shoulder);
-        sphereGizmo.transform.localPosition = new Vector3(0, 0, 0);
-        sphereGizmo.transform.localScale = new Vector3(radius * 2, radius * 2, radius * 2);
-        sphereGizmo.GetComponent<SphereCollider>().enabled = false;
 
-        hand.createGizmo();
     }
     public void createColliders() {
-        SphereCollider collider = shoulder.gameObject.AddComponent<SphereCollider>();
+        SphereCollider collider = shoulderTarget.gameObject.AddComponent<SphereCollider>();
         collider.radius = radius;
         hand.createColliders();
     }
     public void setMouseDrag() {
         MouseDragTargeting mouseDrag = shoulder.gameObject.AddComponent<MouseDragTargeting>();
-        mouseDrag.target = shoulderTarget;
+        mouseDrag.target = shoulderTarget.transform;
+
         hand.setMouseDrag();
     }
     public void reset() {
