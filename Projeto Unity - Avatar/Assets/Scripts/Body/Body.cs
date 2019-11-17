@@ -44,12 +44,19 @@ public class Body {
         rightArm.reset();
     }
     public void createGizmo() {
-    
+        GameObject sphereGizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphereGizmo.transform.SetParent(spine);
+        sphereGizmo.transform.localPosition = new Vector3(0, 0, 0);
+        sphereGizmo.transform.localScale = new Vector3(radius*2, radius*2, radius*2);
+        sphereGizmo.GetComponent<SphereCollider>().enabled = false;
+        sphereGizmo.GetComponent<MeshRenderer>().materials = new Material[]{Resources.Load("SphereMaterial") as Material};
+
+        leftArm.createGizmo();
+        rightArm.createGizmo();
     }
     public void setMouseDrag() {
-        MouseDragTargeting mouseDrag = spine.gameObject.AddComponent<MouseDragTargeting>();
-        mouseDrag.target = spineTarget.transform;
-
+        MouseDragTargeting mouseDrag = spineTarget.gameObject.AddComponent<MouseDragTargeting>();
+        mouseDrag.target = spine.gameObject;
         leftArm.setMouseDrag();
         rightArm.setMouseDrag();
     }

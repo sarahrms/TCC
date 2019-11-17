@@ -12,7 +12,7 @@ public class AvatarSetup : MonoBehaviour {
         body.setIkTargets(ikScript);
         body.createColliders();
         body.setMouseDrag();
-      //  body.createGizmo();
+        body.createGizmo();
     }
 
      public void reset() {

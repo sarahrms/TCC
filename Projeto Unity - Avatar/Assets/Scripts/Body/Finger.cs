@@ -53,8 +53,8 @@ public class Finger {
         fingerNailTarget.transform.localScale = initial.localScale;
     }
     public void setMouseDrag() {
-        MouseDragTargeting mouseDrag = fingerNail.gameObject.AddComponent<MouseDragTargeting>();
-        mouseDrag.target = fingerNailTarget.transform;
+        MouseDragTargeting mouseDrag = fingerNailTarget.gameObject.AddComponent<MouseDragTargeting>();
+        mouseDrag.target = fingerNail.gameObject;
     }
 
 }

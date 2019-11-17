@@ -313,6 +313,7 @@ Assets\Scripts\Body\Body.cs
 Assets\Scripts\Body\Finger.cs
 Assets\Scripts\Body\Hand.cs
 Assets\Scripts\Body\Head.cs
+Assets\Scripts\CameraDrag.cs
 Assets\Scripts\CanvasController.cs
 Assets\Scripts\MouseDragTargeting.cs
 Assets\Scripts\SignalingController.cs

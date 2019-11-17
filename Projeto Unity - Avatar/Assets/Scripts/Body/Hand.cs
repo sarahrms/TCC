@@ -59,9 +59,8 @@ public class Hand {
         }
     }
     public void setMouseDrag() {
-        MouseDragTargeting mouseDrag = wrist.gameObject.AddComponent<MouseDragTargeting>();
-        mouseDrag.target = wristTarget.transform;
-
+        MouseDragTargeting mouseDrag = wristTarget.gameObject.AddComponent<MouseDragTargeting>();
+        mouseDrag.target = wrist.gameObject;
         foreach (Finger finger in fingers) {
             finger.setMouseDrag();
         }

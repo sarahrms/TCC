@@ -2569,77 +2569,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088675854}
   m_CullTransparentMesh: 0
---- !u!1 &1133536681 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3828584962494784366, guid: 9fe13ea58d1cf2640bd86378f643e561,
-    type: 3}
-  m_PrefabInstance: {fileID: 1658689225}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1133536682 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -2199329924220840170, guid: 9fe13ea58d1cf2640bd86378f643e561,
-    type: 3}
-  m_PrefabInstance: {fileID: 1658689225}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1133536683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1133536681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52af154b35b9e48af96507346dc649ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fixTransforms: 1
-  solver:
-    IKPosition: {x: 0, y: 0, z: 0}
-    IKPositionWeight: 1
-    root: {fileID: 1133536682}
-    target: {fileID: 0}
-    tolerance: 0
-    maxIterations: 4
-    useRotationLimits: 1
-    XY: 0
-    bones:
-    - transform: {fileID: 0}
-      weight: 1
-      solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0, w: 0}
-      defaultLocalPosition: {x: 0, y: 0, z: 0}
-      defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
-      length: 0
-      sqrMag: 0
-      axis: {x: 0, y: 0, z: 0}
-    - transform: {fileID: 0}
-      weight: 1
-      solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0, w: 0}
-      defaultLocalPosition: {x: 0, y: 0, z: 0}
-      defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
-      length: 0
-      sqrMag: 0
-      axis: {x: 0, y: 0, z: 0}
-    - transform: {fileID: 0}
-      weight: 1
-      solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0, w: 0}
-      defaultLocalPosition: {x: 0, y: 0, z: 0}
-      defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
-      length: 0
-      sqrMag: 0
-      axis: {x: 0, y: 0, z: 0}
-    - transform: {fileID: 0}
-      weight: 1
-      solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0, w: 0}
-      defaultLocalPosition: {x: 0, y: 0, z: 0}
-      defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
-      length: 0
-      sqrMag: 0
-      axis: {x: 0, y: 0, z: 0}
 --- !u!4 &1171005659 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7814502684447367421, guid: 9fe13ea58d1cf2640bd86378f643e561,
@@ -2837,6 +2766,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22c3dcebb1711142aa37c3a0872bc5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frontCameraTransform: {fileID: 0}
+  topCameraTransform: {fileID: 0}
+  rightCameraTransform: {fileID: 0}
+  leftCameraTransform: {fileID: 0}
   frontCamera: {fileID: 534669904}
   topCamera: {fileID: 176174853}
   rightCamera: {fileID: 933490464}
