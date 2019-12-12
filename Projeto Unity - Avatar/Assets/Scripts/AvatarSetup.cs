@@ -6,21 +6,25 @@ public class AvatarSetup : MonoBehaviour {
     public RootMotion.FinalIK.FullBodyBipedIK ikScript;
     public Body body;
 
-    void Start(){        
+    public void Start(){        
         ikScript = gameObject.GetComponent<RootMotion.FinalIK.FullBodyBipedIK>();
         body = new Body(GameObject.Find("mixamorig:Spine").transform);
         body.setIkTargets(ikScript);
+    }
+
+    public void setupSignCapture() {
         body.createColliders();
         body.setMouseDrag();
         body.createGizmo();
     }
 
-     public void reset() {
-         body.reset();
-     }
+    public void setupSignaling() {
 
-    private void Update() {
-        
     }
+
+    public void reset() {
+        body.reset();
+    }
+
 
 }

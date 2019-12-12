@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MouseDragTargeting : MonoBehaviour {
-    public GameObject target;
+    public GameObject dragTarget;
     public Vector3 offset;
    
     Vector3 mousePositionToWorldPosition() {
@@ -15,11 +15,7 @@ public class MouseDragTargeting : MonoBehaviour {
     }
    
     void OnMouseDrag() {
-        transform.position = mousePositionToWorldPosition() + offset; 
+        transform.position = Vector3.Lerp(transform.position, mousePositionToWorldPosition() + offset, 0.3f); 
     }
 
-    private void OnMouseUp() {
-        transform.position = target.transform.position;
-        Debug.Log(target.transform.position);
-    }
 }

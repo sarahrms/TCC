@@ -1,18 +1,30 @@
 ﻿using UnityEngine;
 
-public class Body {
+public class Body : BasicBodyComponent {
     public Transform spine, initial;
     public GameObject spineTarget;
     public float radius = 3.0f;
     public Arm rightArm, leftArm;
 
-    public Body(Transform spine) {
-        this.spine = spine;
-        this.initial = spine;
-        leftArm = new Arm(GameObject.Find("mixamorig:LeftArm").transform);
-        rightArm = new Arm(GameObject.Find("mixamorig:RightArm").transform);
+    public void createGizmo() {
+        createGizmo(spine, radius, Color.green);
+        createGizmo(spineTarget.transform, radius, Color.blue);
+        leftArm.createGizmo();
+        rightArm.createGizmo();
     }
-   
+
+    public void createColliders() {
+        createCollider(radius, spineTarget);
+        leftArm.createColliders();
+        rightArm.createColliders();
+    }
+
+    public void setMouseDrag() {
+        setMouseDrag(spine, spineTarget);
+        leftArm.setMouseDrag();
+        rightArm.setMouseDrag();
+    }
+
     public void setIkTargets(RootMotion.FinalIK.FullBodyBipedIK ikScript) {
         spineTarget = new GameObject();
         spineTarget.name = spine.gameObject.name + " - target";
@@ -23,41 +35,26 @@ public class Body {
 
         ikScript.solver.bodyEffector.target = spineTarget.transform;
         ikScript.solver.bodyEffector.positionWeight = 1;
+        ikScript.solver.bodyEffector.maintainRelativePositionWeight = 1;
 
         leftArm.setIkTargets(ikScript);
         rightArm.setIkTargets(ikScript);
     }
 
-    public void createColliders() {
-        SphereCollider collider = spineTarget.gameObject.AddComponent<SphereCollider>();
-        collider.radius = radius;
-        leftArm.createColliders();
-        rightArm.createColliders();
+    public Body(Transform spineObject) {
+        spine = spineObject;
+        initial = spineObject; //OLHAR ISSO AQUI//
+        leftArm = new Arm(GameObject.Find("mixamorig:LeftArm").transform);
+        rightArm = new Arm(GameObject.Find("mixamorig:RightArm").transform);
     }
+   
+
+
 
     public void reset() {
-        spine = initial;
-        spineTarget.transform.position = initial.position;
-        spineTarget.transform.rotation = initial.rotation;
-        spineTarget.transform.localScale = initial.localScale;
+        reset(spineTarget.transform, initial);
         leftArm.reset();
         rightArm.reset();
     }
-    public void createGizmo() {
-        GameObject sphereGizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphereGizmo.transform.SetParent(spine);
-        sphereGizmo.transform.localPosition = new Vector3(0, 0, 0);
-        sphereGizmo.transform.localScale = new Vector3(radius*2, radius*2, radius*2);
-        sphereGizmo.GetComponent<SphereCollider>().enabled = false;
-        sphereGizmo.GetComponent<MeshRenderer>().materials = new Material[]{Resources.Load("SphereMaterial") as Material};
-
-        leftArm.createGizmo();
-        rightArm.createGizmo();
-    }
-    public void setMouseDrag() {
-        MouseDragTargeting mouseDrag = spineTarget.gameObject.AddComponent<MouseDragTargeting>();
-        mouseDrag.target = spine.gameObject;
-        leftArm.setMouseDrag();
-        rightArm.setMouseDrag();
-    }
+    
 }

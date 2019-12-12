@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class SignCaptureController : MonoBehaviour {
     public Symbol symbol; 
+    public AvatarSetup avatarSetupScript;
     // Start is called before the first frame update
     void Start() {
-        
+        avatarSetupScript = GameObject.Find("Avatar").GetComponent<AvatarSetup>();
+        avatarSetupScript.setupSignCapture();
     }
 
     // Update is called once per frame

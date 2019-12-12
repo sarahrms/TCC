@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\AvatarSetup.cs" />
     <Compile Include="Assets\Scripts\Body\Arm.cs" />
+    <Compile Include="Assets\Scripts\Body\BasicBodyComponent.cs" />
     <Compile Include="Assets\Scripts\Body\Body.cs" />
     <Compile Include="Assets\Scripts\Body\Finger.cs" />
     <Compile Include="Assets\Scripts\Body\Hand.cs" />

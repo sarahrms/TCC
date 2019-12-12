@@ -2,10 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Finger {
+public class Finger : BasicBodyComponent {
     public Transform fingerNail, distalPhalange, intermediatePhalange, proximalPhalange, initial;
     public GameObject fingerNailTarget;
     public float radius = 0.25f;
+    public void createGizmo() {
+        createGizmo(fingerNail, radius, Color.green);
+        createGizmo(fingerNailTarget.transform, radius, Color.blue);
+    }
+
+    public void createColliders() {
+        SphereCollider collider = fingerNailTarget.gameObject.AddComponent<SphereCollider>();
+        collider.radius = radius;
+    }
+
+    public void setMouseDrag() {
+        MouseDragTargeting mouseDrag = fingerNailTarget.gameObject.AddComponent<MouseDragTargeting>();
+        mouseDrag.dragTarget = fingerNail.gameObject;
+    }
+
     public Finger(Transform proximalPhalange) {
         this.proximalPhalange = proximalPhalange;
         this.intermediatePhalange = this.proximalPhalange.GetChild(0);
@@ -37,24 +52,17 @@ public class Finger {
         RootMotion.FinalIK.FABRIK script = proximalPhalange.gameObject.AddComponent<RootMotion.FinalIK.FABRIK>();
         script.solver.target = fingerNailTarget.transform;
         script.solver.bones = bones;
+        script.solver.IKPositionWeight = 1;
         script.enabled = true;
     }
-    public void createGizmo() {
-      
-    }
-    public void createColliders() {
-        SphereCollider collider = fingerNailTarget.gameObject.AddComponent<SphereCollider>();
-        collider.radius = radius;
-    }
+
+
     public void reset() {
         fingerNail = initial;
         fingerNailTarget.transform.position = initial.position;
         fingerNailTarget.transform.rotation = initial.rotation;
         fingerNailTarget.transform.localScale = initial.localScale;
     }
-    public void setMouseDrag() {
-        MouseDragTargeting mouseDrag = fingerNailTarget.gameObject.AddComponent<MouseDragTargeting>();
-        mouseDrag.target = fingerNail.gameObject;
-    }
+
 
 }
