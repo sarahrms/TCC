@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
-public class CanvasController : MonoBehaviour {
+public class CaptureCanvasController : MonoBehaviour {
     public Transform frontCameraTransform, topCameraTransform, rightCameraTransform, leftCameraTransform;
     public Camera frontCamera, topCamera, rightCamera, leftCamera;
+    public GameObject handConfigurationInterface, headConfigurationInterface, bodyConfigurationInterface, 
+        movementDescriptionInterface, movementDynamicInteface; 
     public SignCaptureController controller;
     public GROUP selectedGroup;
     public InputField idInputField;
@@ -14,12 +16,12 @@ public class CanvasController : MonoBehaviour {
     public Dropdown cameraDropdown, groupDropdown;
 
     void Start() {
-        savePositions();
+        getInitialPositions();
         setCameras();
         addGroupOptions();
     }
 
-    void savePositions() {
+    void getInitialPositions() {
         frontCameraTransform = frontCamera.gameObject.transform;
         topCameraTransform = topCamera.gameObject.transform;
         leftCameraTransform = leftCamera.gameObject.transform;
@@ -48,23 +50,20 @@ public class CanvasController : MonoBehaviour {
     }
     public void changeCamera() {
         int option = cameraDropdown.value;
+        disableAllCameras();
         switch (option) {
             case 0:
-                disableAllCameras();
                 frontCamera.enabled = true;
                 break;
             case 1:
-                disableAllCameras();
-            rightCamera.enabled = true;
-            break;
-        case 2:
-            disableAllCameras();
-            leftCamera.enabled = true;
-            break;
-        case 3:
-            disableAllCameras();
-            topCamera.enabled = true;
-            break;
+                rightCamera.enabled = true;
+                break;
+            case 2:
+                leftCamera.enabled = true;
+                break;
+            case 3:
+                topCamera.enabled = true;
+                break;
         }
     }
 
@@ -78,10 +77,59 @@ public class CanvasController : MonoBehaviour {
 
     public void changeSelectedGroup() {
         selectedGroup = (GROUP) Enum.GetValues(typeof(GROUP)).GetValue(groupDropdown.value);
-        controller.changeGroup(getId(), selectedGroup);
+        disableAllInterfaces();
+        switch(controller.changeGroup(getId(), selectedGroup)){
+            case TYPE.HAND_CONFIGURATION:
+                setHandConfigurationInterface();
+                break;
+            case TYPE.HEAD_CONFIGURATION:
+                setHeadConfigurationInterface();
+                break;
+            case TYPE.BODY_CONFIGURATION:
+                setBodyConfigurationInterface();
+                break;
+            case TYPE.MOVEMENT_DESCRIPTION:
+                setMovementDescriptionInterface();
+                break;
+            case TYPE.MOVEMENT_DYNAMIC:
+                setMovementDynamicInteface();
+                break;
+        }
     }
+
+    public void disableAllInterfaces(){
+        handConfigurationInterface.SetActive(false);
+        headConfigurationInterface.SetActive(false);
+        bodyConfigurationInterface.SetActive(false);
+        movementDescriptionInterface.SetActive(false);
+        movementDynamicInteface.SetActive(false);
+    }
+
+    public void setHandConfigurationInterface() {
+        handConfigurationInterface.SetActive(true);
+    }
+
+    public void setHeadConfigurationInterface() {
+        headConfigurationInterface.SetActive(true);
+    }
+
+    public void setBodyConfigurationInterface() {
+        bodyConfigurationInterface.SetActive(true);
+    }
+
+    public void setMovementDescriptionInterface() {
+        movementDescriptionInterface.SetActive(true);
+    }
+
+    public void setMovementDynamicInteface() {
+        movementDynamicInteface.SetActive(true);
+    }
+
     public int getId() {
         return Convert.ToInt32(idInputField.text);
     }
 
+    public void save() {
+        controller.save();
+    }
 }

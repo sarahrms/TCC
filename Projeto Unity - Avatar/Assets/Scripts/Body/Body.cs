@@ -5,18 +5,19 @@ public class Body : BasicBodyComponent {
     public GameObject spineTarget;
     public float radius = 3.0f;
     public Arm rightArm, leftArm;
+    public RootMotion.FinalIK.FullBodyBipedIK ikScript;
 
     public void createGizmo() {
-        createGizmo(spine, radius, Color.green);
+        //createGizmo(spine, radius, Color.green);
         createGizmo(spineTarget.transform, radius, Color.blue);
         leftArm.createGizmo();
         rightArm.createGizmo();
     }
 
-    public void createColliders() {
+    public void createCollider() {
         createCollider(radius, spineTarget);
-        leftArm.createColliders();
-        rightArm.createColliders();
+        leftArm.createCollider();
+        rightArm.createCollider();
     }
 
     public void setMouseDrag() {
@@ -26,14 +27,15 @@ public class Body : BasicBodyComponent {
     }
 
     public void setIkTargets(RootMotion.FinalIK.FullBodyBipedIK ikScript) {
+        this.ikScript = ikScript;
+
         spineTarget = new GameObject();
         spineTarget.name = spine.gameObject.name + " - target";
         spineTarget.transform.position = spine.position;
         spineTarget.transform.rotation = spine.rotation;
         spineTarget.transform.localScale = spine.localScale;
-        spineTarget.transform.SetParent(spine.parent);
+        //spineTarget.transform.SetParent(spine.parent);
 
-        ikScript.solver.bodyEffector.target = spineTarget.transform;
         ikScript.solver.bodyEffector.positionWeight = 1;
         ikScript.solver.bodyEffector.maintainRelativePositionWeight = 1;
 
@@ -41,16 +43,22 @@ public class Body : BasicBodyComponent {
         rightArm.setIkTargets(ikScript);
     }
 
+    public void update() {
+        ikScript.solver.bodyEffector.position = Vector3.Lerp(ikScript.solver.bodyEffector.position, spineTarget.transform.position, 1);
+        drawLine(ikScript.solver.bodyEffector.position, spine.transform.position);
+
+        leftArm.update();
+        rightArm.update();
+    }
+
     public Body(Transform spineObject) {
+        setLine();
         spine = spineObject;
         initial = spineObject; //OLHAR ISSO AQUI//
         leftArm = new Arm(GameObject.Find("mixamorig:LeftArm").transform);
         rightArm = new Arm(GameObject.Find("mixamorig:RightArm").transform);
     }
    
-
-
-
     public void reset() {
         reset(spineTarget.transform, initial);
         leftArm.reset();

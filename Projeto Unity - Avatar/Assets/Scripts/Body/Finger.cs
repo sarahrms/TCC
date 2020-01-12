@@ -6,12 +6,17 @@ public class Finger : BasicBodyComponent {
     public Transform fingerNail, distalPhalange, intermediatePhalange, proximalPhalange, initial;
     public GameObject fingerNailTarget;
     public float radius = 0.25f;
+
+    public void drawLine() {
+        drawLine(fingerNail.transform.position,fingerNailTarget.transform.position);
+    }
+
     public void createGizmo() {
-        createGizmo(fingerNail, radius, Color.green);
+        //createGizmo(fingerNail, radius, Color.green);
         createGizmo(fingerNailTarget.transform, radius, Color.blue);
     }
 
-    public void createColliders() {
+    public void createCollider() {
         SphereCollider collider = fingerNailTarget.gameObject.AddComponent<SphereCollider>();
         collider.radius = radius;
     }
@@ -22,6 +27,7 @@ public class Finger : BasicBodyComponent {
     }
 
     public Finger(Transform proximalPhalange) {
+        setLine();
         this.proximalPhalange = proximalPhalange;
         this.intermediatePhalange = this.proximalPhalange.GetChild(0);
         this.distalPhalange = this.intermediatePhalange.GetChild(0);
@@ -54,9 +60,15 @@ public class Finger : BasicBodyComponent {
         script.solver.bones = bones;
         script.solver.IKPositionWeight = 1;
         script.enabled = true;
+
+        addLimits();
     }
 
-
+    public void addLimits() {
+        RootMotion.FinalIK.RotationLimit limits = distalPhalange.gameObject.AddComponent<RootMotion.FinalIK.RotationLimit>();
+       // intermediatePhalange;
+      //  proximalPhalange;
+    }
     public void reset() {
         fingerNail = initial;
         fingerNailTarget.transform.position = initial.position;

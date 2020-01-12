@@ -42,7 +42,6 @@ public enum GROUP {
 
 [System.Serializable]
 public class Symbol {
-
     public int id;
     public TYPE type;
     public GROUP group;
@@ -103,8 +102,8 @@ public class Symbol {
         }
         throw new System.Exception();
     }
-
-    // Update is called once per frame
    
+    public void save() {
 
+    }
 }

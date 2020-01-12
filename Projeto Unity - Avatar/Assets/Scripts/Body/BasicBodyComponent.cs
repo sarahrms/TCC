@@ -2,7 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicBodyComponent{
+public class BasicBodyComponent {
+    private GameObject myLine;
+    private LineRenderer lineRenderer; 
+
+    public void setLine() {
+        myLine = new GameObject();
+        myLine.transform.SetParent(GameObject.Find("LineAggregator").transform);
+        myLine.name = "Line " + myLine.transform.parent.childCount;
+        lineRenderer = myLine.AddComponent<LineRenderer>();
+        lineRenderer.startColor = Color.green;
+        lineRenderer.startWidth = 0.1f;
+    }
+
+    public void drawLine(Vector3 initialPosition, Vector3 finalPosition) {
+        lineRenderer.SetPosition(0, initialPosition);
+        lineRenderer.SetPosition(1, finalPosition);
+    }
     
     public void createGizmo(Transform target, float radius, Color color){
         GameObject sphereGizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);

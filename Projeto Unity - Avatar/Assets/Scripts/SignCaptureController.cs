@@ -5,10 +5,20 @@ using UnityEngine;
 public class SignCaptureController : MonoBehaviour {
     public Symbol symbol; 
     public AvatarSetup avatarSetupScript;
+    public GameObject selectedObject;
     // Start is called before the first frame update
     void Start() {
         avatarSetupScript = GameObject.Find("Avatar").GetComponent<AvatarSetup>();
+        avatarSetupScript.init();
         avatarSetupScript.setupSignCapture();
+    }
+
+    public void setSelectedObject(GameObject selected) {
+        this.selectedObject = selected;
+    }
+
+   public void rotateSelectedObject(int degree) {
+       // selectedObject.GetComponent<Transform>().
     }
 
     // Update is called once per frame
@@ -16,21 +26,12 @@ public class SignCaptureController : MonoBehaviour {
         
     }
 
-    public void changeGroup(int id, GROUP selectedGroup) {
+    public TYPE changeGroup(int id, GROUP selectedGroup) {
         symbol = new Symbol(id, selectedGroup);
-        switch (symbol.type) {
-            case TYPE.HAND_CONFIGURATION:
+        return symbol.type;
+    }
 
-
-                break;
-            case TYPE.MOVEMENT_DESCRIPTION:
-
-
-                break;
-            case TYPE.BODY_CONFIGURATION:
-
-
-                break;
-        }
+    public void save() {
+        symbol.save();
     }
 }
