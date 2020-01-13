@@ -6,7 +6,8 @@ public class SignCaptureController : MonoBehaviour {
     public Symbol symbol; 
     public AvatarSetup avatarSetupScript;
     public GameObject selectedObject;
-    // Start is called before the first frame update
+    public bool draggingObject = false;
+    
     void Start() {
         avatarSetupScript = GameObject.Find("Avatar").GetComponent<AvatarSetup>();
         avatarSetupScript.init();
@@ -19,11 +20,6 @@ public class SignCaptureController : MonoBehaviour {
 
    public void rotateSelectedObject(int degree) {
        // selectedObject.GetComponent<Transform>().
-    }
-
-    // Update is called once per frame
-    void Update(){
-        
     }
 
     public TYPE changeGroup(int id, GROUP selectedGroup) {

@@ -4,6 +4,7 @@ using System.Collections;
 
 public class CameraDrag : MonoBehaviour {
     public Transform target;
+    public bool enabed = true;
     public float distance = 2.0f;
     public float xSpeed = 20.0f;
     public float ySpeed = 20.0f;
@@ -26,9 +27,13 @@ public class CameraDrag : MonoBehaviour {
             GetComponent<Rigidbody>().freezeRotation = true;
         }
     }
+
+    public void setEnabled(bool state) {
+        enabled = state;
+    }
     void LateUpdate() {
         if (target) {
-            if (Input.GetMouseButton(0)) {
+            if (Input.GetMouseButton(0) && enabled) {
                 velocityX += xSpeed * Input.GetAxis("Mouse X") * distance * 0.02f;
                 velocityY += ySpeed * Input.GetAxis("Mouse Y") * 0.02f;
             }

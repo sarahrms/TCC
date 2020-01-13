@@ -21,6 +21,13 @@ public class CaptureCanvasController : MonoBehaviour {
         addGroupOptions();
     }
 
+    public void setDraggingObject(bool state) {
+        frontCamera.GetComponent<CameraDrag>().setEnabled(!state);
+        topCamera.GetComponent<CameraDrag>().setEnabled(!state);
+        leftCamera.GetComponent<CameraDrag>().setEnabled(!state);
+        rightCamera.GetComponent<CameraDrag>().setEnabled(!state);
+    }
+
     void getInitialPositions() {
         frontCameraTransform = frontCamera.gameObject.transform;
         topCameraTransform = topCamera.gameObject.transform;

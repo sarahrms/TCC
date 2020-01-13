@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MouseDragTargeting : MonoBehaviour {
-    public static SignCaptureController controller;
+    public static CaptureCanvasController controller;
     public GameObject dragTarget;
     public Vector3 offset;
 
     void Start() {
-        controller = GameObject.Find("Canvas").GetComponent<SignCaptureController>();
+        controller = GameObject.Find("Canvas").GetComponent<CaptureCanvasController>();
     }
    
     Vector3 mousePositionToWorldPosition() {
@@ -17,9 +17,12 @@ public class MouseDragTargeting : MonoBehaviour {
 
     void OnMouseDown() {
         offset = transform.position - mousePositionToWorldPosition();
-        controller.setSelectedObject(dragTarget);
+        controller.setDraggingObject(true);
     }
-   
+    void OnMouseUp() {
+        controller.setDraggingObject(false);
+    }
+
     void OnMouseDrag() {
         transform.position = Vector3.Lerp(transform.position, mousePositionToWorldPosition() + offset, 0.3f); 
     }
