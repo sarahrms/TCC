@@ -70,6 +70,8 @@
     <Compile Include="Assets\Scripts\Body\Hand.cs" />
     <Compile Include="Assets\Scripts\Body\Head.cs" />
     <Compile Include="Assets\Scripts\CameraDrag.cs" />
+    <Compile Include="Assets\Scripts\Canvas\AddPosition.cs" />
+    <Compile Include="Assets\Scripts\Canvas\SetPosition.cs" />
     <Compile Include="Assets\Scripts\CaptureCanvasController.cs" />
     <Compile Include="Assets\Scripts\MouseDragTargeting.cs" />
     <Compile Include="Assets\Scripts\SignalingController.cs" />
@@ -79,7 +81,6 @@
     <Compile Include="Assets\Scripts\SignWriting\Configuration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\HandConfiguration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\HeadConfiguration.cs" />
-    <Compile Include="Assets\Scripts\SignWriting\LegConfiguration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\MovementDescription.cs" />
     <Compile Include="Assets\Scripts\SignWriting\MovementDynamic.cs" />
     <Compile Include="Assets\Scripts\SignWriting\Symbol.cs" />

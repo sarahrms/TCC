@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine;
-using System.Collections;
 
 public class CameraDrag : MonoBehaviour {
     public Transform target;
