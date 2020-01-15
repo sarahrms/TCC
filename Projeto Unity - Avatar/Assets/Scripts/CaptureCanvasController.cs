@@ -12,7 +12,6 @@ public class CaptureCanvasController : MonoBehaviour {
     public SignCaptureController controller;
     public GROUP selectedGroup;
     public InputField idInputField;
-    public Symbol symbol;
     public Dropdown cameraDropdown, groupDropdown;
 
     void Start() {
@@ -85,6 +84,7 @@ public class CaptureCanvasController : MonoBehaviour {
     public void changeSelectedGroup() {
         selectedGroup = (GROUP) Enum.GetValues(typeof(GROUP)).GetValue(groupDropdown.value);
         disableAllInterfaces();
+        Debug.Log(controller.changeGroup(getId(), selectedGroup));
         switch(controller.changeGroup(getId(), selectedGroup)){
             case TYPE.HAND_CONFIGURATION:
                 setHandConfigurationInterface();
@@ -96,7 +96,7 @@ public class CaptureCanvasController : MonoBehaviour {
                 setBodyConfigurationInterface();
                 break;
             case TYPE.MOVEMENT_DESCRIPTION:
-                setMovementDescriptionInterface();
+                setMovementDescriptionInterface(selectedGroup);
                 break;
             case TYPE.MOVEMENT_DYNAMIC:
                 setMovementDynamicInteface();
@@ -124,19 +124,55 @@ public class CaptureCanvasController : MonoBehaviour {
         bodyConfigurationInterface.SetActive(true);
     }
 
-    public void setMovementDescriptionInterface() {
+    public void setMovementDescriptionInterface(GROUP selectedGroup) {
         movementDescriptionInterface.SetActive(true);
+
+        if(selectedGroup == GROUP.FINGER_MOVEMENT){ 
+            movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(false);
+            killChildren(movementDescriptionInterface.transform.GetChild(2).gameObject);
+            movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(true);
+        }
+        else { //hand movement interface
+            movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(true);
+            movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(false);
+            killChildren(movementDescriptionInterface.transform.GetChild(3).gameObject);
+        }
     }
 
+    public void killChildren(GameObject obj) {
+        while(obj.transform.childCount > 1) {
+             Destroy(obj.transform.GetChild(0).gameObject);
+        }
+    }
     public void setMovementDynamicInteface() {
         movementDynamicInteface.SetActive(true);
     }
 
     public int getId() {
-        return Convert.ToInt32(idInputField.text);
+        try{ 
+            return Convert.ToInt32(idInputField.text);
+        }
+        catch(Exception e) {
+            return 0;
+        }
     }
 
     public void save() {
-        controller.save();
+        if (controller.symbol != null) {
+            controller.save();
+        }
+        else {
+            displayMessage();
+        }
+    }
+
+    public void setId() {
+        if (controller.symbol != null) {
+            controller.symbol.id = getId();
+        }
+    }
+
+    public void displayMessage() {
+
     }
 }

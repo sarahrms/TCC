@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AddPosition : MonoBehaviour {
+public class AddHandPosition : MonoBehaviour {
     Vector3 offset = new Vector3(0, 80, 0);
     public Transform positionAggregator;
     public Button addButton;
     public GameObject positionPrefab;
     void Start(){
-        positionPrefab = Resources.Load("Position") as GameObject;
+        positionPrefab = Resources.Load("HandPosition") as GameObject;
     }
 
     public void addPosition() {
@@ -21,6 +21,9 @@ public class AddPosition : MonoBehaviour {
             obj.GetComponent<Text>().text = "Posição " + positionAggregator.childCount.ToString();
 
             addButton.transform.position -= offset;
+        }
+        if (positionAggregator.childCount == 5) {
+            addButton.gameObject.SetActive(false);
         }
     }
 }

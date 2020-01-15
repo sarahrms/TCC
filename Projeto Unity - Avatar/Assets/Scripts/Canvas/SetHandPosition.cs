@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SetPosition : MonoBehaviour {
+public class SetHandPosition : MonoBehaviour {
+    public DrawLines drawLinesScript;
     public Transform rightHandCanvasComponent, leftHandCanvasComponent;
     public GameObject rightHandTarget, leftHandTarget;
     public Vector3 rightHandPosition, leftHandPosition;
+    public Vector3 rightHandRotation, leftHandRotation;
 
     public void Start() {
+        drawLinesScript = GameObject.Find("HandMovementDescriptionInterface").GetComponent<DrawLines>();
         StartCoroutine(WaitAndDoSomething());
     }
     IEnumerator WaitAndDoSomething() {
@@ -27,6 +30,11 @@ public class SetPosition : MonoBehaviour {
         leftHandPosition = leftHandTarget.transform.position;
         rightHandPosition = rightHandTarget.transform.position;
         updateCanvas();
+        updateLines();
+    }
+
+    public void updateLines() {
+        drawLinesScript.draw();
     }
 
     public void updateCanvas() {

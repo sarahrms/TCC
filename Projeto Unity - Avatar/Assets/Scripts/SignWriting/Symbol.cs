@@ -95,11 +95,12 @@ public class Symbol {
     }
 
     private TYPE getTypeByGroup(GROUP group) {
+        if (typeMap == null) { setTypeMap(); }
         foreach(TYPE type in typeMap.Keys){
             if(typeMap[type].Contains(group)){
                 return type;
             }
-        }
+        }        
         throw new System.Exception();
     }
    

@@ -70,8 +70,12 @@
     <Compile Include="Assets\Scripts\Body\Hand.cs" />
     <Compile Include="Assets\Scripts\Body\Head.cs" />
     <Compile Include="Assets\Scripts\CameraDrag.cs" />
-    <Compile Include="Assets\Scripts\Canvas\AddPosition.cs" />
-    <Compile Include="Assets\Scripts\Canvas\SetPosition.cs" />
+    <Compile Include="Assets\Scripts\Canvas\AddFingerPosition.cs" />
+    <Compile Include="Assets\Scripts\Canvas\AddHandPosition.cs" />
+    <Compile Include="Assets\Scripts\Canvas\DrawLines.cs" />
+    <Compile Include="Assets\Scripts\Canvas\SetFingerPosition.cs" />
+    <Compile Include="Assets\Scripts\Canvas\SetHandPosition.cs" />
+    <Compile Include="Assets\Scripts\Canvas\SliderController.cs" />
     <Compile Include="Assets\Scripts\CaptureCanvasController.cs" />
     <Compile Include="Assets\Scripts\MouseDragTargeting.cs" />
     <Compile Include="Assets\Scripts\SignalingController.cs" />
