@@ -8,13 +8,14 @@ public class CaptureCanvasController : MonoBehaviour {
     public Transform frontCameraTransform, topCameraTransform, rightCameraTransform, leftCameraTransform;
     public Camera frontCamera, topCamera, rightCamera, leftCamera;
     public GameObject handConfigurationInterface, headConfigurationInterface, bodyConfigurationInterface, 
-        movementDescriptionInterface, movementDynamicInteface; 
+        movementDescriptionInterface, movementDynamicInteface, currentInterface; 
     public SignCaptureController controller;
     public GROUP selectedGroup;
     public InputField idInputField;
     public Dropdown cameraDropdown, groupDropdown;
 
     void Start() {
+        currentInterface = handConfigurationInterface;
         getInitialPositions();
         setCameras();
         addGroupOptions();
@@ -114,14 +115,17 @@ public class CaptureCanvasController : MonoBehaviour {
 
     public void setHandConfigurationInterface() {
         handConfigurationInterface.SetActive(true);
+        currentInterface = handConfigurationInterface;
     }
 
     public void setHeadConfigurationInterface() {
         headConfigurationInterface.SetActive(true);
+        currentInterface = headConfigurationInterface;
     }
 
     public void setBodyConfigurationInterface() {
         bodyConfigurationInterface.SetActive(true);
+        currentInterface = bodyConfigurationInterface;
     }
 
     public void setMovementDescriptionInterface(GROUP selectedGroup) {
@@ -131,18 +135,20 @@ public class CaptureCanvasController : MonoBehaviour {
             movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(false);
             killChildren(movementDescriptionInterface.transform.GetChild(2).gameObject);
             movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(true);
+            currentInterface = movementDescriptionInterface.transform.GetChild(3).gameObject;
         }
         else { //hand movement interface
             movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(true);
+            currentInterface = movementDescriptionInterface.transform.GetChild(2).gameObject;
             movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(false);
             killChildren(movementDescriptionInterface.transform.GetChild(3).gameObject);
         }
     }
 
     public void killChildren(GameObject obj) {
-        while(obj.transform.childCount > 1) {
+     /*   while(obj.transform.childCount > 1) {
              Destroy(obj.transform.GetChild(0).gameObject);
-        }
+        }*/
     }
     public void setMovementDynamicInteface() {
         movementDynamicInteface.SetActive(true);
@@ -153,13 +159,14 @@ public class CaptureCanvasController : MonoBehaviour {
             return Convert.ToInt32(idInputField.text);
         }
         catch(Exception e) {
+            displayMessage();
             return 0;
         }
     }
 
     public void save() {
         if (controller.symbol != null) {
-            controller.save();
+            controller.save(currentInterface);
         }
         else {
             displayMessage();

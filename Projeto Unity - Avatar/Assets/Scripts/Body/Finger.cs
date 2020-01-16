@@ -49,7 +49,7 @@ public class Finger : BasicBodyComponent {
         bones[4].transform = fingerNail;
   
         fingerNailTarget = new GameObject();
-        fingerNailTarget.name = proximalPhalange.name + "target";
+        fingerNailTarget.name = proximalPhalange.name + " - Target";
         fingerNailTarget.transform.position = fingerNail.transform.position;
         fingerNailTarget.transform.rotation = fingerNail.transform.rotation;
         fingerNailTarget.transform.localScale = fingerNail.transform.localScale;

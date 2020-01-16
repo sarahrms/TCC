@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-public class Configuration {
-    public virtual void save() {
-        
-    }
+[System.Serializable]
+public abstract class Configuration {
+    public abstract void setup(GameObject curentInterface);
 }

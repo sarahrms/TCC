@@ -27,7 +27,7 @@ public class Arm : BasicBodyComponent {
         this.ikScript = ikScript;
 
         shoulderTarget = new GameObject();
-        shoulderTarget.name = shoulder.gameObject.name + " - target";
+        shoulderTarget.name = shoulder.gameObject.name + " - Target";
         shoulderTarget.transform.position = shoulder.position;
         shoulderTarget.transform.rotation = shoulder.rotation;
         shoulderTarget.transform.localScale = shoulder.localScale;

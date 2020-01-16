@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
+[System.Serializable]
 public enum TYPE {
     HAND_CONFIGURATION,
     HEAD_CONFIGURATION,
@@ -7,6 +9,8 @@ public enum TYPE {
     MOVEMENT_DESCRIPTION,
     MOVEMENT_DYNAMIC
 }
+
+[System.Serializable]
 public enum GROUP {
     INDEX,
     INDEX_MIDDLE,
@@ -86,10 +90,10 @@ public class Symbol {
                 this.configuration = new BodyConfiguration();
                 break;
             case TYPE.MOVEMENT_DESCRIPTION:
-                this.configuration = new MovementDescription();
+                this.configuration = new MovementDescriptionConfiguration();
                 break;
             case TYPE.MOVEMENT_DYNAMIC:
-                this.configuration = new MovementDynamic();
+                this.configuration = new MovementDynamicConfiguration();
                 break;
         }
     }
@@ -104,7 +108,8 @@ public class Symbol {
         throw new System.Exception();
     }
    
-    public void save() {
-
+    public void setupConfiguration(GameObject currentInterface) {
+        configuration.setup(currentInterface);
     }
+
 }

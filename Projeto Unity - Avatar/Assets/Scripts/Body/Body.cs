@@ -30,7 +30,7 @@ public class Body : BasicBodyComponent {
         this.ikScript = ikScript;
 
         spineTarget = new GameObject();
-        spineTarget.name = spine.gameObject.name + " - target";
+        spineTarget.name = spine.gameObject.name + " - Target";
         spineTarget.transform.position = spine.position;
         spineTarget.transform.rotation = spine.rotation;
         spineTarget.transform.localScale = spine.localScale;

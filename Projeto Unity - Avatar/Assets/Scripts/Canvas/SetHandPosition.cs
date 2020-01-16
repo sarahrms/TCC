@@ -4,14 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SetHandPosition : MonoBehaviour {
-    public DrawLines drawLinesScript;
     public Transform rightHandCanvasComponent, leftHandCanvasComponent;
     public GameObject rightHandTarget, leftHandTarget;
     public Vector3 rightHandPosition, leftHandPosition;
     public Vector3 rightHandRotation, leftHandRotation;
 
     public void Start() {
-        drawLinesScript = GameObject.Find("HandMovementDescriptionInterface").GetComponent<DrawLines>();
         StartCoroutine(WaitAndDoSomething());
     }
     IEnumerator WaitAndDoSomething() {
@@ -20,8 +18,8 @@ public class SetHandPosition : MonoBehaviour {
     }
 
     public void init() { 
-        rightHandTarget = GameObject.Find("mixamorig:RightHand - target");
-        leftHandTarget = GameObject.Find("mixamorig:LeftHand - target");
+        rightHandTarget = GameObject.Find("mixamorig:RightHand - Target");
+        leftHandTarget = GameObject.Find("mixamorig:LeftHand - Target");
 
         rightHandCanvasComponent = transform.GetChild(0);
         leftHandCanvasComponent = transform.GetChild(1);
@@ -30,21 +28,16 @@ public class SetHandPosition : MonoBehaviour {
         leftHandPosition = leftHandTarget.transform.position;
         rightHandPosition = rightHandTarget.transform.position;
         updateCanvas();
-        updateLines();
-    }
-
-    public void updateLines() {
-        drawLinesScript.draw();
     }
 
     public void updateCanvas() {
-        rightHandCanvasComponent.GetChild(0).GetChild(1).GetComponent<Text>().text = rightHandPosition.x.ToString();
-        rightHandCanvasComponent.GetChild(1).GetChild(1).GetComponent<Text>().text = rightHandPosition.y.ToString();
-        rightHandCanvasComponent.GetChild(2).GetChild(1).GetComponent<Text>().text = rightHandPosition.z.ToString();
+        rightHandCanvasComponent.GetChild(0).GetChild(1).GetComponent<Text>().text = System.Math.Round(rightHandPosition.x,2).ToString();
+        rightHandCanvasComponent.GetChild(1).GetChild(1).GetComponent<Text>().text = System.Math.Round(rightHandPosition.y,2).ToString();
+        rightHandCanvasComponent.GetChild(2).GetChild(1).GetComponent<Text>().text = System.Math.Round(rightHandPosition.z,2).ToString();
 
-        leftHandCanvasComponent.GetChild(0).GetChild(1).GetComponent<Text>().text = leftHandPosition.x.ToString();
-        leftHandCanvasComponent.GetChild(1).GetChild(1).GetComponent<Text>().text = leftHandPosition.y.ToString();
-        leftHandCanvasComponent.GetChild(2).GetChild(1).GetComponent<Text>().text = leftHandPosition.z.ToString();
+        leftHandCanvasComponent.GetChild(0).GetChild(1).GetComponent<Text>().text = System.Math.Round(leftHandPosition.x,2).ToString();
+        leftHandCanvasComponent.GetChild(1).GetChild(1).GetComponent<Text>().text = System.Math.Round(leftHandPosition.y,2).ToString();
+        leftHandCanvasComponent.GetChild(2).GetChild(1).GetComponent<Text>().text = System.Math.Round(leftHandPosition.z,2).ToString();
     }
     
 }

@@ -34,7 +34,7 @@ public class Hand : BasicBodyComponent {
         this.ikScript = ikScript;
 
         wristTarget = new GameObject();
-        wristTarget.name = wrist.gameObject.name + " - target";
+        wristTarget.name = wrist.gameObject.name + " - Target";
         wristTarget.transform.position = wrist.position;
         wristTarget.transform.rotation = wrist.rotation;
         wristTarget.transform.localScale = wrist.localScale;
