@@ -62,24 +62,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AvatarSetup.cs" />
-    <Compile Include="Assets\Scripts\Body\Arm.cs" />
-    <Compile Include="Assets\Scripts\Body\BasicBodyComponent.cs" />
-    <Compile Include="Assets\Scripts\Body\Body.cs" />
-    <Compile Include="Assets\Scripts\Body\Finger.cs" />
-    <Compile Include="Assets\Scripts\Body\Hand.cs" />
-    <Compile Include="Assets\Scripts\Body\Head.cs" />
     <Compile Include="Assets\Scripts\CameraDrag.cs" />
-    <Compile Include="Assets\Scripts\Canvas\AddFingerPosition.cs" />
-    <Compile Include="Assets\Scripts\Canvas\AddHandPosition.cs" />
-    <Compile Include="Assets\Scripts\Canvas\SetBodyPosition.cs" />
-    <Compile Include="Assets\Scripts\Canvas\SetFingerPosition.cs" />
-    <Compile Include="Assets\Scripts\Canvas\SetHandPosition.cs" />
-    <Compile Include="Assets\Scripts\Canvas\SliderController.cs" />
-    <Compile Include="Assets\Scripts\CaptureCanvasController.cs" />
-    <Compile Include="Assets\Scripts\MouseDragTargeting.cs" />
-    <Compile Include="Assets\Scripts\SignalingController.cs" />
-    <Compile Include="Assets\Scripts\SignCaptureController.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\AvatarCaptureSetup.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\BodyComponents\ArmComponent.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\BodyComponents\BasicBodyComponent.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\BodyComponents\BodyComponent.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\BodyComponents\FingerComponent.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\BodyComponents\HandComponent.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\AddFingerPosition.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\AddHandPosition.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SetBodyPosition.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SetFingerPosition.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SetHandPosition.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SliderController.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\CaptureSystemCanvasController.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\CaptureSystemController.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\MouseDragTargeting.cs" />
+    <Compile Include="Assets\Scripts\SignalingSystem\AvatarSetupSignaling.cs" />
+    <Compile Include="Assets\Scripts\SignalingSystem\Body\ArmController.cs" />
+    <Compile Include="Assets\Scripts\SignalingSystem\Body\BodyController.cs" />
+    <Compile Include="Assets\Scripts\SignalingSystem\Body\FingerController.cs" />
+    <Compile Include="Assets\Scripts\SignalingSystem\Body\HandController.cs" />
+    <Compile Include="Assets\Scripts\SignalingSystem\Body\HeadController.cs" />
+    <Compile Include="Assets\Scripts\SignalingSystem\SignalingCanvasController.cs" />
+    <Compile Include="Assets\Scripts\SignalingSystem\SignalingController.cs" />
     <Compile Include="Assets\Scripts\SignWriting\BodyConfiguration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\Configuration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\HandConfiguration.cs" />
