@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
-public class HeadConfiguration : Configuration{
-    public override void setup(GameObject curentInterface) {
+[System.Serializable]
 
+public class HeadConfiguration : Configuration {
+    public string animation;
+    public override void setup(GameObject currentInterface) {
+        animation = currentInterface.transform.GetChild(1).GetComponent<InputField>().text;
     }
 }

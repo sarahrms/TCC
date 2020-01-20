@@ -21,9 +21,16 @@ public class HandComponent : BasicBodyComponent {
     }
 
     public void update() {
-        ikScript.solver.rightHandEffector.position = Vector3.Lerp(ikScript.solver.rightHandEffector.position, wristTarget.position, 1);
-        ikScript.solver.rightHandEffector.rotation = wristTarget.rotation;
-        drawLine(ikScript.solver.rightHandEffector.position, wrist.position);
+        if (wrist.name == "mixamorig:RightHand") {
+            ikScript.solver.rightHandEffector.position = Vector3.Lerp(ikScript.solver.rightHandEffector.position, wristTarget.position, 1);
+            ikScript.solver.rightHandEffector.rotation = wristTarget.rotation;
+            drawLine(ikScript.solver.rightHandEffector.position, wrist.position);
+        }
+        else if (wrist.name == "mixamorig:LeftHand") {
+            ikScript.solver.leftHandEffector.position = Vector3.Lerp(ikScript.solver.leftHandEffector.position, wristTarget.position, 1);
+            ikScript.solver.leftHandEffector.rotation = wristTarget.rotation;
+            drawLine(ikScript.solver.leftHandEffector.position, wrist.position);
+        }
 
         foreach (FingerComponent finger in fingers) {
             finger.drawLine();
@@ -33,6 +40,7 @@ public class HandComponent : BasicBodyComponent {
     public void reset() {
         wristTarget.position = initialWristPosition;
         wristTarget.rotation = Quaternion.Euler(initialWristRotation);
+
         foreach (FingerComponent finger in fingers) {
             finger.reset();
         }
@@ -47,9 +55,16 @@ public class HandComponent : BasicBodyComponent {
         wristTarget.rotation = wrist.rotation;
         wristTarget.localScale = wrist.localScale;
 
-        ikScript.solver.rightHandEffector.positionWeight = 1;
-        ikScript.solver.rightHandEffector.rotationWeight = 1;
-        ikScript.solver.rightHandEffector.maintainRelativePositionWeight = 1;
+        if (wrist.name == "mixamorig:RightHand") {
+            ikScript.solver.rightHandEffector.positionWeight = 1;
+            ikScript.solver.rightHandEffector.rotationWeight = 1;
+            ikScript.solver.rightHandEffector.maintainRelativePositionWeight = 1;
+        }
+        else if (wrist.name == "mixamorig:LeftHand") {
+            ikScript.solver.leftHandEffector.positionWeight = 1;
+            ikScript.solver.leftHandEffector.rotationWeight = 1;
+            ikScript.solver.leftHandEffector.maintainRelativePositionWeight = 1;
+        }
 
         foreach (FingerComponent finger in fingers) {
             finger.setIkTargets(wrist);
@@ -76,7 +91,5 @@ public class HandComponent : BasicBodyComponent {
             finger.setMouseDrag();
         }
     }
-
-  
-
+    
 }

@@ -80,6 +80,7 @@ public class CaptureSystemCanvasController : MonoBehaviour {
             groupDropdown.options.Add(new Dropdown.OptionData(groupName));
         }
         groupDropdown.value = 0;
+        groupDropdown.RefreshShownValue();
     }
 
     public void changeSelectedGroup() {
@@ -111,11 +112,40 @@ public class CaptureSystemCanvasController : MonoBehaviour {
         bodyConfigurationInterface.SetActive(false);
         movementDescriptionInterface.SetActive(false);
         movementDynamicInteface.SetActive(false);
+        disableAllTargets();
+    }
+
+    public void disableAllTargets() {
+        GameObject.Find("mixamorig:Spine - Target").SetActive(false);
+        GameObject.Find("mixamorig:RightArm - Target").SetActive(false);
+        GameObject.Find("mixamorig:LeftArm - Target").SetActive(false);
+
+        GameObject.Find("mixamorig:RightHand - Target").SetActive(false);
+        GameObject.Find("mixamorig:LeftHand - Target").SetActive(false);
+
+        GameObject.Find("mixamorig:RightHandThumb1 - Target").SetActive(false);
+        GameObject.Find("mixamorig:RightHandIndex1 - Target").SetActive(false);
+        GameObject.Find("mixamorig:RightHandMiddle1 - Target").SetActive(false);
+        GameObject.Find("mixamorig:RightHandRing1 - Target").SetActive(false);
+        GameObject.Find("mixamorig:RightHandPinky1 - Target").SetActive(false);
+
+        GameObject.Find("mixamorig:LeftHandThumb1 - Target").SetActive(false);
+        GameObject.Find("mixamorig:LeftHandIndex1 - Target").SetActive(false);
+        GameObject.Find("mixamorig:LeftHandMiddle1 - Target").SetActive(false);
+        GameObject.Find("mixamorig:LeftHandRing1 - Target").SetActive(false);
+        GameObject.Find("mixamorig:LeftHandPinky1 - Target").SetActive(false);
     }
 
     public void setHandConfigurationInterface() {
         handConfigurationInterface.SetActive(true);
         currentInterface = handConfigurationInterface;
+
+        GameObject.Find("mixamorig:RightHand - Target").SetActive(true);
+        GameObject.Find("mixamorig:RightHandThumb1 - Target").SetActive(true);
+        GameObject.Find("mixamorig:RightHandIndex1 - Target").SetActive(true);
+        GameObject.Find("mixamorig:RightHandMiddle1 - Target").SetActive(true);
+        GameObject.Find("mixamorig:RightHandRing1 - Target").SetActive(true);
+        GameObject.Find("mixamorig:RightHandPinky1 - Target").SetActive(true);        
     }
 
     public void setHeadConfigurationInterface() {
@@ -126,6 +156,10 @@ public class CaptureSystemCanvasController : MonoBehaviour {
     public void setBodyConfigurationInterface() {
         bodyConfigurationInterface.SetActive(true);
         currentInterface = bodyConfigurationInterface;
+
+        GameObject.Find("mixamorig:Spine - Target").SetActive(true);
+        GameObject.Find("mixamorig:RightArm - Target").SetActive(true);
+        GameObject.Find("mixamorig:LeftArm - Target").SetActive(true);
     }
 
     public void setMovementDescriptionInterface(GROUP selectedGroup) {

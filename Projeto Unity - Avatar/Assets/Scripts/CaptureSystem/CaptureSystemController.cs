@@ -20,9 +20,10 @@ public class CaptureSystemController : MonoBehaviour {
     public void save(GameObject currentInterface) {
         symbol.setupConfiguration(currentInterface);
         string filePath = Path.Combine("Assets\\Symbols\\" + symbol.type + "\\" + symbol.group + "\\", symbol.id + ".json");
-       
         string jsonString = JsonUtility.ToJson(symbol);
+
         Debug.Log(jsonString);
+
         using (StreamWriter streamWriter = File.CreateText(filePath)) {
             streamWriter.Write(jsonString);
         }

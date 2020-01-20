@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SetFingerPosition : MonoBehaviour {
+public class SetFingersPosition : MonoBehaviour {
     public Transform canvasComponent, indexTarget, middleTarget, pinkyTarget, ringTarget, thumbTarget;
     public Vector3 indexPosition, middlePosition, pinkyPosition, ringPosition, thumbPosition; 
 

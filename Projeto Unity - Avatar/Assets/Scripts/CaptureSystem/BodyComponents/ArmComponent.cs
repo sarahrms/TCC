@@ -7,22 +7,28 @@ public class ArmComponent : BasicBodyComponent {
     public HandComponent hand;
     public RootMotion.FinalIK.FullBodyBipedIK ikScript;
 
-    public ArmComponent(Transform shoulderTransform) {
+    public ArmComponent(Transform shoulderTransform) { 
         shoulder = shoulderTransform;
         initialShoulderPosition = shoulderTransform.position;
-        hand = new HandComponent(shoulder.GetChild(0).GetChild(0).transform);
+        hand = new HandComponent(shoulder.GetChild(0).GetChild(0).transform);       
         setLine();
     }
 
     public void update() {
-        ikScript.solver.rightShoulderEffector.position = Vector3.Lerp(ikScript.solver.rightShoulderEffector.position, shoulderTarget.position, 1);
-        drawLine(ikScript.solver.rightShoulderEffector.position, shoulder.position);
+        if(shoulder.name == "mixamorig:RightArm") { 
+            ikScript.solver.rightShoulderEffector.position = Vector3.Lerp(ikScript.solver.rightShoulderEffector.position, shoulderTarget.position, 1);
+            drawLine(ikScript.solver.rightShoulderEffector.position, shoulder.position);            
+        }
+        else if (shoulder.name == "mixamorig:LeftArm") {
+            ikScript.solver.leftShoulderEffector.position = Vector3.Lerp(ikScript.solver.leftShoulderEffector.position, shoulderTarget.position, 1);
+            drawLine(ikScript.solver.leftShoulderEffector.position, shoulder.position);            
+        }
         hand.update();
     }
 
     public void reset() {
         shoulderTarget.position = initialShoulderPosition;
-        hand.reset();
+        hand.reset(); 
     }
 
     public void setIkTargets(RootMotion.FinalIK.FullBodyBipedIK ikScript) {
@@ -34,15 +40,20 @@ public class ArmComponent : BasicBodyComponent {
         shoulderTarget.rotation = shoulder.rotation;
         shoulderTarget.localScale = shoulder.localScale;
 
-        ikScript.solver.rightShoulderEffector.positionWeight = 1;
-        ikScript.solver.rightShoulderEffector.maintainRelativePositionWeight = 1;
-
+        if (shoulder.name == "mixamorig:RightArm") {
+            ikScript.solver.rightShoulderEffector.positionWeight = 1;
+            ikScript.solver.rightShoulderEffector.maintainRelativePositionWeight = 1;
+        }
+        else if (shoulder.name == "mixamorig:LeftArm") {
+            ikScript.solver.leftShoulderEffector.positionWeight = 1;
+            ikScript.solver.leftShoulderEffector.maintainRelativePositionWeight = 1;
+        }
         hand.setIkTargets(ikScript);
     }
 
     public void createGizmo() {
         createGizmo(shoulderTarget, radius, Color.blue);
-        hand.createGizmo();
+        hand.createGizmo(); 
     }
 
     public void createCollider() {
@@ -52,7 +63,7 @@ public class ArmComponent : BasicBodyComponent {
 
     public void setMouseDrag() {
         setMouseDrag(shoulderTarget.gameObject);
-        hand.setMouseDrag();
+        hand.setMouseDrag(); 
     }
 
 }

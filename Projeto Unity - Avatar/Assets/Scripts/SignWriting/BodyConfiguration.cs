@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 public class BodyConfiguration : Configuration {
-    private Vector3 targetSpinePosition, targetLeftArm, targetRightArm;
+    public Vector3 rightShoulderPosition, leftShoulderPosition, spinePosition;
+    public override void setup(GameObject currentInterface) {
+        SetBodyPosition script = currentInterface.GetComponent<SetBodyPosition>();
 
-    public override void setup(GameObject curentInterface) {
-        //targetSpinePosition = 
+        rightShoulderPosition = script.rightShoulderPosition;
+        leftShoulderPosition = script.leftShoulderPosition;
+        spinePosition = script.spinePosition;
     }
 }

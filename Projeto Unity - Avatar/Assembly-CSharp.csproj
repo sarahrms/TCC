@@ -72,7 +72,7 @@
     <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\AddFingerPosition.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\AddHandPosition.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SetBodyPosition.cs" />
-    <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SetFingerPosition.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SetFingersPosition.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SetHandPosition.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SliderController.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CaptureSystemCanvasController.cs" />
@@ -88,11 +88,12 @@
     <Compile Include="Assets\Scripts\SignalingSystem\SignalingController.cs" />
     <Compile Include="Assets\Scripts\SignWriting\BodyConfiguration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\Configuration.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\DynamicConfiguration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\HandConfiguration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\HeadConfiguration.cs" />
-    <Compile Include="Assets\Scripts\SignWriting\MovementDescriptionConfiguration.cs" />
-    <Compile Include="Assets\Scripts\SignWriting\MovementDynamicConfiguration.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\MovementConfiguration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\Symbol.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\WristConfiguration.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Sarah/Documents/GitHub/TCC-I/Projeto Unity - Avatar/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

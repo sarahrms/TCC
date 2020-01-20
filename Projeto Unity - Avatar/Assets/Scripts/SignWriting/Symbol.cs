@@ -49,7 +49,9 @@ public class Symbol {
     public int id;
     public TYPE type;
     public GROUP group;
-    public Configuration configuration;
+    public string configuration;
+
+    private Configuration configurationObj;
 
     private static Dictionary<TYPE, List<GROUP>> typeMap;
 
@@ -78,24 +80,33 @@ public class Symbol {
     public Symbol(int id, GROUP group) {
         this.id = id;
         this.group = group;
-        this.type = getTypeByGroup(group);
+        type = getTypeByGroup(group);
         switch (type) {
             case TYPE.HAND_CONFIGURATION:
-                this.configuration = new HandConfiguration();
+                configurationObj = new HandConfiguration();
                 break;
             case TYPE.HEAD_CONFIGURATION:
-                this.configuration = new HeadConfiguration();
+                configurationObj = new HeadConfiguration();
                 break;
             case TYPE.BODY_CONFIGURATION:
-                this.configuration = new BodyConfiguration();
+                configurationObj = new BodyConfiguration();
                 break;
             case TYPE.MOVEMENT_DESCRIPTION:
-                this.configuration = new MovementDescriptionConfiguration();
+                MovementConfiguration movementConfiguration = new MovementConfiguration();
+                movementConfiguration.type = getMovementType();
+                configurationObj = movementConfiguration;
                 break;
             case TYPE.MOVEMENT_DYNAMIC:
-                this.configuration = new MovementDynamicConfiguration();
+                configurationObj = new DynamicConfiguration();
                 break;
         }
+    }
+
+    public MOVEMENT_TYPE getMovementType() {
+        if(group == GROUP.FINGER_MOVEMENT) {
+            return MOVEMENT_TYPE.FINGERS_MOVEMENT;
+        }
+        return MOVEMENT_TYPE.HANDS_MOVEMENT;
     }
 
     private TYPE getTypeByGroup(GROUP group) {
@@ -109,7 +120,25 @@ public class Symbol {
     }
    
     public void setupConfiguration(GameObject currentInterface) {
-        configuration.setup(currentInterface);
+        configurationObj.setup(currentInterface);
+        configuration = setConfigurationData();
+    }
+
+    public string setConfigurationData() {
+        switch (type) {
+            case TYPE.HAND_CONFIGURATION:
+                return JsonUtility.ToJson((HandConfiguration) configurationObj);
+            case TYPE.HEAD_CONFIGURATION:
+                return JsonUtility.ToJson((HeadConfiguration) configurationObj);
+            case TYPE.BODY_CONFIGURATION:
+                return JsonUtility.ToJson((BodyConfiguration) configurationObj);
+            case TYPE.MOVEMENT_DESCRIPTION:
+                return JsonUtility.ToJson((MovementConfiguration) configurationObj);
+            case TYPE.MOVEMENT_DYNAMIC:
+                return JsonUtility.ToJson((DynamicConfiguration) configurationObj);
+            default: 
+                throw new System.Exception();
+        }
     }
 
 }

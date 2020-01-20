@@ -1,15 +1,24 @@
 ﻿using UnityEngine;
 
-public class HandConfiguration : Configuration{
-    public Vector3 indexTargetPosition, middleTargetPosition, thumbTargetPosition, pinkyTargetPosition,
-        ringTargetPosition;
+[System.Serializable]
+
+public class HandConfiguration : Configuration {
+    public Vector3 indexPosition, middlePosition, thumbPosition, pinkyPosition, ringPosition;
     public override void setup(GameObject currentInterface) {
-        SetFingerPosition script = currentInterface.transform.GetChild(1).GetChild(0).gameObject.GetComponent<SetFingerPosition>();
+        SetFingersPosition script = currentInterface.transform.GetChild(1).GetChild(0).gameObject.GetComponent<SetFingersPosition>();
        
-        indexTargetPosition = script.indexPosition;
-        middleTargetPosition = script.middlePosition;
-        thumbTargetPosition = script.thumbPosition;
-        pinkyTargetPosition = script.pinkyPosition;
-        ringTargetPosition = script.pinkyPosition;
+        indexPosition = script.indexPosition;
+        middlePosition = script.middlePosition;
+        thumbPosition = script.thumbPosition;
+        pinkyPosition = script.pinkyPosition;
+        ringPosition = script.pinkyPosition;
+    }
+
+    public void setup(SetFingersPosition script) {
+        indexPosition = script.indexPosition;
+        middlePosition = script.middlePosition;
+        thumbPosition = script.thumbPosition;
+        pinkyPosition = script.pinkyPosition;
+        ringPosition = script.pinkyPosition;
     }
 }
