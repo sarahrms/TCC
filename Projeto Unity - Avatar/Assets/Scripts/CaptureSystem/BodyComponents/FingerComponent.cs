@@ -35,10 +35,10 @@ public class FingerComponent : BasicBodyComponent {
 
         fingerNailTarget = new GameObject().transform;
         fingerNailTarget.name = proximalPhalange.name + " - Target";
+        fingerNailTarget.SetParent(wrist);
         fingerNailTarget.position = fingerNail.position;
         fingerNailTarget.rotation = fingerNail.rotation;
         fingerNailTarget.localScale = fingerNail.localScale;
-        fingerNailTarget.SetParent(wrist);
 
         RootMotion.FinalIK.FABRIK script = proximalPhalange.gameObject.AddComponent<RootMotion.FinalIK.FABRIK>();
         script.solver.target = fingerNailTarget;
@@ -50,13 +50,13 @@ public class FingerComponent : BasicBodyComponent {
     }
 
     public void addLimits() {
-        RootMotion.FinalIK.RotationLimit limits = distalPhalange.gameObject.AddComponent<RootMotion.FinalIK.RotationLimit>();
+       // RootMotion.FinalIK.RotationLimit limits = distalPhalange.gameObject.AddComponent<RootMotion.FinalIK.RotationLimit>();
         // intermediatePhalange;
         //  proximalPhalange;
     }
 
     public void createGizmo() {
-        createGizmo(fingerNailTarget, radius, Color.green);
+        createGizmo(fingerNailTarget, radius);
     }
 
     public void createCollider() {
@@ -68,7 +68,7 @@ public class FingerComponent : BasicBodyComponent {
         setMouseDrag(fingerNailTarget.gameObject);
     }
 
-    public void drawLine() {
+    public void update() {
         drawLine(fingerNail.position, fingerNailTarget.position);
     }
 

@@ -53,9 +53,9 @@ public class Symbol {
 
     private Configuration configurationObj;
 
-    private static Dictionary<TYPE, List<GROUP>> typeMap;
+    public static Dictionary<TYPE, List<GROUP>> typeMap;
 
-    private static void setTypeMap() {
+    public static void setTypeMap() {
         typeMap = new Dictionary<TYPE, List<GROUP>>();
         typeMap.Add(TYPE.HAND_CONFIGURATION, new List<GROUP>(){GROUP.INDEX, GROUP.INDEX_MIDDLE, GROUP.INDEX_MIDDLE_THUMB,
                                                                GROUP.FOUR_FINGERS, GROUP.FIVE_FINGERS, GROUP.BABY_FINGER, 
@@ -97,7 +97,7 @@ public class Symbol {
                 configurationObj = movementConfiguration;
                 break;
             case TYPE.MOVEMENT_DYNAMIC:
-                configurationObj = new DynamicConfiguration();
+                configurationObj = new DynamicsConfiguration();
                 break;
         }
     }
@@ -110,7 +110,6 @@ public class Symbol {
     }
 
     private TYPE getTypeByGroup(GROUP group) {
-        if (typeMap == null) { setTypeMap(); }
         foreach(TYPE type in typeMap.Keys){
             if(typeMap[type].Contains(group)){
                 return type;
@@ -135,7 +134,7 @@ public class Symbol {
             case TYPE.MOVEMENT_DESCRIPTION:
                 return JsonUtility.ToJson((MovementConfiguration) configurationObj);
             case TYPE.MOVEMENT_DYNAMIC:
-                return JsonUtility.ToJson((DynamicConfiguration) configurationObj);
+                return JsonUtility.ToJson((DynamicsConfiguration) configurationObj);
             default: 
                 throw new System.Exception();
         }

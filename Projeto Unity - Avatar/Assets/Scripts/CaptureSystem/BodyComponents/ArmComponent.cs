@@ -52,7 +52,7 @@ public class ArmComponent : BasicBodyComponent {
     }
 
     public void createGizmo() {
-        createGizmo(shoulderTarget, radius, Color.blue);
+        createGizmo(shoulderTarget, radius);
         hand.createGizmo(); 
     }
 

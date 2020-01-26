@@ -12,7 +12,7 @@ public class CaptureSystemCanvasController : MonoBehaviour {
     public CaptureSystemController controller;
     public GROUP selectedGroup;
     public InputField idInputField;
-    public Dropdown cameraDropdown, groupDropdown;
+    public Dropdown cameraDropdown, groupDropdown, tipoDropdown;
 
     void Start() {
         currentInterface = handConfigurationInterface;
@@ -74,34 +74,60 @@ public class CaptureSystemCanvasController : MonoBehaviour {
         }
     }
 
-    void addGroupOptions() {
-        foreach(GROUP group in Enum.GetValues(typeof(GROUP))) {
+    public void addGroupOptions() {
+        Symbol.setTypeMap();
+        groupDropdown.ClearOptions();
+        List<GROUP> list;
+        switch (tipoDropdown.value){
+            case 0:
+                list = Symbol.typeMap[TYPE.HAND_CONFIGURATION];
+                break;
+            case 1:
+                list = Symbol.typeMap[TYPE.HEAD_CONFIGURATION];
+                break;
+            case 2:
+                list = Symbol.typeMap[TYPE.BODY_CONFIGURATION];
+                break;
+            case 3:
+                list = Symbol.typeMap[TYPE.MOVEMENT_DESCRIPTION];
+                break;
+            case 4:
+                list = Symbol.typeMap[TYPE.MOVEMENT_DYNAMIC];
+                break;
+            default:
+                list = new List<GROUP>();
+                break;
+        }
+        foreach(GROUP group in list) {
             String groupName = new CultureInfo("en-US", false).TextInfo.ToTitleCase(group.ToString().Replace('_', ' ').ToLower());
             groupDropdown.options.Add(new Dropdown.OptionData(groupName));
         }
-        groupDropdown.value = 0;
         groupDropdown.RefreshShownValue();
+        changeSelectedGroup();
     }
 
     public void changeSelectedGroup() {
-        selectedGroup = (GROUP) Enum.GetValues(typeof(GROUP)).GetValue(groupDropdown.value);
+        selectedGroup = (GROUP)Enum.GetValues(typeof(GROUP)).GetValue(groupDropdown.value);
+        controller.changeGroup(getId(), selectedGroup);
+        controller.reset();
         disableAllInterfaces();
-        Debug.Log(controller.changeGroup(getId(), selectedGroup));
-        switch(controller.changeGroup(getId(), selectedGroup)){
-            case TYPE.HAND_CONFIGURATION:
+        switch (tipoDropdown.value) {
+            case 0:
                 setHandConfigurationInterface();
                 break;
-            case TYPE.HEAD_CONFIGURATION:
+            case 1:
                 setHeadConfigurationInterface();
                 break;
-            case TYPE.BODY_CONFIGURATION:
+            case 2:
                 setBodyConfigurationInterface();
                 break;
-            case TYPE.MOVEMENT_DESCRIPTION:
+            case 3:
                 setMovementDescriptionInterface(selectedGroup);
                 break;
-            case TYPE.MOVEMENT_DYNAMIC:
+            case 4:
                 setMovementDynamicInteface();
+                break;
+            default:
                 break;
         }
     }
@@ -112,54 +138,35 @@ public class CaptureSystemCanvasController : MonoBehaviour {
         bodyConfigurationInterface.SetActive(false);
         movementDescriptionInterface.SetActive(false);
         movementDynamicInteface.SetActive(false);
-        disableAllTargets();
+        if(controller.avatarSetupScript!=null){
+            controller.disableAllTargets();
+        }
     }
 
-    public void disableAllTargets() {
-        GameObject.Find("mixamorig:Spine - Target").SetActive(false);
-        GameObject.Find("mixamorig:RightArm - Target").SetActive(false);
-        GameObject.Find("mixamorig:LeftArm - Target").SetActive(false);
-
-        GameObject.Find("mixamorig:RightHand - Target").SetActive(false);
-        GameObject.Find("mixamorig:LeftHand - Target").SetActive(false);
-
-        GameObject.Find("mixamorig:RightHandThumb1 - Target").SetActive(false);
-        GameObject.Find("mixamorig:RightHandIndex1 - Target").SetActive(false);
-        GameObject.Find("mixamorig:RightHandMiddle1 - Target").SetActive(false);
-        GameObject.Find("mixamorig:RightHandRing1 - Target").SetActive(false);
-        GameObject.Find("mixamorig:RightHandPinky1 - Target").SetActive(false);
-
-        GameObject.Find("mixamorig:LeftHandThumb1 - Target").SetActive(false);
-        GameObject.Find("mixamorig:LeftHandIndex1 - Target").SetActive(false);
-        GameObject.Find("mixamorig:LeftHandMiddle1 - Target").SetActive(false);
-        GameObject.Find("mixamorig:LeftHandRing1 - Target").SetActive(false);
-        GameObject.Find("mixamorig:LeftHandPinky1 - Target").SetActive(false);
-    }
+   
 
     public void setHandConfigurationInterface() {
         handConfigurationInterface.SetActive(true);
         currentInterface = handConfigurationInterface;
-
-        GameObject.Find("mixamorig:RightHand - Target").SetActive(true);
-        GameObject.Find("mixamorig:RightHandThumb1 - Target").SetActive(true);
-        GameObject.Find("mixamorig:RightHandIndex1 - Target").SetActive(true);
-        GameObject.Find("mixamorig:RightHandMiddle1 - Target").SetActive(true);
-        GameObject.Find("mixamorig:RightHandRing1 - Target").SetActive(true);
-        GameObject.Find("mixamorig:RightHandPinky1 - Target").SetActive(true);        
+        if (controller.avatarSetupScript != null) {
+            controller.enableHandConfigurationTargets();     
+        }
     }
 
     public void setHeadConfigurationInterface() {
         headConfigurationInterface.SetActive(true);
         currentInterface = headConfigurationInterface;
+       /* if (controller.avatarSetupScript != null) {
+            controller.enableHeadConfigurationTargets();
+        }*/
     }
 
     public void setBodyConfigurationInterface() {
         bodyConfigurationInterface.SetActive(true);
         currentInterface = bodyConfigurationInterface;
-
-        GameObject.Find("mixamorig:Spine - Target").SetActive(true);
-        GameObject.Find("mixamorig:RightArm - Target").SetActive(true);
-        GameObject.Find("mixamorig:LeftArm - Target").SetActive(true);
+        if (controller.avatarSetupScript != null) {
+            controller.enableBodyConfigurationTargets();  
+        }
     }
 
     public void setMovementDescriptionInterface(GROUP selectedGroup) {
@@ -170,12 +177,18 @@ public class CaptureSystemCanvasController : MonoBehaviour {
             killChildren(movementDescriptionInterface.transform.GetChild(2).gameObject);
             movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(true);
             currentInterface = movementDescriptionInterface.transform.GetChild(3).gameObject;
+            if (controller.avatarSetupScript != null) {
+                controller.enableMovementConfigurationTargets(true);
+            }
         }
         else { //hand movement interface
             movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(true);
             currentInterface = movementDescriptionInterface.transform.GetChild(2).gameObject;
             movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(false);
             killChildren(movementDescriptionInterface.transform.GetChild(3).gameObject);
+            if (controller.avatarSetupScript != null) {
+                controller.enableMovementConfigurationTargets(false);
+            }
         }
     }
 

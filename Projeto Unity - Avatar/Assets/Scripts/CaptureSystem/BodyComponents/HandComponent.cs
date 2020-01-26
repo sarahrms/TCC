@@ -33,7 +33,7 @@ public class HandComponent : BasicBodyComponent {
         }
 
         foreach (FingerComponent finger in fingers) {
-            finger.drawLine();
+            finger.update();
         }
     }
 
@@ -72,7 +72,7 @@ public class HandComponent : BasicBodyComponent {
     }
 
     public void createGizmo() {
-        createGizmo(wristTarget, radius, Color.blue); 
+        createGizmo(wristTarget, radius); 
         foreach (FingerComponent finger in fingers) {
             finger.createGizmo();
         }

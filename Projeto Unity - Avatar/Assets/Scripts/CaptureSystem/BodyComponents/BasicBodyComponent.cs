@@ -21,14 +21,13 @@ public class BasicBodyComponent {
         lineRenderer.SetPosition(1, finalPosition);
     }
     
-    public void createGizmo(Transform target, float radius, Color color){
+    public void createGizmo(Transform target, float radius){
         GameObject sphereGizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphereGizmo.transform.SetParent(target);
         sphereGizmo.transform.localPosition = new Vector3(0, 0, 0);
         sphereGizmo.transform.localScale = new Vector3(radius * 2, radius * 2, radius * 2);
         sphereGizmo.GetComponent<SphereCollider>().enabled = false;
         sphereGizmo.GetComponent<MeshRenderer>().materials = new Material[] { Resources.Load("SphereMaterial") as Material };
-        sphereGizmo.GetComponent<MeshRenderer>().material.color = color;
     }
 
     public void createCollider(float radius, GameObject target) {
