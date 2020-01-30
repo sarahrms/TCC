@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
 public class HeadController : BasicBodyController {
-    public Vector3 initialHeadPosition, initialHeadRotation, headTargetPosition;
+    public Vector3 initialHeadPosition, headTargetPosition;
+    public Quaternion initialHeadRotation;
     public Transform head, headTarget;
     public HandController handController;
     public RootMotion.FinalIK.FullBodyBipedIK ikScript;
@@ -10,7 +11,7 @@ public class HeadController : BasicBodyController {
     public HeadController(Transform headTransform) {
         head = headTransform;
         initialHeadPosition = headTransform.position;
-        initialHeadRotation = headTransform.rotation.eulerAngles;
+        initialHeadRotation = headTransform.rotation;
     }
 
     public void setIkTargets(Transform neck) {
@@ -35,8 +36,12 @@ public class HeadController : BasicBodyController {
         script.enabled = true;
     }
 
+    public void resetAnimation() { }
+
+
     public void reset() {
         headTarget.position = initialHeadPosition;
+        headTarget.rotation = initialHeadRotation;
     }
 
     public void setSpeed(float speed) {

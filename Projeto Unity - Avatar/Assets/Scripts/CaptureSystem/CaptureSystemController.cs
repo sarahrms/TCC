@@ -84,7 +84,6 @@ public class CaptureSystemController : MonoBehaviour {
         leftHandPinkyTarget.SetActive(false);
     }
     public void enableHandConfigurationTargets() {
-        rightHandTarget.SetActive(true);
         rightHandThumbTarget.SetActive(true);
         rightHandIndexTarget.SetActive(true);
         rightHandMiddleTarget.SetActive(true);
@@ -107,13 +106,19 @@ public class CaptureSystemController : MonoBehaviour {
         headTarget.SetActive(true);
     }
 
-    public void enableMovementConfigurationTargets(bool isFinger) {
-        if (isFinger) {
-            enableHandConfigurationTargets();
-        }
-        else {
-            rightArmTarget.SetActive(true);
-            rightHandTarget.SetActive(true);
+    public void enableMovementConfigurationTargets(GROUP selectedGroup) {
+        switch (selectedGroup) {
+            case GROUP.FINGER_MOVEMENT:
+                enableHandConfigurationTargets();
+                break;
+
+            case GROUP.HEAD:
+                headTarget.SetActive(true);
+                break;
+
+            default:
+                rightHandTarget.SetActive(true);
+                break;
         }
     }
 

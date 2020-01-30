@@ -2,16 +2,17 @@
 using UnityEngine;
 
 public class HandController : BasicBodyController {
-    public Vector3 initialWristPosition, initialWristRotation;
+    public Vector3 initialWristPosition;
+    public Quaternion initialWristRotation;
     public Transform wrist, wristTarget;
     public List<FingerController> fingerControllers;
     public RootMotion.FinalIK.FullBodyBipedIK ikScript;
-    public float speed = 1;
+    public float speed = 1, radius = 1.0f;
 
     public HandController(Transform wrist) {
         this.wrist = wrist;
         initialWristPosition = wrist.position;
-        initialWristRotation = wrist.rotation.eulerAngles;
+        initialWristRotation = wrist.rotation;
         fingerControllers = new List<FingerController>();
         for (int i = 0; i < 5; i++) {
             FingerController fingerController = new FingerController(wrist.GetChild(i));
@@ -46,7 +47,7 @@ public class HandController : BasicBodyController {
 
     public void reset() {
         wristTarget.position = initialWristPosition;
-        wristTarget.rotation = Quaternion.Euler(initialWristRotation);
+        wristTarget.rotation = initialWristRotation;
 
         for (int i = 0; i < 5; i++) {
             fingerControllers[i].reset();
@@ -87,5 +88,22 @@ public class HandController : BasicBodyController {
         }
         return flag;
     }
- 
+
+    public void createGizmo() {
+        GameObject sphereGizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphereGizmo.transform.SetParent(wristTarget);
+        sphereGizmo.transform.localPosition = new Vector3(0, 0, 0);
+        sphereGizmo.transform.localScale = new Vector3(radius * 2, radius * 2, radius * 2);
+        sphereGizmo.GetComponent<SphereCollider>().enabled = false;
+        sphereGizmo.GetComponent<MeshRenderer>().materials = new Material[] { Resources.Load("SphereMaterial") as Material };
+
+    }
+
+    public void createCollider() {
+        SphereCollider collider = wristTarget.gameObject.AddComponent<SphereCollider>();
+        collider.radius = radius;
+    }
+    public void setMouseDrag() {
+        wristTarget.gameObject.AddComponent<MouseDragTargeting>();
+    }
 }

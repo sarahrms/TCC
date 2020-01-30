@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public enum TYPE {
     HAND_CONFIGURATION,
-    HEAD_CONFIGURATION,
+    FACE_CONFIGURATION,
     BODY_CONFIGURATION,
     MOVEMENT_DESCRIPTION,
     MOVEMENT_DYNAMIC
@@ -57,24 +57,40 @@ public class Symbol {
 
     public static void setTypeMap() {
         typeMap = new Dictionary<TYPE, List<GROUP>>();
-        typeMap.Add(TYPE.HAND_CONFIGURATION, new List<GROUP>(){GROUP.INDEX, GROUP.INDEX_MIDDLE, GROUP.INDEX_MIDDLE_THUMB,
-                                                               GROUP.FOUR_FINGERS, GROUP.FIVE_FINGERS, GROUP.BABY_FINGER, 
-                                                               GROUP.RING_FINGER, GROUP.MIDDLE_FINGER, GROUP.INDEX_THUMB,
+        typeMap.Add(TYPE.HAND_CONFIGURATION, new List<GROUP>(){GROUP.INDEX, 
+                                                               GROUP.INDEX_MIDDLE, 
+                                                               GROUP.INDEX_MIDDLE_THUMB,
+                                                               GROUP.FOUR_FINGERS, 
+                                                               GROUP.FIVE_FINGERS, 
+                                                               GROUP.BABY_FINGER, 
+                                                               GROUP.RING_FINGER, 
+                                                               GROUP.MIDDLE_FINGER, 
+                                                               GROUP.INDEX_THUMB,
                                                                GROUP.THUMB});
 
-        typeMap.Add(TYPE.HEAD_CONFIGURATION, new List<GROUP>(){GROUP.BROWS_EYES_EYEGAZE, GROUP.CHEEK_EARS_NOSE_BREATH,
-                                                                GROUP.MOUTH_LIPS, GROUP.TONGUE_TEETH_CHIN_NECK, GROUP.HEAD});
+        typeMap.Add(TYPE.FACE_CONFIGURATION, new List<GROUP>(){GROUP.BROWS_EYES_EYEGAZE, 
+                                                               GROUP.CHEEK_EARS_NOSE_BREATH,
+                                                               GROUP.MOUTH_LIPS, 
+                                                               GROUP.TONGUE_TEETH_CHIN_NECK});
 
-        typeMap.Add(TYPE.BODY_CONFIGURATION, new List<GROUP>(){GROUP.SHOULDERS_HIPS_TORSO, GROUP.LIMBS});
+        typeMap.Add(TYPE.BODY_CONFIGURATION, new List<GROUP>(){GROUP.SHOULDERS_HIPS_TORSO, 
+                                                               GROUP.LIMBS});
 
-        typeMap.Add(TYPE.MOVEMENT_DESCRIPTION, new List<GROUP>(){GROUP.CONTACT, GROUP.STRAIGHT_WALL_PLANE,
-                                                                 GROUP.FINGER_MOVEMENT, GROUP.STRAIGHT_DIAGONAL_PLANE,
-                                                                 GROUP.STRAIGHT_FLOOR_PLANE, GROUP.CURVES_WALL_PLANE,
-                                                                 GROUP.CURVES_HIT_WALL_PLANE, GROUP.CURVES_HIT_FLOOR_PLANE,
-                                                                 GROUP.CURVES_FLOOR_PLANE, GROUP.CIRCLE });
+        typeMap.Add(TYPE.MOVEMENT_DESCRIPTION, new List<GROUP>(){GROUP.CONTACT,
+                                                                 GROUP.STRAIGHT_WALL_PLANE,
+                                                                 GROUP.CURVES_FLOOR_PLANE, 
+                                                                 GROUP.STRAIGHT_DIAGONAL_PLANE,
+                                                                 GROUP.STRAIGHT_FLOOR_PLANE, 
+                                                                 GROUP.CURVES_WALL_PLANE,
+                                                                 GROUP.CURVES_HIT_WALL_PLANE, 
+                                                                 GROUP.CURVES_HIT_FLOOR_PLANE,
+                                                                 GROUP.CIRCLE, 
+                                                                 GROUP.HEAD, 
+                                                                 GROUP.FINGER_MOVEMENT});
 
-        typeMap.Add(TYPE.MOVEMENT_DYNAMIC, new List<GROUP>(){GROUP. DYNAMICS_TIMING, GROUP.PUNCTUATION,
-                                                                 GROUP.LOCATION_FOR_SORTING });
+        typeMap.Add(TYPE.MOVEMENT_DYNAMIC, new List<GROUP>(){GROUP. DYNAMICS_TIMING, 
+                                                             GROUP.PUNCTUATION,
+                                                             GROUP.LOCATION_FOR_SORTING});
     }
     
     public Symbol(int id, GROUP group) {
@@ -85,8 +101,8 @@ public class Symbol {
             case TYPE.HAND_CONFIGURATION:
                 configurationObj = new HandConfiguration();
                 break;
-            case TYPE.HEAD_CONFIGURATION:
-                configurationObj = new HeadConfiguration();
+            case TYPE.FACE_CONFIGURATION:
+                configurationObj = new FaceConfiguration();
                 break;
             case TYPE.BODY_CONFIGURATION:
                 configurationObj = new BodyConfiguration();
@@ -105,6 +121,9 @@ public class Symbol {
     public MOVEMENT_TYPE getMovementType() {
         if(group == GROUP.FINGER_MOVEMENT) {
             return MOVEMENT_TYPE.FINGERS_MOVEMENT;
+        }
+        else if(group == GROUP.HEAD) {
+            return MOVEMENT_TYPE.HEAD_MOVEMENT;
         }
         return MOVEMENT_TYPE.HANDS_MOVEMENT;
     }
@@ -127,8 +146,8 @@ public class Symbol {
         switch (type) {
             case TYPE.HAND_CONFIGURATION:
                 return JsonUtility.ToJson((HandConfiguration) configurationObj);
-            case TYPE.HEAD_CONFIGURATION:
-                return JsonUtility.ToJson((HeadConfiguration) configurationObj);
+            case TYPE.FACE_CONFIGURATION:
+                return JsonUtility.ToJson((FaceConfiguration) configurationObj);
             case TYPE.BODY_CONFIGURATION:
                 return JsonUtility.ToJson((BodyConfiguration) configurationObj);
             case TYPE.MOVEMENT_DESCRIPTION:

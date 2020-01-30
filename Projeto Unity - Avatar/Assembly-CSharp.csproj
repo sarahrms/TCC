@@ -72,9 +72,11 @@
     <Compile Include="Assets\Scripts\CaptureSystem\BodyComponents\HeadComponent.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\AddFingerPosition.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\AddHandPosition.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\AddHeadPosition.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SetBodyPosition.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SetFingersPosition.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SetHandPosition.cs" />
+    <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SetHeadPosition.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CanvasComponents\SliderController.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CaptureSystemCanvasController.cs" />
     <Compile Include="Assets\Scripts\CaptureSystem\CaptureSystemController.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Assets\Scripts\SignWriting\BodyConfiguration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\Configuration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\DynamicsConfiguration.cs" />
+    <Compile Include="Assets\Scripts\SignWriting\FaceConfiguration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\HandConfiguration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\HeadConfiguration.cs" />
     <Compile Include="Assets\Scripts\SignWriting\MovementConfiguration.cs" />

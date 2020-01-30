@@ -385,15 +385,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82539e374523970459f8bee25d0808fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawLinesScript: {fileID: 0}
-  rightHandCanvasComponent: {fileID: 0}
-  leftHandCanvasComponent: {fileID: 0}
-  rightHandTarget: {fileID: 0}
-  leftHandTarget: {fileID: 0}
-  rightHandPosition: {x: 0, y: 0, z: 0}
-  leftHandPosition: {x: 0, y: 0, z: 0}
-  rightHandRotation: {x: 0, y: 0, z: 0}
-  leftHandRotation: {x: 0, y: 0, z: 0}
+  canvasComponent: {fileID: 0}
+  handTarget: {fileID: 0}
+  handPosition: {x: 0, y: 0, z: 0}
+  handRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &2816940448647677691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,7 +1983,7 @@ GameObject:
   - component: {fileID: 7518079268231159466}
   - component: {fileID: 4796494017803158542}
   m_Layer: 0
-  m_Name: Esquerda
+  m_Name: "Posi\xE7\xE3o"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2057,7 +2052,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Esquerda:'
+  m_Text: "Posi\xE7\xE3o:"
 --- !u!1 &8449432965247825490
 GameObject:
   m_ObjectHideFlags: 0
@@ -2149,7 +2144,7 @@ GameObject:
   - component: {fileID: 7578587168619844288}
   - component: {fileID: 2496378509544107384}
   m_Layer: 0
-  m_Name: Direita
+  m_Name: "Rota\xE7\xE3o"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2218,7 +2213,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Direita:'
+  m_Text: "Rota\xE7\xE3o:"
 --- !u!1 &9049881156626918823
 GameObject:
   m_ObjectHideFlags: 0

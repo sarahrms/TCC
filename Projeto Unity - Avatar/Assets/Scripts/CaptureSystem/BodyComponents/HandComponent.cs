@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class HandComponent : BasicBodyComponent {
     public Transform wrist, wristTarget;
-    public Vector3 initialWristPosition, initialWristRotation;
+    public Vector3 initialWristPosition;
+    public Quaternion initialWristRotation;
     public float radius = 1.0f;
     public List<FingerComponent> fingers;
     public RootMotion.FinalIK.FullBodyBipedIK ikScript;
@@ -11,7 +12,7 @@ public class HandComponent : BasicBodyComponent {
     public HandComponent(Transform wristTransform) {
         wrist = wristTransform;
         initialWristPosition = wrist.position;
-        initialWristRotation = wrist.rotation.eulerAngles;
+        initialWristRotation = wrist.rotation;
         fingers = new List<FingerComponent>();
         for (int i = 0; i < 5; i++) {
             FingerComponent finger = new FingerComponent(wrist.GetChild(i));
@@ -39,7 +40,7 @@ public class HandComponent : BasicBodyComponent {
 
     public void reset() {
         wristTarget.position = initialWristPosition;
-        wristTarget.rotation = Quaternion.Euler(initialWristRotation);
+        wristTarget.rotation = initialWristRotation;
 
         foreach (FingerComponent finger in fingers) {
             finger.reset();

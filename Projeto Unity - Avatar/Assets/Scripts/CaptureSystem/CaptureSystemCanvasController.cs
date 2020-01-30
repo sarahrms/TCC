@@ -8,11 +8,13 @@ public class CaptureSystemCanvasController : MonoBehaviour {
     public Transform frontCameraTransform, topCameraTransform, rightCameraTransform, leftCameraTransform;
     public Camera frontCamera, topCamera, rightCamera, leftCamera;
     public GameObject handConfigurationInterface, headConfigurationInterface, bodyConfigurationInterface, 
-        movementDescriptionInterface, movementDynamicInteface, currentInterface; 
+        movementDescriptionInterface, currentInterface; 
     public CaptureSystemController controller;
+    public TYPE selectedType;
     public GROUP selectedGroup;
     public InputField idInputField;
     public Dropdown cameraDropdown, groupDropdown, tipoDropdown;
+    public Slider rotacaoX, rotacaoY, rotacaoZ;
 
     void Start() {
         currentInterface = handConfigurationInterface;
@@ -80,25 +82,25 @@ public class CaptureSystemCanvasController : MonoBehaviour {
         List<GROUP> list;
         switch (tipoDropdown.value){
             case 0:
-                list = Symbol.typeMap[TYPE.HAND_CONFIGURATION];
+                selectedType = TYPE.HAND_CONFIGURATION;               
                 break;
             case 1:
-                list = Symbol.typeMap[TYPE.HEAD_CONFIGURATION];
+                selectedType = TYPE.FACE_CONFIGURATION;
                 break;
             case 2:
-                list = Symbol.typeMap[TYPE.BODY_CONFIGURATION];
+                selectedType = TYPE.BODY_CONFIGURATION;
                 break;
             case 3:
-                list = Symbol.typeMap[TYPE.MOVEMENT_DESCRIPTION];
+                selectedType = TYPE.MOVEMENT_DESCRIPTION;
                 break;
             case 4:
-                list = Symbol.typeMap[TYPE.MOVEMENT_DYNAMIC];
+                selectedType = TYPE.MOVEMENT_DYNAMIC;
                 break;
             default:
-                list = new List<GROUP>();
                 break;
         }
-        foreach(GROUP group in list) {
+        list = Symbol.typeMap[selectedType];
+        foreach (GROUP group in list) {
             String groupName = new CultureInfo("en-US", false).TextInfo.ToTitleCase(group.ToString().Replace('_', ' ').ToLower());
             groupDropdown.options.Add(new Dropdown.OptionData(groupName));
         }
@@ -107,7 +109,7 @@ public class CaptureSystemCanvasController : MonoBehaviour {
     }
 
     public void changeSelectedGroup() {
-        selectedGroup = (GROUP)Enum.GetValues(typeof(GROUP)).GetValue(groupDropdown.value);
+        selectedGroup = Symbol.typeMap[selectedType][groupDropdown.value];
         controller.changeGroup(getId(), selectedGroup);
         controller.reset();
         disableAllInterfaces();
@@ -124,9 +126,6 @@ public class CaptureSystemCanvasController : MonoBehaviour {
             case 3:
                 setMovementDescriptionInterface(selectedGroup);
                 break;
-            case 4:
-                setMovementDynamicInteface();
-                break;
             default:
                 break;
         }
@@ -137,7 +136,6 @@ public class CaptureSystemCanvasController : MonoBehaviour {
         headConfigurationInterface.SetActive(false);
         bodyConfigurationInterface.SetActive(false);
         movementDescriptionInterface.SetActive(false);
-        movementDynamicInteface.SetActive(false);
         if(controller.avatarSetupScript!=null){
             controller.disableAllTargets();
         }
@@ -172,23 +170,45 @@ public class CaptureSystemCanvasController : MonoBehaviour {
     public void setMovementDescriptionInterface(GROUP selectedGroup) {
         movementDescriptionInterface.SetActive(true);
 
-        if(selectedGroup == GROUP.FINGER_MOVEMENT){ 
-            movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(false);
-            killChildren(movementDescriptionInterface.transform.GetChild(2).gameObject);
-            movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(true);
-            currentInterface = movementDescriptionInterface.transform.GetChild(3).gameObject;
-            if (controller.avatarSetupScript != null) {
-                controller.enableMovementConfigurationTargets(true);
-            }
+        switch(selectedGroup){
+            case GROUP.FINGER_MOVEMENT:
+                movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(true); //finger
+                currentInterface = movementDescriptionInterface.transform.GetChild(2).gameObject;
+
+                movementDescriptionInterface.transform.GetChild(1).gameObject.SetActive(false);//hand
+                killChildren(movementDescriptionInterface.transform.GetChild(1).gameObject);
+
+                movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(false); //head
+                killChildren(movementDescriptionInterface.transform.GetChild(3).gameObject);
+
+                break;
+
+            case GROUP.HEAD:
+                movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(true); //head
+                currentInterface = movementDescriptionInterface.transform.GetChild(3).gameObject;
+
+                movementDescriptionInterface.transform.GetChild(1).gameObject.SetActive(false);//hand
+                killChildren(movementDescriptionInterface.transform.GetChild(1).gameObject);
+
+                movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(false); //finger
+                killChildren(movementDescriptionInterface.transform.GetChild(2).gameObject);
+
+                break;
+
+            default: //hand movement interface
+                movementDescriptionInterface.transform.GetChild(1).gameObject.SetActive(true); //hand
+                currentInterface = movementDescriptionInterface.transform.GetChild(1).gameObject;
+
+                movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(false); //finger
+                killChildren(movementDescriptionInterface.transform.GetChild(2).gameObject);
+
+                movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(false); //head
+                killChildren(movementDescriptionInterface.transform.GetChild(3).gameObject);
+
+                break;
         }
-        else { //hand movement interface
-            movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(true);
-            currentInterface = movementDescriptionInterface.transform.GetChild(2).gameObject;
-            movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(false);
-            killChildren(movementDescriptionInterface.transform.GetChild(3).gameObject);
-            if (controller.avatarSetupScript != null) {
-                controller.enableMovementConfigurationTargets(false);
-            }
+        if (controller.avatarSetupScript != null) {
+            controller.enableMovementConfigurationTargets(selectedGroup);
         }
     }
 
@@ -196,9 +216,6 @@ public class CaptureSystemCanvasController : MonoBehaviour {
      /*   while(obj.transform.childCount > 1) {
              Destroy(obj.transform.GetChild(0).gameObject);
         }*/
-    }
-    public void setMovementDynamicInteface() {
-        movementDynamicInteface.SetActive(true);
     }
 
     public int getId() {

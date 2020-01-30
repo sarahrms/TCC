@@ -4,20 +4,29 @@ using UnityEngine;
 
 public enum MOVEMENT_TYPE {
     FINGERS_MOVEMENT,
-    HANDS_MOVEMENT
+    HANDS_MOVEMENT, 
+    HEAD_MOVEMENT
 }
 
 public class MovementConfiguration : Configuration {
     public MOVEMENT_TYPE type;
-    public int vezes;
     public List<string> configurations;
     private List<Configuration> configurationList;
     public override void setup(GameObject currentInterface) {
+        configurationList = new List<Configuration>();
         Transform positionAggregator;
-        switch (type) {
+        positionAggregator = currentInterface.transform.GetChild(1);
+
+        switch (type) {   
+            case MOVEMENT_TYPE.HANDS_MOVEMENT: 
+                for (int i = 0; i < positionAggregator.childCount; i++) {
+                    SetHandPosition script = positionAggregator.GetChild(i).GetComponent<SetHandPosition>();
+                    WristConfiguration positionConfiguration = new WristConfiguration();
+                    positionConfiguration.setup(script);
+                    configurationList.Add(positionConfiguration);
+                }
+                break;
             case MOVEMENT_TYPE.FINGERS_MOVEMENT:
-                positionAggregator = currentInterface.transform.GetChild(3).GetChild(1);
-                configurationList = new List<Configuration>();
                 for (int i = 0; i < positionAggregator.childCount; i++) {
                     SetFingersPosition script = positionAggregator.GetChild(i).GetComponent<SetFingersPosition>();
                     HandConfiguration handConfiguration = new HandConfiguration();
@@ -25,11 +34,10 @@ public class MovementConfiguration : Configuration {
                     configurationList.Add(handConfiguration);
                 }
                 break;
-            case MOVEMENT_TYPE.HANDS_MOVEMENT:
-                positionAggregator = currentInterface.transform.GetChild(2).GetChild(1);                
+            case MOVEMENT_TYPE.HEAD_MOVEMENT:
                 for (int i = 0; i < positionAggregator.childCount; i++) {
-                    SetHandPosition script = positionAggregator.GetChild(i).GetComponent<SetHandPosition>();
-                    WristConfiguration positionConfiguration = new WristConfiguration();
+                    SetHeadPosition script = positionAggregator.GetChild(i).GetComponent<SetHeadPosition>();
+                    HeadConfiguration positionConfiguration = new HeadConfiguration();
                     positionConfiguration.setup(script);
                     configurationList.Add(positionConfiguration);
                 }
@@ -41,6 +49,7 @@ public class MovementConfiguration : Configuration {
     }
 
     public void setupPositionsData() {
+        configurations = new List<string>();
         switch (type) {
             case MOVEMENT_TYPE.FINGERS_MOVEMENT:
                 foreach(Configuration config in configurationList) {
@@ -50,6 +59,11 @@ public class MovementConfiguration : Configuration {
             case MOVEMENT_TYPE.HANDS_MOVEMENT:
                 foreach (Configuration config in configurationList) {
                     configurations.Add(JsonUtility.ToJson((WristConfiguration)config));
+                }
+                break;
+            case MOVEMENT_TYPE.HEAD_MOVEMENT:
+                foreach (Configuration config in configurationList) {
+                    configurations.Add(JsonUtility.ToJson((HeadConfiguration)config));
                 }
                 break;
             default:

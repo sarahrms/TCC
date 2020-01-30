@@ -1,11 +1,13 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 
 public class HeadConfiguration : Configuration {
-    public string animation;
-    public override void setup(GameObject currentInterface) {
-        animation = currentInterface.transform.GetChild(1).GetComponent<InputField>().text;
+    public Vector3 headPosition, headRotation;
+
+    public void setup(SetHeadPosition script) {
+        headPosition = script.headPosition;
+        headRotation = script.headRotation;
     }
 }

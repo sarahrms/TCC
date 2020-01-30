@@ -11,13 +11,16 @@ public class SignalingSystemCanvasController : MonoBehaviour {
     public SignalingSystemController controller;
     public GROUP selectedGroup;
     public Dropdown cameraDropdown, maoDireitaDropdown, maoDireitaFileDropdown, 
-        maoEsquerdaDropdown, maoEsquerdaFileDropdown;
+        maoEsquerdaDropdown, maoEsquerdaFileDropdown, rostoDropdown, rostoFileDropdown, 
+        bodyDropdown, bodyFileDropdown, movementDropdown, movementFileDropdown;
 
     void Start() {
         getInitialPositions();
         setCameras();
         changeFileOptionsMaoEsquerda();
         changeFileOptionsMaoDireita();
+        changeFileOptionsRosto();
+        changeFileOptionsBody();
     }
 
     public void setDraggingObject(bool state) {
@@ -57,37 +60,47 @@ public class SignalingSystemCanvasController : MonoBehaviour {
         frontCamera.enabled = true;
     }
 
-    public void changeFileOptionsMaoDireita() {
-        FileInfo[] fileInfo;
-        DirectoryInfo levelDirectoryPath = getHandFilePath(maoDireitaDropdown);
+    public void changeFileOptions(Dropdown dropdown, Dropdown fileDropdown, DirectoryInfo levelDirectoryPath) {
+        FileInfo[] fileInfo;        
         fileInfo = levelDirectoryPath.GetFiles("*.json*", SearchOption.AllDirectories);
-        maoDireitaFileDropdown.ClearOptions();
-        maoDireitaFileDropdown.options.Add(new Dropdown.OptionData("Nenhuma"));
+        fileDropdown.ClearOptions();
+        fileDropdown.options.Add(new Dropdown.OptionData("Nenhuma"));
         foreach (FileInfo file in fileInfo) {
-            if (!file.Extension.Contains("meta")) { 
-                maoDireitaFileDropdown.options.Add(new Dropdown.OptionData(file.Name.Remove(file.Name.IndexOf(file.Extension))));  
+            if (!file.Extension.Contains("meta")) {
+                fileDropdown.options.Add(new Dropdown.OptionData(file.Name.Remove(file.Name.IndexOf(file.Extension))));
             }
         }
-        maoDireitaFileDropdown.RefreshShownValue();
+        fileDropdown.RefreshShownValue();
+    }
+
+    public void changeFileOptionsMaoDireita() {
+        DirectoryInfo levelDirectoryPath = getHandFilePath(maoDireitaDropdown);
+        changeFileOptions(maoDireitaDropdown, maoDireitaFileDropdown, levelDirectoryPath);
     }
 
     public void changeFileOptionsMaoEsquerda() {
-        FileInfo[] fileInfo;
-        DirectoryInfo levelDirectoryPath = getHandFilePath(maoEsquerdaDropdown);        
-        fileInfo = levelDirectoryPath.GetFiles("*.json*", SearchOption.AllDirectories);
-        maoEsquerdaFileDropdown.ClearOptions();
-        maoEsquerdaFileDropdown.options.Add(new Dropdown.OptionData("Nenhuma"));
-        foreach (FileInfo file in fileInfo) {
-            if (!file.Extension.Contains("meta")) {
-                maoEsquerdaFileDropdown.options.Add(new Dropdown.OptionData(file.Name.Remove(file.Name.IndexOf(file.Extension))));    
-            }
-        }
-        maoEsquerdaFileDropdown.RefreshShownValue();
+        DirectoryInfo levelDirectoryPath = getHandFilePath(maoEsquerdaDropdown);
+        changeFileOptions(maoEsquerdaDropdown, maoEsquerdaFileDropdown, levelDirectoryPath);
     }
 
-    public DirectoryInfo getHandFilePath(Dropdown maoDropdown) {
+    public void changeFileOptionsRosto() {
+        DirectoryInfo levelDirectoryPath = getRostoFilePath(rostoDropdown);
+        changeFileOptions(rostoDropdown, rostoFileDropdown, levelDirectoryPath);
+    }
+
+    public void changeFileOptionsBody() {
+        DirectoryInfo levelDirectoryPath = getRostoFilePath(bodyDropdown);
+        changeFileOptions(bodyDropdown, bodyFileDropdown, levelDirectoryPath);
+    }
+
+    public void changeFileOptionsMovement() {
+        DirectoryInfo levelDirectoryPath = getMovementFilePath(movementDropdown);
+        changeFileOptions(movementDropdown, movementFileDropdown, levelDirectoryPath);
+    }
+
+    public DirectoryInfo getHandFilePath(Dropdown dropdown) {
         DirectoryInfo levelDirectoryPath;
-        switch (maoDropdown.value) {
+        switch (dropdown.value) {
             case 0:
                 levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Hand_Configuration\\Index");
                 break;
@@ -100,22 +113,22 @@ public class SignalingSystemCanvasController : MonoBehaviour {
             case 3:
                 levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Hand_Configuration\\Four_Fingers");
                 break;
-            case 5:
+            case 4:
                 levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Hand_Configuration\\Five_Fingers");
                 break;
-            case 6:
+            case 5:
                 levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Hand_Configuration\\Baby_Finger");
                 break;
-            case 7:
+            case 6:
                 levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Hand_Configuration\\Ring_Finger");
                 break;
-            case 8:
+            case 7:
                 levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Hand_Configuration\\Middle_Finger");
                 break;
-            case 9:
+            case 8:
                 levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Hand_Configuration\\Index_Thumb");
                 break;
-            case 10:
+            case 9:
                 levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Hand_Configuration\\Thumb");
                 break;
             default:
@@ -125,11 +138,75 @@ public class SignalingSystemCanvasController : MonoBehaviour {
         return levelDirectoryPath;
     }
 
+    public DirectoryInfo getRostoFilePath(Dropdown dropdown) {
+        DirectoryInfo levelDirectoryPath;
+        switch (dropdown.value) {
+            case 0:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Face_Configuration\\Brows_Eyes_EyeGaze");
+                break;
+            case 1:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Face_Configuration\\Cheek_Ears_Nose_Breath");
+                break;
+            case 2:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Face_Configuration\\Mouth_Lips");
+                break;
+            case 3:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Face_Configuration\\Tongue_Teeth_Chin_Neck");
+                break;
+            default:
+                levelDirectoryPath = new DirectoryInfo("");
+                break;
+        }
+        return levelDirectoryPath;
+    }
+
+    public DirectoryInfo getBodyFilePath(Dropdown dropdown) {
+        DirectoryInfo levelDirectoryPath;
+        switch (dropdown.value) {
+            case 0:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Body_Configuration\\Shoulders Hips Torso");
+                break;
+            case 1:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Body_Configuration\\Limbs");
+                break;
+            default:
+                levelDirectoryPath = new DirectoryInfo("");
+                break;
+        }
+        return levelDirectoryPath;
+    }
+
+    public DirectoryInfo getMovementFilePath(Dropdown dropdown) {
+        DirectoryInfo levelDirectoryPath;
+        switch (dropdown.value) {
+            case 0:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Brows_Eyes_EyeGaze");
+                break;
+            case 1:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Cheek_Ears_Nose_Breath");
+                break;
+            case 2:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Mouth_Lips");
+                break;
+            case 3:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Tongue_Teeth_Chin_Neck");
+                break;
+            default:
+                levelDirectoryPath = new DirectoryInfo("");
+                break;
+        }
+        return levelDirectoryPath;
+    }
+
+    public void loadConfiguration<T>() {
+
+    }
+
     public void loadRightHandConfiguration() {
         if(maoDireitaFileDropdown.value != 0) { 
             string fileName = maoDireitaFileDropdown.options[maoDireitaFileDropdown.value].text + ".json";
             string filePath = getHandFilePath(maoDireitaDropdown).ToString() + "\\" + fileName;
-            HandConfiguration configuration = controller.loadHandConfiguration(filePath); 
+            HandConfiguration configuration = controller.loadConfiguration<HandConfiguration>(filePath); 
             controller.loadHandConfiguration(configuration, true);
         }
         else {
@@ -141,7 +218,7 @@ public class SignalingSystemCanvasController : MonoBehaviour {
         if (maoEsquerdaFileDropdown.value != 0) {
             string fileName = maoEsquerdaFileDropdown.options[maoEsquerdaFileDropdown.value].text + ".json";
             string filePath = getHandFilePath(maoEsquerdaDropdown).ToString() + "\\" + fileName;
-            HandConfiguration configuration = controller.loadHandConfiguration(filePath);
+            HandConfiguration configuration = controller.loadConfiguration<HandConfiguration>(filePath);
             controller.loadHandConfiguration(configuration, false);
         }
         else {
@@ -149,4 +226,39 @@ public class SignalingSystemCanvasController : MonoBehaviour {
         }
     }
 
+    public void loadFaceConfiguration() {
+       if (rostoFileDropdown.value != 0) {
+            string fileName = rostoFileDropdown.options[rostoFileDropdown.value].text + ".json";
+            string filePath = getRostoFilePath(rostoDropdown).ToString() + "\\" + fileName;
+            FaceConfiguration configuration = controller.loadConfiguration<FaceConfiguration>(filePath);
+            controller.loadFaceConfiguration(configuration);
+        }
+        else {
+            controller.avatarSetupScript.bodyController.headController.resetAnimation();
+        }
+    }
+
+    public void loadBodyConfiguration() {
+        if (bodyFileDropdown.value != 0) {
+            string fileName = bodyFileDropdown.options[bodyFileDropdown.value].text + ".json";
+            string filePath = getBodyFilePath(bodyDropdown).ToString() + "\\" + fileName;
+            BodyConfiguration configuration = controller.loadConfiguration<BodyConfiguration>(filePath);
+            controller.loadBodyConfiguration(configuration);
+        }
+        else {
+            controller.avatarSetupScript.bodyController.reset();
+        }
+    }
+
+    public void loadMovementConfiguration() {
+        if (movementFileDropdown.value != 0) {
+            string fileName = movementFileDropdown.options[movementFileDropdown.value].text + ".json";
+            string filePath = getBodyFilePath(movementDropdown).ToString() + "\\" + fileName;
+            MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
+            controller.loadMovementConfiguration(configuration);
+        }
+        else {
+            controller.avatarSetupScript.bodyController.reset();
+        }
+    }
 }

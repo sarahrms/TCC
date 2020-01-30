@@ -7,14 +7,6 @@ public class SetFingersPosition : MonoBehaviour {
     public Transform canvasComponent, indexTarget, middleTarget, pinkyTarget, ringTarget, thumbTarget;
     public Vector3 indexPosition, middlePosition, pinkyPosition, ringPosition, thumbPosition; 
 
-    public void Start() {
-        StartCoroutine(WaitAndDoSomething());
-    }
-    IEnumerator WaitAndDoSomething() {
-        yield return new WaitForSeconds(0.25f);
-        init();
-    }
-
     public void init() { 
         indexTarget = GameObject.Find("mixamorig:RightHandIndex1 - Target").transform;
         middleTarget = GameObject.Find("mixamorig:RightHandMiddle1 - Target").transform;

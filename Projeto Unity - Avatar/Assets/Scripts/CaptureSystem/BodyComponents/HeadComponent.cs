@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class HeadComponent : BasicBodyComponent {
     public Transform head, headTarget;
-    public Vector3 initialHeadPosition, initialHeadRotation;
+    public Vector3 initialHeadPosition;
+    public Quaternion initialHeadRotation;
     public float radius = 1.5f;
     public RootMotion.FinalIK.FullBodyBipedIK ikScript;
 
     public HeadComponent(Transform headTransform) {
         head = headTransform;
         initialHeadPosition = headTransform.position;
-        initialHeadRotation = headTransform.rotation.eulerAngles;
+        initialHeadRotation = headTransform.rotation;
         setLine();
     }
 
@@ -21,7 +22,7 @@ public class HeadComponent : BasicBodyComponent {
 
     public void reset() {
         headTarget.position = initialHeadPosition;
-        headTarget.rotation = Quaternion.Euler(initialHeadRotation);
+        headTarget.rotation = initialHeadRotation;
     }
 
     public void setIkTargets(Transform neck) {
