@@ -5,18 +5,28 @@ using UnityEngine.UI;
 
 public class SetFingersPosition : MonoBehaviour {
     public Transform canvasComponent, indexTarget, middleTarget, pinkyTarget, ringTarget, thumbTarget;
-    public Vector3 indexPosition, middlePosition, pinkyPosition, ringPosition, thumbPosition; 
+    public Vector3 indexPosition, middlePosition, pinkyPosition, ringPosition, thumbPosition;
 
-    public void init() { 
+    public void Start() {
+        StartCoroutine(WaitAndDoSomething());
+    }
+    IEnumerator WaitAndDoSomething() {
+        yield return new WaitForSeconds(0.05f);
+        init();
+    }
+
+    public void init() {  
         indexTarget = GameObject.Find("mixamorig:RightHandIndex1 - Target").transform;
         middleTarget = GameObject.Find("mixamorig:RightHandMiddle1 - Target").transform;
         pinkyTarget = GameObject.Find("mixamorig:RightHandPinky1 - Target").transform;
         ringTarget = GameObject.Find("mixamorig:RightHandRing1 - Target").transform;
         thumbTarget = GameObject.Find("mixamorig:RightHandThumb1 - Target").transform;
-
+        
         canvasComponent = transform.GetChild(0);
     }
+
     public void setPosition() {
+        init();
         indexPosition = indexTarget.localPosition;
         middlePosition = middleTarget.localPosition;
         pinkyPosition = pinkyTarget.localPosition;

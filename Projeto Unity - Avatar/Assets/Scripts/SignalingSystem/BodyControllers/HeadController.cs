@@ -32,6 +32,7 @@ public class HeadController : BasicBodyController {
         RootMotion.FinalIK.FABRIK script = neck.gameObject.AddComponent<RootMotion.FinalIK.FABRIK>();
         script.solver.target = headTarget;
         script.solver.IKPositionWeight = 1;
+        
         script.solver.bones = bones;
         script.enabled = true;
     }

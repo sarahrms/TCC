@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class AddHeadPosition : MonoBehaviour {
     Vector3 offset = new Vector3(0, 80, 0);
-    public Transform positionAggregator;
+    float lastXValue, lastYValue, lastZValue;
+    public Transform positionAggregator, headTarget;
     public Button addButton;
     public GameObject positionPrefab;
     public Slider sliderX, sliderY, sliderZ;
@@ -13,6 +14,10 @@ public class AddHeadPosition : MonoBehaviour {
     void Start() {
         positionPrefab = Resources.Load("HeadPosition") as GameObject;
         positionAggregator.GetChild(0).GetComponent<SetHeadPosition>().init();
+        headTarget = GameObject.Find("mixamorig:Head - Target").transform;
+        lastXValue = sliderX.value;
+        lastYValue = sliderY.value;
+        lastZValue = sliderZ.value;
     }
 
     public void addPosition() {
@@ -30,10 +35,23 @@ public class AddHeadPosition : MonoBehaviour {
         }
     }
 
-    public void rotacionarX() { }
 
-    public void rotacionarY() { }
+    public void rotacionarX() {
+        float currentSliderValue = sliderX.value;
+        headTarget.Rotate(currentSliderValue - lastXValue, 0, 0);
+        lastXValue = currentSliderValue;
+    }
 
-    public void rotacionarZ() { }
+    public void rotacionarY() {
+        float currentSliderValue = sliderY.value;
+        headTarget.Rotate(0, currentSliderValue - lastYValue, 0);
+        lastYValue = currentSliderValue;
+    }
+
+    public void rotacionarZ() {
+        float currentSliderValue = sliderZ.value;
+        headTarget.Rotate(0, 0, currentSliderValue - lastZValue);
+        lastZValue = currentSliderValue;
+    }
 
 }

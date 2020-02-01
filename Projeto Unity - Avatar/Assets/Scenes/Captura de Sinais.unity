@@ -1210,7 +1210,6 @@ GameObject:
   m_Component:
   - component: {fileID: 176174854}
   - component: {fileID: 176174853}
-  - component: {fileID: 176174852}
   m_Layer: 0
   m_Name: Top Camera
   m_TagString: MainCamera
@@ -1218,28 +1217,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &176174852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 176174851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5fad3fd03bd2604194ca5801ac6fe6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1016647485}
-  enabed: 1
-  distance: 1
-  xSpeed: 1
-  ySpeed: 10
-  yMinLimit: 0
-  yMaxLimit: 0
-  distanceMin: 50
-  distanceMax: 50
-  smoothTime: 10
 --- !u!20 &176174853
 Camera:
   m_ObjectHideFlags: 0
@@ -1474,9 +1451,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1496316970}
   m_Direction: 2
   m_MinValue: 0
-  m_MaxValue: 120
+  m_MaxValue: 180
   m_WholeNumbers: 1
-  m_Value: 60
+  m_Value: 90
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -4503,7 +4480,7 @@ GameObject:
   - component: {fileID: 565033888}
   - component: {fileID: 565033887}
   m_Layer: 0
-  m_Name: Left Camera
+  m_Name: Right Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5745,9 +5722,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1799027989}
   m_Direction: 2
   m_MinValue: 0
-  m_MaxValue: 40
+  m_MaxValue: 180
   m_WholeNumbers: 1
-  m_Value: 20
+  m_Value: 90
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -6734,7 +6711,7 @@ GameObject:
   - component: {fileID: 933490464}
   - component: {fileID: 933490463}
   m_Layer: 0
-  m_Name: Right Camera
+  m_Name: Left Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8688,8 +8665,8 @@ MonoBehaviour:
   leftCameraTransform: {fileID: 0}
   frontCamera: {fileID: 534669904}
   topCamera: {fileID: 176174853}
-  rightCamera: {fileID: 933490464}
-  leftCamera: {fileID: 565033888}
+  rightCamera: {fileID: 565033888}
+  leftCamera: {fileID: 933490464}
   handConfigurationInterface: {fileID: 684803562}
   headConfigurationInterface: {fileID: 889524529}
   bodyConfigurationInterface: {fileID: 552268111}
@@ -11965,9 +11942,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 31021548}
   m_Direction: 2
   m_MinValue: 0
-  m_MaxValue: 80
+  m_MaxValue: 180
   m_WholeNumbers: 0
-  m_Value: 20
+  m_Value: 90
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -12898,6 +12875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionAggregator: {fileID: 1804238574}
+  headTarget: {fileID: 0}
   addButton: {fileID: 1395067242}
   positionPrefab: {fileID: 2990034230998479806, guid: 15017f3cec8d5da4e8b96b043f8a6aef,
     type: 3}

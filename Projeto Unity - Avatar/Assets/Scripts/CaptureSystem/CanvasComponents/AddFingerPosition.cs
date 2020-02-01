@@ -10,7 +10,6 @@ public class AddFingerPosition : MonoBehaviour {
     public GameObject positionPrefab;
     void Start(){
         positionPrefab = Resources.Load("FingerPosition") as GameObject;
-        positionAggregator.GetChild(0).GetComponent<SetFingersPosition>().init();
     }
 
     public void addPosition() {
@@ -20,7 +19,6 @@ public class AddFingerPosition : MonoBehaviour {
             obj.transform.position = positionAggregator.GetChild(positionAggregator.childCount - 2).position - offset;
             obj.name = "Position " + positionAggregator.childCount.ToString();
             obj.GetComponent<Text>().text = "Configuração " + positionAggregator.childCount.ToString() + ":";
-            obj.GetComponent<SetFingersPosition>().init();
             addButton.transform.position -= offset;
         }
         if (positionAggregator.childCount == 3) {

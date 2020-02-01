@@ -6,7 +6,7 @@ public enum TYPE {
     HAND_CONFIGURATION,
     FACE_CONFIGURATION,
     BODY_CONFIGURATION,
-    MOVEMENT_DESCRIPTION,
+    MOVEMENT_CONFIGURATION,
     MOVEMENT_DYNAMIC
 }
 
@@ -76,7 +76,7 @@ public class Symbol {
         typeMap.Add(TYPE.BODY_CONFIGURATION, new List<GROUP>(){GROUP.SHOULDERS_HIPS_TORSO, 
                                                                GROUP.LIMBS});
 
-        typeMap.Add(TYPE.MOVEMENT_DESCRIPTION, new List<GROUP>(){GROUP.CONTACT,
+        typeMap.Add(TYPE.MOVEMENT_CONFIGURATION, new List<GROUP>(){GROUP.CONTACT,
                                                                  GROUP.STRAIGHT_WALL_PLANE,
                                                                  GROUP.CURVES_FLOOR_PLANE, 
                                                                  GROUP.STRAIGHT_DIAGONAL_PLANE,
@@ -107,7 +107,7 @@ public class Symbol {
             case TYPE.BODY_CONFIGURATION:
                 configurationObj = new BodyConfiguration();
                 break;
-            case TYPE.MOVEMENT_DESCRIPTION:
+            case TYPE.MOVEMENT_CONFIGURATION:
                 MovementConfiguration movementConfiguration = new MovementConfiguration();
                 movementConfiguration.type = getMovementType();
                 configurationObj = movementConfiguration;
@@ -150,7 +150,7 @@ public class Symbol {
                 return JsonUtility.ToJson((FaceConfiguration) configurationObj);
             case TYPE.BODY_CONFIGURATION:
                 return JsonUtility.ToJson((BodyConfiguration) configurationObj);
-            case TYPE.MOVEMENT_DESCRIPTION:
+            case TYPE.MOVEMENT_CONFIGURATION:
                 return JsonUtility.ToJson((MovementConfiguration) configurationObj);
             case TYPE.MOVEMENT_DYNAMIC:
                 return JsonUtility.ToJson((DynamicsConfiguration) configurationObj);

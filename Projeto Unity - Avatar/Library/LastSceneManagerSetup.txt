@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Captura de Sinais.unity
+- path: Assets/Scenes/Cadastro Termos.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

@@ -17,7 +17,7 @@ public class CaptureSystemController : MonoBehaviour {
         StartCoroutine(WaitAndDoSomething());
     }
     IEnumerator WaitAndDoSomething() {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.10f);
         setTargetObjects();
         disableAllTargets();
         enableHandConfigurationTargets();

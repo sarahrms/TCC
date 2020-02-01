@@ -45,13 +45,15 @@ public class HandController : BasicBodyController {
         }
     }
 
-    public void reset() {
-        wristTarget.position = initialWristPosition;
-        wristTarget.rotation = initialWristRotation;
-
+    public void resetFingers() {
         for (int i = 0; i < 5; i++) {
             fingerControllers[i].reset();
         }
+    }
+
+    public void resetWrist() {
+        wristTarget.position = initialWristPosition;
+        wristTarget.rotation = initialWristRotation;
     }
 
     public void setSpeed(float speed) {
@@ -80,8 +82,15 @@ public class HandController : BasicBodyController {
             fingerController.update();
         }
     }
-
     public bool isArrived() {
+        bool flag = true;
+        foreach (FingerController fingerController in fingerControllers) {
+            flag = fingerController.isArrived() ? flag : false;
+        }
+        return flag;
+    }
+
+    public bool isFingersArrived() {
         bool flag = true;
         foreach (FingerController fingerController in fingerControllers) {
            flag = fingerController.isArrived() ? flag : false;

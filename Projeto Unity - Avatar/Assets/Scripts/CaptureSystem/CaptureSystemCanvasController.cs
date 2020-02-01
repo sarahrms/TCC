@@ -25,7 +25,7 @@ public class CaptureSystemCanvasController : MonoBehaviour {
 
     public void setDraggingObject(bool state) {
         frontCamera.GetComponent<CameraDrag>().setEnabled(!state);
-        topCamera.GetComponent<CameraDrag>().setEnabled(!state);
+       // topCamera.GetComponent<CameraDrag>().setEnabled(!state);
         leftCamera.GetComponent<CameraDrag>().setEnabled(!state);
         rightCamera.GetComponent<CameraDrag>().setEnabled(!state);
     }
@@ -91,7 +91,7 @@ public class CaptureSystemCanvasController : MonoBehaviour {
                 selectedType = TYPE.BODY_CONFIGURATION;
                 break;
             case 3:
-                selectedType = TYPE.MOVEMENT_DESCRIPTION;
+                selectedType = TYPE.MOVEMENT_CONFIGURATION;
                 break;
             case 4:
                 selectedType = TYPE.MOVEMENT_DYNAMIC;

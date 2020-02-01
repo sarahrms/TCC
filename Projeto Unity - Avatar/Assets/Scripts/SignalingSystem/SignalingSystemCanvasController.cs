@@ -12,7 +12,11 @@ public class SignalingSystemCanvasController : MonoBehaviour {
     public GROUP selectedGroup;
     public Dropdown cameraDropdown, maoDireitaDropdown, maoDireitaFileDropdown, 
         maoEsquerdaDropdown, maoEsquerdaFileDropdown, rostoDropdown, rostoFileDropdown, 
-        bodyDropdown, bodyFileDropdown, movementDropdown, movementFileDropdown;
+        bodyDropdown, bodyFileDropdown, maoDireitaMovimentoFileDropdown, maoDireitaMovimentoDropdown,
+        maoEsquerdaMovimentoFileDropdown, maoEsquerdaMovimentoDropdown, headMovimentFileDropdown,
+        maoDireitaFingerMovementFileDropdown, maoEsquerdaFingerMovementFileDropdown;
+
+    public GameObject rightHandInterface, leftHandInterface;
 
     void Start() {
         getInitialPositions();
@@ -21,6 +25,9 @@ public class SignalingSystemCanvasController : MonoBehaviour {
         changeFileOptionsMaoDireita();
         changeFileOptionsRosto();
         changeFileOptionsBody();
+        changeFileOptionsMovementRightHand();
+        changeFileOptionsMovementLeftHand();
+        changeFileOptionsFingersMovement();
     }
 
     public void setDraggingObject(bool state) {
@@ -60,9 +67,9 @@ public class SignalingSystemCanvasController : MonoBehaviour {
         frontCamera.enabled = true;
     }
 
-    public void changeFileOptions(Dropdown dropdown, Dropdown fileDropdown, DirectoryInfo levelDirectoryPath) {
+    public void changeFileOptions(Dropdown fileDropdown, DirectoryInfo levelDirectoryPath) {
         FileInfo[] fileInfo;        
-        fileInfo = levelDirectoryPath.GetFiles("*.json*", SearchOption.AllDirectories);
+        fileInfo = levelDirectoryPath.GetFiles("*", SearchOption.AllDirectories);        
         fileDropdown.ClearOptions();
         fileDropdown.options.Add(new Dropdown.OptionData("Nenhuma"));
         foreach (FileInfo file in fileInfo) {
@@ -73,29 +80,48 @@ public class SignalingSystemCanvasController : MonoBehaviour {
         fileDropdown.RefreshShownValue();
     }
 
+    public void changeFileOptionsFingersMovement() {
+        DirectoryInfo levelDirectoryPath = getFingerMovementFilePath();
+        changeFileOptions(maoDireitaFingerMovementFileDropdown, levelDirectoryPath);
+        changeFileOptions(maoEsquerdaFingerMovementFileDropdown, levelDirectoryPath);
+    }
+
     public void changeFileOptionsMaoDireita() {
         DirectoryInfo levelDirectoryPath = getHandFilePath(maoDireitaDropdown);
-        changeFileOptions(maoDireitaDropdown, maoDireitaFileDropdown, levelDirectoryPath);
+        changeFileOptions(maoDireitaFileDropdown, levelDirectoryPath);
     }
 
     public void changeFileOptionsMaoEsquerda() {
         DirectoryInfo levelDirectoryPath = getHandFilePath(maoEsquerdaDropdown);
-        changeFileOptions(maoEsquerdaDropdown, maoEsquerdaFileDropdown, levelDirectoryPath);
+        changeFileOptions(maoEsquerdaFileDropdown, levelDirectoryPath);
     }
 
     public void changeFileOptionsRosto() {
         DirectoryInfo levelDirectoryPath = getRostoFilePath(rostoDropdown);
-        changeFileOptions(rostoDropdown, rostoFileDropdown, levelDirectoryPath);
+        changeFileOptions(rostoFileDropdown, levelDirectoryPath);
     }
 
     public void changeFileOptionsBody() {
-        DirectoryInfo levelDirectoryPath = getRostoFilePath(bodyDropdown);
-        changeFileOptions(bodyDropdown, bodyFileDropdown, levelDirectoryPath);
+        DirectoryInfo levelDirectoryPath = getBodyFilePath(bodyDropdown);
+        changeFileOptions(bodyFileDropdown, levelDirectoryPath);
     }
 
-    public void changeFileOptionsMovement() {
-        DirectoryInfo levelDirectoryPath = getMovementFilePath(movementDropdown);
-        changeFileOptions(movementDropdown, movementFileDropdown, levelDirectoryPath);
+    public void changeFileOptionsMovementRightHand() {
+        DirectoryInfo levelDirectoryPath = getMovementFilePath(maoDireitaMovimentoDropdown);
+        changeFileOptions(maoDireitaMovimentoFileDropdown, levelDirectoryPath);
+    }
+
+    public void changeFileOptionsMovementLeftHand() {
+        DirectoryInfo levelDirectoryPath = getMovementFilePath(maoEsquerdaMovimentoDropdown);
+        changeFileOptions(maoEsquerdaMovimentoFileDropdown, levelDirectoryPath);
+    }
+
+    public DirectoryInfo getFingerMovementFilePath() {
+        return new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Finger_Movement");
+    }
+
+    public DirectoryInfo getHeadMovementFilePath() {
+        return new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Head");
     }
 
     public DirectoryInfo getHandFilePath(Dropdown dropdown) {
@@ -164,7 +190,7 @@ public class SignalingSystemCanvasController : MonoBehaviour {
         DirectoryInfo levelDirectoryPath;
         switch (dropdown.value) {
             case 0:
-                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Body_Configuration\\Shoulders Hips Torso");
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Body_Configuration\\Shoulders_Hips_Torso");
                 break;
             case 1:
                 levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Body_Configuration\\Limbs");
@@ -180,26 +206,37 @@ public class SignalingSystemCanvasController : MonoBehaviour {
         DirectoryInfo levelDirectoryPath;
         switch (dropdown.value) {
             case 0:
-                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Brows_Eyes_EyeGaze");
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Contact");
                 break;
             case 1:
-                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Cheek_Ears_Nose_Breath");
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Straight_Wall_Plane");
                 break;
             case 2:
-                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Mouth_Lips");
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Curves_Floor_Plane");
                 break;
             case 3:
-                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Tongue_Teeth_Chin_Neck");
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Straight_Diagonal_Plane");
+                break;
+            case 4:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Straight_Floor_Plane");
+                break;
+            case 5:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Curves_Wall_Plane");
+                break;
+            case 6:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Curves_Hit_Wall_Plane");
+                break;
+            case 7:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Curves_Hit_Floor_Plane");
+                break;
+            case 8:
+                levelDirectoryPath = new DirectoryInfo("Assets\\Symbols\\Movement_Configuration\\Circle");
                 break;
             default:
                 levelDirectoryPath = new DirectoryInfo("");
                 break;
         }
         return levelDirectoryPath;
-    }
-
-    public void loadConfiguration<T>() {
-
     }
 
     public void loadRightHandConfiguration() {
@@ -210,7 +247,7 @@ public class SignalingSystemCanvasController : MonoBehaviour {
             controller.loadHandConfiguration(configuration, true);
         }
         else {
-            controller.avatarSetupScript.bodyController.rightArmController.handController.reset();
+            controller.avatarSetupScript.bodyController.rightArmController.handController.resetFingers();
         }
     }
 
@@ -222,7 +259,7 @@ public class SignalingSystemCanvasController : MonoBehaviour {
             controller.loadHandConfiguration(configuration, false);
         }
         else {
-            controller.avatarSetupScript.bodyController.leftArmController.handController.reset();
+            controller.avatarSetupScript.bodyController.leftArmController.handController.resetFingers();
         }
     }
 
@@ -250,15 +287,81 @@ public class SignalingSystemCanvasController : MonoBehaviour {
         }
     }
 
-    public void loadMovementConfiguration() {
-        if (movementFileDropdown.value != 0) {
-            string fileName = movementFileDropdown.options[movementFileDropdown.value].text + ".json";
-            string filePath = getBodyFilePath(movementDropdown).ToString() + "\\" + fileName;
+    public void loadRightHandMovementConfiguration() {
+        if (maoDireitaMovimentoFileDropdown.value != 0) {
+            string fileName = maoDireitaMovimentoFileDropdown.options[maoDireitaMovimentoFileDropdown.value].text + ".json";
+            string filePath = getHandFilePath(maoDireitaMovimentoDropdown).ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
-            controller.loadMovementConfiguration(configuration);
+            controller.loadMovementConfiguration(configuration, true);           
         }
         else {
-            controller.avatarSetupScript.bodyController.reset();
+            controller.avatarSetupScript.bodyController.rightArmController.handController.resetWrist();
         }
+    }
+
+    public void loadLeftHandMovementConfiguration() {
+        if (maoEsquerdaMovimentoFileDropdown.value != 0) {
+            string fileName = maoEsquerdaMovimentoFileDropdown.options[maoEsquerdaMovimentoFileDropdown.value].text + ".json";
+            string filePath = getHandFilePath(maoEsquerdaMovimentoDropdown).ToString() + "\\" + fileName;
+            MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
+            controller.loadMovementConfiguration(configuration, false);
+        }
+        else {
+            controller.avatarSetupScript.bodyController.leftArmController.handController.resetWrist();
+        }
+    }
+
+    public void loadRightHandFingerMovementConfiguration() {
+        if (maoDireitaFingerMovementFileDropdown.value != 0) {
+            string fileName = maoDireitaFingerMovementFileDropdown.options[maoDireitaFingerMovementFileDropdown.value].text + ".json";
+            string filePath = getFingerMovementFilePath().ToString() + "\\" + fileName;
+            MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
+            controller.loadMovementConfiguration(configuration, true);
+            disableHandsConfigurationInterfaces();
+        }
+        else {
+            loadRightHandConfiguration();
+            enableHandsConfigurationInterface();
+        }
+    }
+
+    public void loadLeftHandFingerMovementConfiguration() {
+        if (maoEsquerdaMovimentoFileDropdown.value != 0) {
+            string fileName = maoEsquerdaMovimentoFileDropdown.options[maoEsquerdaMovimentoFileDropdown.value].text + ".json";
+            string filePath = getFingerMovementFilePath().ToString() + "\\" + fileName;
+            MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
+            controller.loadMovementConfiguration(configuration, false);
+            disableHandsConfigurationInterfaces();
+        }
+        else {
+            loadLeftHandConfiguration();
+            enableHandsConfigurationInterface();
+        }
+    }
+
+    public void loadHeadMovementConfiguration() {
+        if (headMovimentFileDropdown.value != 0) {
+            string fileName = headMovimentFileDropdown.options[headMovimentFileDropdown.value].text + ".json";
+            string filePath = getFingerMovementFilePath().ToString() + "\\" + fileName;
+            MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
+            controller.loadMovementConfiguration(configuration, false);
+        }
+        else {
+            controller.avatarSetupScript.bodyController.headController.reset();
+        }
+    }
+
+    public void enableHandsConfigurationInterface() {
+        rightHandInterface.transform.GetChild(0).GetComponent<Dropdown>().interactable = true;
+        rightHandInterface.transform.GetChild(1).GetComponent<Dropdown>().interactable = true;
+        leftHandInterface.transform.GetChild(0).GetComponent<Dropdown>().interactable = true;
+        leftHandInterface.transform.GetChild(1).GetComponent<Dropdown>().interactable = true;
+    }
+
+    public void disableHandsConfigurationInterfaces() {
+        rightHandInterface.transform.GetChild(0).GetComponent<Dropdown>().interactable = false;
+        rightHandInterface.transform.GetChild(1).GetComponent<Dropdown>().interactable = false;
+        leftHandInterface.transform.GetChild(0).GetComponent<Dropdown>().interactable = false;
+        leftHandInterface.transform.GetChild(1).GetComponent<Dropdown>().interactable = false;
     }
 }

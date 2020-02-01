@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class AddHandPosition : MonoBehaviour {
     Vector3 offset = new Vector3(0, 80, 0);
+    float lastXValue, lastYValue, lastZValue;
     public Transform positionAggregator, handTarget;
     public Button addButton;
     public GameObject positionPrefab;
@@ -14,6 +15,10 @@ public class AddHandPosition : MonoBehaviour {
         positionPrefab = Resources.Load("HandPosition") as GameObject;
         positionAggregator.GetChild(0).GetComponent<SetHandPosition>().init();
         handTarget = GameObject.Find("mixamorig:RightHand - Target").transform;
+        lastXValue = sliderX.value;
+        lastYValue = sliderY.value;
+        lastZValue = sliderZ.value;
+
     }
 
     public void addPosition() {
@@ -31,29 +36,22 @@ public class AddHandPosition : MonoBehaviour {
         }
     }
 
-    public void rotacionarX() { 
-        float initialSliderValue = 20;
+    public void rotacionarX() {
         float currentSliderValue = sliderX.value;
-
-        Vector3 rotation = handTarget.eulerAngles;
-        rotation.x = currentSliderValue - initialSliderValue;
-        handTarget.rotation = Quaternion.Euler(rotation);
+        handTarget.Rotate(currentSliderValue - lastXValue, 0, 0);
+        lastXValue = currentSliderValue;
     }
 
     public void rotacionarY() {
-        float initialRotationYValue = -30;
-        float initialSliderValue = 60;
-        float currentSliderValue = sliderX.value;
-
-        Vector3 rotation = handTarget.eulerAngles;
-        rotation.y = (currentSliderValue - initialSliderValue) + initialRotationYValue;
-        handTarget.rotation = Quaternion.Euler(rotation);
+        float currentSliderValue = sliderY.value;
+        handTarget.Rotate(0, currentSliderValue - lastYValue, 0);
+        lastYValue = currentSliderValue;
     }
 
-    public void rotacionarZ() {
-        int minValue = 0, maxValue = 40, initialValue = 20;
-
-
+    public void rotacionarZ() {        
+        float currentSliderValue = sliderZ.value;
+        handTarget.Rotate(0, 0, currentSliderValue - lastZValue);
+        lastZValue = currentSliderValue;
     }
 
 }

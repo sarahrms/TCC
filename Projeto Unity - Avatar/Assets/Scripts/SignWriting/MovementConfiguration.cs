@@ -11,7 +11,7 @@ public enum MOVEMENT_TYPE {
 public class MovementConfiguration : Configuration {
     public MOVEMENT_TYPE type;
     public List<string> configurations;
-    private List<Configuration> configurationList;
+    public List<Configuration> configurationList;
     public override void setup(GameObject currentInterface) {
         configurationList = new List<Configuration>();
         Transform positionAggregator;
@@ -64,6 +64,29 @@ public class MovementConfiguration : Configuration {
             case MOVEMENT_TYPE.HEAD_MOVEMENT:
                 foreach (Configuration config in configurationList) {
                     configurations.Add(JsonUtility.ToJson((HeadConfiguration)config));
+                }
+                break;
+            default:
+                throw new System.Exception();
+        }
+    }
+
+    public void loadConfigurationList() {
+        configurationList = new List<Configuration>();
+        switch (type) {
+            case MOVEMENT_TYPE.FINGERS_MOVEMENT:
+                foreach(string jsonString in configurations) {
+                    configurationList.Add(JsonUtility.FromJson<HandConfiguration>(jsonString));
+                }
+                break;
+            case MOVEMENT_TYPE.HANDS_MOVEMENT:
+                foreach (string jsonString in configurations) {
+                    configurationList.Add(JsonUtility.FromJson<WristConfiguration>(jsonString));
+                }
+                break;
+            case MOVEMENT_TYPE.HEAD_MOVEMENT:
+                foreach (string jsonString in configurations) {
+                    configurationList.Add(JsonUtility.FromJson<HeadConfiguration>(jsonString));
                 }
                 break;
             default:

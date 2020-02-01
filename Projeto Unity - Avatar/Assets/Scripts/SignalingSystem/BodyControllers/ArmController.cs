@@ -33,7 +33,6 @@ public class ArmController : BasicBodyController {
 
     public void reset() {
         shoulderTarget.position = initialShoulderPosition;
-        handController.reset();
     }
 
     public void setSpeed(float speed) {
