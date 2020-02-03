@@ -11740,7 +11740,7 @@ MonoBehaviour:
   maoDireitaMovimentoDropdown: {fileID: 1218555745}
   maoEsquerdaMovimentoFileDropdown: {fileID: 1354203652}
   maoEsquerdaMovimentoDropdown: {fileID: 1130254510}
-  headMovimentFileDropdown: {fileID: 1782543112}
+  headMovementFileDropdown: {fileID: 1782543112}
   maoDireitaFingerMovementFileDropdown: {fileID: 2008728993}
   maoEsquerdaFingerMovementFileDropdown: {fileID: 1339615199}
   rightHandInterface: {fileID: 1015206614}

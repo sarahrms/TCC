@@ -70,11 +70,11 @@ public class HandController : BasicBodyController {
 
     public void update() {
         if (wrist.name == "mixamorig:RightHand") {
-            ikScript.solver.rightHandEffector.position = Vector3.Lerp(ikScript.solver.rightHandEffector.position, wristTarget.position, 1);
+            ikScript.solver.rightHandEffector.position = Vector3.Lerp(ikScript.solver.rightHandEffector.position, wristTarget.position, 1 * speed);
             ikScript.solver.rightHandEffector.rotation = wristTarget.rotation;
         }
         else if (wrist.name == "mixamorig:LeftHand") {
-            ikScript.solver.leftHandEffector.position = Vector3.Lerp(ikScript.solver.leftHandEffector.position, wristTarget.position, 1);
+            ikScript.solver.leftHandEffector.position = Vector3.Lerp(ikScript.solver.leftHandEffector.position, wristTarget.position, 1 * speed);
             ikScript.solver.leftHandEffector.rotation = wristTarget.rotation;
         }
 
@@ -82,12 +82,12 @@ public class HandController : BasicBodyController {
             fingerController.update();
         }
     }
-    public bool isArrived() {
-        bool flag = true;
-        foreach (FingerController fingerController in fingerControllers) {
-            flag = fingerController.isArrived() ? flag : false;
+    public bool isWristArrived() {
+        Vector3 distance = ikScript.solver.leftHandEffector.position - wristTarget.position;
+        if (distance.sqrMagnitude < 0.2f) {
+            return true;
         }
-        return flag;
+        return false;
     }
 
     public bool isFingersArrived() {

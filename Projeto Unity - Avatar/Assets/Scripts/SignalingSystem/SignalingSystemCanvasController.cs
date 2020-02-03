@@ -13,7 +13,7 @@ public class SignalingSystemCanvasController : MonoBehaviour {
     public Dropdown cameraDropdown, maoDireitaDropdown, maoDireitaFileDropdown, 
         maoEsquerdaDropdown, maoEsquerdaFileDropdown, rostoDropdown, rostoFileDropdown, 
         bodyDropdown, bodyFileDropdown, maoDireitaMovimentoFileDropdown, maoDireitaMovimentoDropdown,
-        maoEsquerdaMovimentoFileDropdown, maoEsquerdaMovimentoDropdown, headMovimentFileDropdown,
+        maoEsquerdaMovimentoFileDropdown, maoEsquerdaMovimentoDropdown, headMovementFileDropdown,
         maoDireitaFingerMovementFileDropdown, maoEsquerdaFingerMovementFileDropdown;
 
     public GameObject rightHandInterface, leftHandInterface;
@@ -28,6 +28,7 @@ public class SignalingSystemCanvasController : MonoBehaviour {
         changeFileOptionsMovementRightHand();
         changeFileOptionsMovementLeftHand();
         changeFileOptionsFingersMovement();
+        changeFileOptionsHeadMovement();
     }
 
     public void setDraggingObject(bool state) {
@@ -78,6 +79,11 @@ public class SignalingSystemCanvasController : MonoBehaviour {
             }
         }
         fileDropdown.RefreshShownValue();
+    }
+
+    public void changeFileOptionsHeadMovement() {
+        DirectoryInfo levelDirectoryPath = getHeadMovementFilePath();
+        changeFileOptions(headMovementFileDropdown, levelDirectoryPath);
     }
 
     public void changeFileOptionsFingersMovement() {
@@ -290,7 +296,7 @@ public class SignalingSystemCanvasController : MonoBehaviour {
     public void loadRightHandMovementConfiguration() {
         if (maoDireitaMovimentoFileDropdown.value != 0) {
             string fileName = maoDireitaMovimentoFileDropdown.options[maoDireitaMovimentoFileDropdown.value].text + ".json";
-            string filePath = getHandFilePath(maoDireitaMovimentoDropdown).ToString() + "\\" + fileName;
+            string filePath = getMovementFilePath(maoDireitaMovimentoDropdown).ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
             controller.loadMovementConfiguration(configuration, true);           
         }
@@ -302,7 +308,7 @@ public class SignalingSystemCanvasController : MonoBehaviour {
     public void loadLeftHandMovementConfiguration() {
         if (maoEsquerdaMovimentoFileDropdown.value != 0) {
             string fileName = maoEsquerdaMovimentoFileDropdown.options[maoEsquerdaMovimentoFileDropdown.value].text + ".json";
-            string filePath = getHandFilePath(maoEsquerdaMovimentoDropdown).ToString() + "\\" + fileName;
+            string filePath = getMovementFilePath(maoEsquerdaMovimentoDropdown).ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
             controller.loadMovementConfiguration(configuration, false);
         }
@@ -340,9 +346,9 @@ public class SignalingSystemCanvasController : MonoBehaviour {
     }
 
     public void loadHeadMovementConfiguration() {
-        if (headMovimentFileDropdown.value != 0) {
-            string fileName = headMovimentFileDropdown.options[headMovimentFileDropdown.value].text + ".json";
-            string filePath = getFingerMovementFilePath().ToString() + "\\" + fileName;
+        if (headMovementFileDropdown.value != 0) {
+            string fileName = headMovementFileDropdown.options[headMovementFileDropdown.value].text + ".json";
+            string filePath = getHeadMovementFilePath().ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
             controller.loadMovementConfiguration(configuration, false);
         }

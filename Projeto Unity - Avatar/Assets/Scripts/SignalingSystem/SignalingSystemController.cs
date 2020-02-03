@@ -18,6 +18,8 @@ public class SignalingSystemController : MonoBehaviour {
         using (StreamReader streamReader = File.OpenText(path)) {
             string jsonString = streamReader.ReadToEnd();
             Symbol symbol = JsonUtility.FromJson<Symbol>(jsonString);
+            Debug.Log(jsonString);
+
             T configuration = JsonUtility.FromJson<T>(symbol.configuration);
             return configuration;
         }
@@ -75,10 +77,6 @@ public class SignalingSystemController : MonoBehaviour {
     }
 
     public void loadMovementConfiguration(MovementConfiguration configuration, bool rightHand) {
-        Debug.Log("LOAD MOVEMENT CONFIGURATION, RIGHT HAND:" + rightHand.ToString());
-        Debug.Log(configuration.configurations);
-        Debug.Log(configuration.type);
-
         configuration.loadConfigurationList();
         switch (configuration.type) {
             case MOVEMENT_TYPE.HANDS_MOVEMENT:                
@@ -86,21 +84,28 @@ public class SignalingSystemController : MonoBehaviour {
                     WristConfiguration wristConfig = (WristConfiguration) config;
                     loadWristConfiguration(wristConfig, rightHand);
                     if (rightHand) {
-                        while (!avatarSetupScript.bodyController.rightArmController.handController.isArrived()) {
+                        while (!avatarSetupScript.bodyController.rightArmController.handController.isWristArrived()) {
                             //WaitForSeconds(0.1f);
                         }
                     }
                     else {
-                        while (!avatarSetupScript.bodyController.leftArmController.handController.isArrived()) {
+                        while (!avatarSetupScript.bodyController.leftArmController.handController.isWristArrived()) {
                             //WaitForSeconds(0.1f);
                         }
                     }
                 }
                 break;
+
             case MOVEMENT_TYPE.FINGERS_MOVEMENT:
+                Debug.Log(configuration.configurationList.ToString());
                 foreach (Configuration config in configuration.configurationList) {
                     HandConfiguration handConfig = (HandConfiguration) config;
+
+                    
+
                     loadHandConfiguration(handConfig, rightHand);
+
+
                     if (rightHand) {
                         while (!avatarSetupScript.bodyController.rightArmController.handController.isFingersArrived()) {
                             //WaitForSeconds(0.1f);
