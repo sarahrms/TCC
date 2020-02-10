@@ -59,4 +59,9 @@ public class HeadController : BasicBodyController {
         head.transform.rotation = Quaternion.Lerp(head.transform.rotation, headTargetRotation, constant * speed);
     }
 
+    public bool isArrived() {
+        //IMPLEMENTAR//
+        return false;
+    }
+
 }

@@ -96,10 +96,13 @@
     <Compile Include="Assets\Scripts\TermCaptureSystem\BodyControllers\FingerController.cs" />
     <Compile Include="Assets\Scripts\TermCaptureSystem\BodyControllers\HandController.cs" />
     <Compile Include="Assets\Scripts\TermCaptureSystem\BodyControllers\HeadController.cs" />
-    <Compile Include="Assets\Scripts\TermCaptureSystem\RotationScript.cs" />
+    <Compile Include="Assets\Scripts\TermCaptureSystem\Canvas\AddTermPrefab.cs" />
+    <Compile Include="Assets\Scripts\TermCaptureSystem\Canvas\LoadTermOptions.cs" />
+    <Compile Include="Assets\Scripts\TermCaptureSystem\Canvas\RotationScript.cs" />
     <Compile Include="Assets\Scripts\TermCaptureSystem\TermCaptureAvatarSetup.cs" />
     <Compile Include="Assets\Scripts\TermCaptureSystem\TermCaptureCanvasController.cs" />
     <Compile Include="Assets\Scripts\TermCaptureSystem\TermCaptureSystemController.cs" />
+    <None Include="Assets\Materials\UI-Default-No-Alpha.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Sarah/Documents/GitHub/TCC-I/Projeto Unity - Avatar/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

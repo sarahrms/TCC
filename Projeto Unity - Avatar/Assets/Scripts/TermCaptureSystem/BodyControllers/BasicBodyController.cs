@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicBodyController {
+public class BasicBodyController : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {

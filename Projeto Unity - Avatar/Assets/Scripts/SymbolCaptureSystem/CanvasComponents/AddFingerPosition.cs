@@ -8,7 +8,11 @@ public class AddFingerPosition : MonoBehaviour {
     public Transform positionAggregator;
     public Button addButton;
     public GameObject positionPrefab;
-    void Start(){
+    void Start() {
+        StartCoroutine(init());
+    }
+    IEnumerator init() {
+        yield return new WaitForSeconds(0.2f);
         positionPrefab = Resources.Load("FingerPosition") as GameObject;
     }
 

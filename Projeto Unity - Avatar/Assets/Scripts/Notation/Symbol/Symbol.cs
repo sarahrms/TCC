@@ -109,10 +109,16 @@ public class Symbol {
                 break;
             case TYPE.MOVEMENT_CONFIGURATION:
                 MovementConfiguration movementConfiguration = new MovementConfiguration();
-                movementConfiguration.type = getMovementType();
+                movementConfiguration.movementType = getMovementType();
+                movementConfiguration.trajectoryType = getTrajectoryType();
                 configurationObj = movementConfiguration;
                 break;
         }
+    }
+
+    public TRAJECTORY_TYPE getTrajectoryType() {
+        return (group.ToString().Contains("CURVE") || group.ToString().Contains("CIRCLE")) ? 
+                        TRAJECTORY_TYPE.CURVE : TRAJECTORY_TYPE.STRAIGHT;
     }
 
     public MOVEMENT_TYPE getMovementType() {

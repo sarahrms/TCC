@@ -17,20 +17,24 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
     public Slider rotacaoX, rotacaoY, rotacaoZ;
 
     void Start() {
+        StartCoroutine(init());
+    }
+    IEnumerator init() {
+        yield return new WaitForSeconds(0.4f);
         currentInterface = handConfigurationInterface;
-        getInitialPositions();
+        getInitialCameraPositions();
         setCameras();
+        controller.disableAllTargets();
         addGroupOptions();
     }
 
     public void setDraggingObject(bool state) {
         frontCamera.GetComponent<CameraDrag>().setEnabled(!state);
-       // topCamera.GetComponent<CameraDrag>().setEnabled(!state);
         leftCamera.GetComponent<CameraDrag>().setEnabled(!state);
         rightCamera.GetComponent<CameraDrag>().setEnabled(!state);
     }
 
-    void getInitialPositions() {
+    void getInitialCameraPositions() {
         frontCameraTransform = frontCamera.gameObject.transform;
         topCameraTransform = topCamera.gameObject.transform;
         leftCameraTransform = leftCamera.gameObject.transform;
@@ -77,7 +81,6 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
     }
 
     public void addGroupOptions() {
-        Symbol.setTypeMap();
         groupDropdown.ClearOptions();
         List<GROUP> list;
         switch (tipoDropdown.value){
@@ -136,12 +139,7 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
         headConfigurationInterface.SetActive(false);
         bodyConfigurationInterface.SetActive(false);
         movementDescriptionInterface.SetActive(false);
-        if(controller.avatarSetupScript!=null){
-            controller.disableAllTargets();
-        }
     }
-
-   
 
     public void setHandConfigurationInterface() {
         handConfigurationInterface.SetActive(true);
@@ -154,9 +152,9 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
     public void setHeadConfigurationInterface() {
         headConfigurationInterface.SetActive(true);
         currentInterface = headConfigurationInterface;
-       /* if (controller.avatarSetupScript != null) {
+        if (controller.avatarSetupScript != null) {
             controller.enableHeadConfigurationTargets();
-        }*/
+        }
     }
 
     public void setBodyConfigurationInterface() {
@@ -176,10 +174,10 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
                 currentInterface = movementDescriptionInterface.transform.GetChild(2).gameObject;
 
                 movementDescriptionInterface.transform.GetChild(1).gameObject.SetActive(false);//hand
-                killChildren(movementDescriptionInterface.transform.GetChild(1).gameObject);
+                killChildren(movementDescriptionInterface.transform.GetChild(1).GetChild(1).gameObject);
 
                 movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(false); //head
-                killChildren(movementDescriptionInterface.transform.GetChild(3).gameObject);
+                killChildren(movementDescriptionInterface.transform.GetChild(3).GetChild(1).gameObject);
 
                 break;
 
@@ -188,22 +186,31 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
                 currentInterface = movementDescriptionInterface.transform.GetChild(3).gameObject;
 
                 movementDescriptionInterface.transform.GetChild(1).gameObject.SetActive(false);//hand
-                killChildren(movementDescriptionInterface.transform.GetChild(1).gameObject);
+                killChildren(movementDescriptionInterface.transform.GetChild(1).GetChild(1).gameObject);
 
                 movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(false); //finger
-                killChildren(movementDescriptionInterface.transform.GetChild(2).gameObject);
+                killChildren(movementDescriptionInterface.transform.GetChild(2).GetChild(1).gameObject);
 
                 break;
 
             default: //hand movement interface
+                if (selectedGroup.ToString().Contains("CURVE") || selectedGroup.ToString().Contains("CIRCLE")) {
+                    movementDescriptionInterface.transform.GetChild(1).GetComponent<AddHandPosition>().addCurveTrajectoryOptions();
+                    movementDescriptionInterface.transform.GetChild(1).GetChild(3).gameObject.SetActive(true);
+                }
+                else {
+                    movementDescriptionInterface.transform.GetChild(1).GetComponent<AddHandPosition>().removeCurveTrajectoryOptions();
+                    movementDescriptionInterface.transform.GetChild(1).GetChild(3).gameObject.SetActive(false);
+                }
+
                 movementDescriptionInterface.transform.GetChild(1).gameObject.SetActive(true); //hand
                 currentInterface = movementDescriptionInterface.transform.GetChild(1).gameObject;
 
                 movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(false); //finger
-                killChildren(movementDescriptionInterface.transform.GetChild(2).gameObject);
+                killChildren(movementDescriptionInterface.transform.GetChild(2).GetChild(1).gameObject);
 
                 movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(false); //head
-                killChildren(movementDescriptionInterface.transform.GetChild(3).gameObject);
+                killChildren(movementDescriptionInterface.transform.GetChild(3).GetChild(1).gameObject);
 
                 break;
         }
@@ -213,9 +220,9 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
     }
 
     public void killChildren(GameObject obj) {
-     /*   while(obj.transform.childCount > 1) {
-             Destroy(obj.transform.GetChild(0).gameObject);
-        }*/
+       for(int i=0; i<obj.transform.childCount; i++) { 
+             Destroy(obj.transform.GetChild(i).gameObject);
+       }
     }
 
     public int getId() {

@@ -6,14 +6,15 @@ using UnityEngine;
 public class TermCaptureSystemController : MonoBehaviour {
     public TermCaptureAvatarSetup avatarSetupScript;
     public HandComponent rightHand, leftHand;
-    public MOVEMENT_TYPE currentConfigurationType;
-    public List<Configuration> configurationList;
-    public int currentConfigurationIndex;
+    public MovementConfiguration currentConfiguration;
+    public int currentIndex;
     public bool isRightHand, isPlaying = false;
+
     void Start() {
         avatarSetupScript = GameObject.Find("Avatar").GetComponent<TermCaptureAvatarSetup>();
         avatarSetupScript.init();
     }
+
     private void Update() {
         avatarSetupScript.update();
         updateConfiguration();
@@ -21,12 +22,36 @@ public class TermCaptureSystemController : MonoBehaviour {
 
     public void updateConfiguration() {
         if (isPlaying) { 
-            switch (currentConfigurationType) {
+            switch (currentConfiguration.movementType) {
                 case MOVEMENT_TYPE.HANDS_MOVEMENT:
                     if(isRightHand) {
                         if (avatarSetupScript.bodyController.rightArmController.handController.isWristArrived()) {
-                            if(++currentConfigurationIndex < configurationList.Count) {
+                            if(++currentIndex < currentConfiguration.configurationList.Count) {
                                 loadHandMovementConfiguration();
+                            }
+                            else {
+                                isPlaying = false;
+                                avatarSetupScript.bodyController.rightArmController.handController.trajectoryType = TRAJECTORY_TYPE.STRAIGHT;
+                            }
+                        }
+                    }
+                    else {
+                        if (avatarSetupScript.bodyController.leftArmController.handController.isWristArrived()) {
+                            if (++currentIndex < currentConfiguration.configurationList.Count) {
+                                loadHandMovementConfiguration();
+                            }
+                            else {
+                                isPlaying = false;
+                                avatarSetupScript.bodyController.leftArmController.handController.trajectoryType = TRAJECTORY_TYPE.STRAIGHT;
+                            }
+                        }
+                    }                
+                    break;
+                case MOVEMENT_TYPE.FINGERS_MOVEMENT:
+                    if (isRightHand) {
+                        if (avatarSetupScript.bodyController.rightArmController.handController.isFingersArrived()) {
+                            if (++currentIndex < currentConfiguration.configurationList.Count) {
+                                loadFingersMovementConfiguration();
                             }
                             else {
                                 isPlaying = false;
@@ -34,38 +59,82 @@ public class TermCaptureSystemController : MonoBehaviour {
                         }
                     }
                     else {
-                        if (avatarSetupScript.bodyController.leftArmController.handController.isWristArrived()) {
-                            if (++currentConfigurationIndex < configurationList.Count) {
-                                loadHandMovementConfiguration();
+                        if (avatarSetupScript.bodyController.leftArmController.handController.isFingersArrived()) {
+                            if (++currentIndex < currentConfiguration.configurationList.Count) {
+                                loadFingersMovementConfiguration();
                             }
                             else {
                                 isPlaying = false;
                             }
                         }
-                    }                
-                    break;
-                case MOVEMENT_TYPE.FINGERS_MOVEMENT:
-                 
+                    }
                     break;
                 case MOVEMENT_TYPE.HEAD_MOVEMENT:
-                  
+                    if (avatarSetupScript.bodyController.headController.isArrived()) {
+                        if (++currentIndex < currentConfiguration.configurationList.Count) {
+                            loadHeadMovementConfiguration();
+                        }
+                        else {
+                            isPlaying = false;
+                        }
+                    }
                     break;
             }
         }
     }
 
+    public void loadMovementConfiguration(MovementConfiguration configuration, bool isRight) {
+        configuration.loadConfigurationList();
+        isRightHand = isRight;
+        isPlaying = true;
+        currentConfiguration = configuration;
+        currentIndex = 0;
+        switch (currentConfiguration.movementType) {
+            case MOVEMENT_TYPE.HANDS_MOVEMENT:
+                loadHandMovementConfiguration();
+                HandController handController;
+                if (isRightHand) {
+                    handController = avatarSetupScript.bodyController.rightArmController.handController;
+                }
+                else {
+                    handController = avatarSetupScript.bodyController.leftArmController.handController;
+                }
+                break;
+            case MOVEMENT_TYPE.FINGERS_MOVEMENT:
+                loadFingersMovementConfiguration();
+                break;
+            case MOVEMENT_TYPE.HEAD_MOVEMENT:
+                loadHeadMovementConfiguration();
+                break;
+        }
+    }
+
     public void loadHandMovementConfiguration() {
-        WristConfiguration wristConfiguration = (WristConfiguration) configurationList[currentConfigurationIndex];
+        WristConfiguration wristConfiguration = (WristConfiguration) currentConfiguration.configurationList[currentIndex];
         loadWristConfiguration(wristConfiguration, isRightHand);
+        setWristTrajectory();
+    }
+
+    public void setWristTrajectory() {
+        HandController handController;
+        if (isRightHand) {
+            handController = avatarSetupScript.bodyController.rightArmController.handController;
+        }
+        else {
+            handController = avatarSetupScript.bodyController.leftArmController.handController;
+        }
+        handController.trajectoryDirection =  currentConfiguration.trajectoryDirections[currentIndex-1];
+        handController.trajectoryPlane = currentConfiguration.trajectoryPlane;
+        handController.trajectoryType = (currentIndex == 0) ? TRAJECTORY_TYPE.STRAIGHT : currentConfiguration.trajectoryType;
     }
 
     public void loadFingersMovementConfiguration() {
-        HandConfiguration handConfiguration = (HandConfiguration) configurationList[currentConfigurationIndex];
+        HandConfiguration handConfiguration = (HandConfiguration) currentConfiguration.configurationList[currentIndex];
         loadHandConfiguration(handConfiguration, isRightHand);
     }
 
     public void loadHeadMovementConfiguration() {
-        HeadConfiguration headConfiguration = (HeadConfiguration) configurationList[currentConfigurationIndex];
+        HeadConfiguration headConfiguration = (HeadConfiguration) currentConfiguration.configurationList[currentIndex];
         loadHeadConfiguration(headConfiguration);
     }
 
@@ -121,26 +190,6 @@ public class TermCaptureSystemController : MonoBehaviour {
 
     public void loadHeadConfiguration(HeadConfiguration configuration) {
         avatarSetupScript.bodyController.headController.setTarget(configuration.headPosition, configuration.headRotation);
-    }
-
-    public void loadMovementConfiguration(MovementConfiguration configuration, bool isRight) {
-        configuration.loadConfigurationList();
-        isRightHand = isRight;
-        isPlaying = true;
-        currentConfigurationType = configuration.type;
-        configurationList = configuration.configurationList;
-        currentConfigurationIndex = 0;
-        switch (currentConfigurationType) {
-            case MOVEMENT_TYPE.HANDS_MOVEMENT:
-                loadHandMovementConfiguration();              
-                break;
-            case MOVEMENT_TYPE.FINGERS_MOVEMENT:
-                loadFingersMovementConfiguration();
-                break;
-            case MOVEMENT_TYPE.HEAD_MOVEMENT:
-                loadHeadMovementConfiguration();
-                break;
-        }
     }
 
 }

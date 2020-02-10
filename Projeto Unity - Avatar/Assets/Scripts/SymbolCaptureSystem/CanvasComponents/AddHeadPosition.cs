@@ -12,8 +12,11 @@ public class AddHeadPosition : MonoBehaviour {
     public Slider sliderX, sliderY, sliderZ;
 
     void Start() {
+        StartCoroutine(init());
+    }
+    IEnumerator init() {
+        yield return new WaitForSeconds(0.2f);
         positionPrefab = Resources.Load("HeadPosition") as GameObject;
-        positionAggregator.GetChild(0).GetComponent<SetHeadPosition>().init();
         head = GameObject.Find("mixamorig:Head").transform;
         headTarget = GameObject.Find("mixamorig:Head - Target").transform;
         lastXValue = sliderX.value;

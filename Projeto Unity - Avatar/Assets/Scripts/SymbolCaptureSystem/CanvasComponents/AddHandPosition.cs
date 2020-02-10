@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AddHandPosition : MonoBehaviour {
-    Vector3 offset = new Vector3(0, 80, 0);
+    bool curveMovement = false;
+    Vector3 offset = new Vector3(0, 90, 0);
     float lastXValue, lastYValue, lastZValue;
     public Transform positionAggregator, handTarget;
     public Button addButton;
@@ -12,13 +14,17 @@ public class AddHandPosition : MonoBehaviour {
     public Slider sliderX, sliderY, sliderZ;
 
     void Start(){
+        StartCoroutine(init());
+    }
+
+    IEnumerator init() {
+        yield return new WaitForSeconds(0.2f);
         positionPrefab = Resources.Load("HandPosition") as GameObject;
-        positionAggregator.GetChild(0).GetComponent<SetHandPosition>().init();
+        
         handTarget = GameObject.Find("mixamorig:RightHand - Target").transform;
         lastXValue = sliderX.value;
         lastYValue = sliderY.value;
         lastZValue = sliderZ.value;
-
     }
 
     public void addPosition() {
@@ -29,7 +35,10 @@ public class AddHandPosition : MonoBehaviour {
             obj.name = "Position " + positionAggregator.childCount.ToString();
             obj.GetComponent<Text>().text = "Configuração " + positionAggregator.childCount.ToString() + ":";
             obj.GetComponent<SetHandPosition>().init();
-            addButton.transform.position -= offset;
+            if (curveMovement) {
+                addOption(obj);
+            }
+            addButton.transform.position -= offset;            
         }
         if (positionAggregator.childCount == 5) {
             addButton.gameObject.SetActive(false);
@@ -52,6 +61,31 @@ public class AddHandPosition : MonoBehaviour {
         float currentSliderValue = sliderZ.value;
         handTarget.Rotate(0, 0, currentSliderValue - lastZValue);
         lastZValue = currentSliderValue;
+    }
+
+    public void addCurveTrajectoryOptions() {
+        Debug.Log(positionAggregator.childCount);
+        curveMovement = true;
+        for(int i=0; i<positionAggregator.childCount; i++) {
+            GameObject position = positionAggregator.GetChild(i).gameObject;
+            addOption(position);
+        }        
+    }
+
+    public void removeCurveTrajectoryOptions() {
+        curveMovement = false;
+        for (int i=0; i<positionAggregator.childCount; i++) {
+            GameObject position = positionAggregator.GetChild(i).gameObject;
+            removeOption(position);
+        }
+    }
+
+    public void addOption(GameObject obj) {
+        obj.transform.GetChild(3).gameObject.SetActive(true);
+    }
+
+    public void removeOption(GameObject obj) {
+        obj.transform.GetChild(3).gameObject.SetActive(false);
     }
 
 }

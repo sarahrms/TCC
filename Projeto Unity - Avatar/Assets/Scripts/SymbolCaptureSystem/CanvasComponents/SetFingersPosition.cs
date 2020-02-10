@@ -11,10 +11,9 @@ public class SetFingersPosition : MonoBehaviour {
         StartCoroutine(WaitAndDoSomething());
     }
     IEnumerator WaitAndDoSomething() {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.2f);
         init();
     }
-
     public void init() {  
         indexTarget = GameObject.Find("mixamorig:RightHandIndex1 - Target").transform;
         middleTarget = GameObject.Find("mixamorig:RightHandMiddle1 - Target").transform;

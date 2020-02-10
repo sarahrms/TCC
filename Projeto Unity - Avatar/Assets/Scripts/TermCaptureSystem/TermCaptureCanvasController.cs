@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,9 +15,11 @@ public class TermCaptureCanvasController : MonoBehaviour {
         maoEsquerdaDropdown, maoEsquerdaFileDropdown, rostoDropdown, rostoFileDropdown, 
         bodyDropdown, bodyFileDropdown, maoDireitaMovimentoFileDropdown, maoDireitaMovimentoDropdown,
         maoEsquerdaMovimentoFileDropdown, maoEsquerdaMovimentoDropdown, headMovementFileDropdown,
-        maoDireitaFingerMovementFileDropdown, maoEsquerdaFingerMovementFileDropdown;
-    public InputField nomeTermo;
+        maoDireitaFingerMovementFileDropdown, maoEsquerdaFingerMovementFileDropdown,
+        canvasTypeDropdown;
+    public InputField nomeTermoSimples, nomeTermoComposto;
     public GameObject rightHandInterface, leftHandInterface;
+    public GameObject simpleCanvas, compositeCanvas;
 
     void Start() {
         getInitialPositions();
@@ -253,9 +254,11 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string filePath = getHandFilePath(maoDireitaDropdown).ToString() + "\\" + fileName;
             HandConfiguration configuration = controller.loadConfiguration<HandConfiguration>(filePath); 
             controller.loadHandConfiguration(configuration, true);
+            disableRightFingersMovementConfigurationInterface();
         }
         else {
             controller.avatarSetupScript.bodyController.rightArmController.handController.resetFingers();
+            enableRightFingersMovementConfigurationInterface();
         }
     }
 
@@ -265,9 +268,11 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string filePath = getHandFilePath(maoEsquerdaDropdown).ToString() + "\\" + fileName;
             HandConfiguration configuration = controller.loadConfiguration<HandConfiguration>(filePath);
             controller.loadHandConfiguration(configuration, false);
+            disableLeftFingersMovementConfigurationInterface();
         }
         else {
             controller.avatarSetupScript.bodyController.leftArmController.handController.resetFingers();
+            enableLeftFingersMovementConfigurationInterface();
         }
     }
 
@@ -325,11 +330,11 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string filePath = getFingerMovementFilePath().ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
             controller.loadMovementConfiguration(configuration, true);
-            disableHandsConfigurationInterfaces();
+            disableRightHandConfigurationInterface();
         }
         else {
             loadRightHandConfiguration();
-            enableHandsConfigurationInterface();
+            enableRightHandConfigurationInterface();
         }
     }
 
@@ -339,11 +344,11 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string filePath = getFingerMovementFilePath().ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
             controller.loadMovementConfiguration(configuration, false);
-            disableHandsConfigurationInterfaces();
+            disableLeftHandConfigurationInterface();
         }
         else {
             loadLeftHandConfiguration();
-            enableHandsConfigurationInterface();
+            enableLeftHandConfigurationInterface();
         }
     }
 
@@ -359,18 +364,40 @@ public class TermCaptureCanvasController : MonoBehaviour {
         }
     }
 
-    public void enableHandsConfigurationInterface() {
+    public void enableRightHandConfigurationInterface() {
         rightHandInterface.transform.GetChild(0).GetComponent<Dropdown>().interactable = true;
         rightHandInterface.transform.GetChild(1).GetComponent<Dropdown>().interactable = true;
+    }
+
+    public void enableLeftHandConfigurationInterface() {
         leftHandInterface.transform.GetChild(0).GetComponent<Dropdown>().interactable = true;
         leftHandInterface.transform.GetChild(1).GetComponent<Dropdown>().interactable = true;
     }
 
-    public void disableHandsConfigurationInterfaces() {
+    public void disableRightHandConfigurationInterface() {
         rightHandInterface.transform.GetChild(0).GetComponent<Dropdown>().interactable = false;
         rightHandInterface.transform.GetChild(1).GetComponent<Dropdown>().interactable = false;
+    }
+
+    public void disableLeftHandConfigurationInterface() {
         leftHandInterface.transform.GetChild(0).GetComponent<Dropdown>().interactable = false;
         leftHandInterface.transform.GetChild(1).GetComponent<Dropdown>().interactable = false;
+    }
+
+    public void enableRightFingersMovementConfigurationInterface() {
+        maoDireitaFingerMovementFileDropdown.interactable = true; 
+    }
+
+    public void enableLeftFingersMovementConfigurationInterface() {
+        maoEsquerdaFingerMovementFileDropdown.interactable = true;
+    }
+
+    public void disableRightFingersMovementConfigurationInterface() {
+        maoDireitaFingerMovementFileDropdown.interactable = false;
+    }
+
+    public void disableLeftFingersMovementConfigurationInterface() {
+        maoEsquerdaFingerMovementFileDropdown.interactable = false;
     }
 
     public void setToggleMaoEsquerda() {
@@ -381,8 +408,49 @@ public class TermCaptureCanvasController : MonoBehaviour {
         overwriteRightHand = rightHandToggle.isOn;
     }
 
-    public void salvar() {
-        string nome = nomeTermo.text;
+    public void salvarTermoSimples() {
+        SimpleTerm termo = new SimpleTerm();
+        termo.name = nomeTermoSimples.text;
+        termo.rightHandConfigurationPath =
+        termo.leftHandConfigurationPath =
+        termo.faceConfigurationPath = getRostoFilePath(rostoDropdown).ToString() + "\\" + rostoFileDropdown.options[rostoFileDropdown.value].text + ".json";
+        termo.bodyConfigurationPath = 
+        termo.rightHandMovementConfigurationPath = getHandFilePath(maoDireitaDropdown).ToString() + "\\" + maoDireitaFileDropdown.options[maoDireitaFileDropdown.value].text + ".json";
+        termo.leftHandMovementConfigurationPath = getHandFilePath(maoEsquerdaDropdown).ToString() + "\\" + maoEsquerdaFileDropdown.options[maoEsquerdaFileDropdown.value].text + ".json";
+        termo.overwriteRightHand = overwriteRightHand;
+        termo.overwriteLeftHand = overwriteLeftHand;
+        Transform rightHand = GameObject.Find("mixamorig:RightHand - Target").transform;
+        Transform leftHand = GameObject.Find("mixamorig:LeftHand - Target").transform;
+        termo.rightHandPosition = rightHand.position;
+        termo.rightHandRotation = rightHand.rotation.eulerAngles;
+        termo.leftHandPosition = leftHand.position;
+        termo.leftHandRotation = leftHand.rotation.eulerAngles;
+        termo.rightHandFingersMovementConfigurationPath = getFingerMovementFilePath().ToString() + "\\" + maoDireitaFingerMovementFileDropdown.options[maoDireitaFingerMovementFileDropdown.value].text + ".json";
+        termo.leftHandFingersMovementConfigurationPath = getFingerMovementFilePath().ToString() + "\\" + maoEsquerdaFingerMovementFileDropdown.options[maoEsquerdaFingerMovementFileDropdown.value].text + ".json";
+        termo.headMovementConfigurationPath = getHeadMovementFilePath().ToString() + "\\" + headMovementFileDropdown.options[headMovementFileDropdown.value].text + ".json";
+        termo.save();
+}
+
+    public void salvarTermoComposto() {
+        CompositeTerm termo = new CompositeTerm();
+        termo.name = nomeTermoComposto.text;
+        termo.termList = new List<string>();
+        Transform termAggregator = compositeCanvas.transform.GetChild(3);
+        for(int i=1; i<termAggregator.childCount; i++) { 
+            Transform term = termAggregator.GetChild(i).GetChild(0);
+            termo.termList.Add(term.GetComponent<Dropdown>().options[term.GetComponent<Dropdown>().value].text);
+        }
+        termo.save();
     }
 
+    public void activateCompositeTerm() {
+        if (canvasTypeDropdown.value == 0) {
+            simpleCanvas.SetActive(true);
+            compositeCanvas.SetActive(false);
+        }
+        else {
+            simpleCanvas.SetActive(false);
+            compositeCanvas.SetActive(true);
+        }
+    }
 }

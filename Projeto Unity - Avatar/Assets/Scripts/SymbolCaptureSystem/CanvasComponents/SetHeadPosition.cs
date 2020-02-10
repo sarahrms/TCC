@@ -8,11 +8,21 @@ public class SetHeadPosition : MonoBehaviour {
     public GameObject headTarget;
     public Vector3 headPosition, headRotation;
 
+    public void Start() {
+        StartCoroutine(WaitAndDoSomething());
+    }
+
+    IEnumerator WaitAndDoSomething() {
+        yield return new WaitForSeconds(0.2f);
+        init();
+    }
+
     public void init() {
         headTarget = GameObject.Find("mixamorig:Head - Target");
         canvasPositionComponent = transform.GetChild(0);
         canvasRotationComponent = transform.GetChild(1);
     }
+
     public void setPosition() {
         headPosition = headTarget.transform.position;
         headRotation = headTarget.transform.rotation.eulerAngles;

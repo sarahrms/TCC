@@ -5,22 +5,18 @@ using UnityEngine;
 
 public class SymbolCaptureSystemController : MonoBehaviour {
     public Symbol symbol; 
-    public AvatarCaptureSetup avatarSetupScript;
+    public SymbolCaptureAvatarSetup avatarSetupScript;
     public GameObject headTarget, spineTarget, rightArmTarget, leftArmTarget, rightHandTarget, leftHandTarget, 
         rightHandThumbTarget, rightHandIndexTarget, rightHandMiddleTarget, rightHandRingTarget, rightHandPinkyTarget,
         leftHandThumbTarget, leftHandIndexTarget, leftHandMiddleTarget, leftHandRingTarget, leftHandPinkyTarget;
     public bool draggingObject = false;
     
     void Start() {
-        avatarSetupScript = GameObject.Find("Avatar").GetComponent<AvatarCaptureSetup>();
+        avatarSetupScript = GameObject.Find("Avatar").GetComponent<SymbolCaptureAvatarSetup>();
+        avatarSetupScript.init();
+        Symbol.setTypeMap();
         symbol = new Symbol(0, GROUP.INDEX);
-        StartCoroutine(WaitAndDoSomething());
-    }
-    IEnumerator WaitAndDoSomething() {
-        yield return new WaitForSeconds(0.10f);
         setTargetObjects();
-        disableAllTargets();
-        enableHandConfigurationTargets();
     }
 
     public TYPE changeGroup(int id, GROUP selectedGroup) {

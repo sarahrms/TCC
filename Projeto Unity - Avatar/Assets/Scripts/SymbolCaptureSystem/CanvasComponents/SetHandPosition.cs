@@ -7,6 +7,13 @@ public class SetHandPosition : MonoBehaviour {
     public GameObject handTarget;
     public Vector3 handPosition, handRotation;
 
+    public void Start() {
+        StartCoroutine(WaitAndDoSomething());
+    }
+    IEnumerator WaitAndDoSomething() {
+        yield return new WaitForSeconds(0.2f);
+        init();
+    }
     public void init() { 
         handTarget = GameObject.Find("mixamorig:RightHand - Target");
         canvasPositionComponent = transform.GetChild(0);
