@@ -158,7 +158,7 @@ public class TermCaptureSystemController : MonoBehaviour {
         }
     }
 
-    public void loadWristConfiguration(WristConfiguration configuration, bool right) {
+    public void loadWristConfiguration(WristConfiguration configuration, bool right) {/////////////////////////////////////////
         HandController handController;
         if (right) { 
             handController = avatarSetupScript.bodyController.rightArmController.handController;
@@ -168,9 +168,9 @@ public class TermCaptureSystemController : MonoBehaviour {
             handController = avatarSetupScript.bodyController.leftArmController.handController;
             Vector3 position = new Vector3(-configuration.handPosition.x, configuration.handPosition.y, configuration.handPosition.z);
             Vector3 rotation = new Vector3(-configuration.handRotation.x, configuration.handRotation.y, configuration.handRotation.x);
-            handController.setTarget(position, rotation); 
-        }
-
+            handController.setTarget(position, rotation); //FIX ME/////////////////////////////////////////////////////////////
+        }//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     public void loadFaceConfiguration(FaceConfiguration configuration) {
