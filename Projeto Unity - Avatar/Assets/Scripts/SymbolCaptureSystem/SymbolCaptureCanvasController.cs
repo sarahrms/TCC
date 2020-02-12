@@ -40,6 +40,7 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
         leftCameraTransform = leftCamera.gameObject.transform;
         rightCameraTransform = rightCamera.gameObject.transform;
     }
+
     void disableAllCameras() {
         frontCamera.enabled = false;
         frontCamera.gameObject.transform.position = frontCameraTransform.position;
@@ -57,10 +58,12 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
         rightCamera.gameObject.transform.position = rightCameraTransform.position;
         rightCamera.gameObject.transform.rotation = rightCameraTransform.rotation;
     }
+
     void setCameras() {
         disableAllCameras();
         frontCamera.enabled = true;
     }
+
     public void changeCamera() {
         int option = cameraDropdown.value;
         disableAllCameras();
@@ -145,6 +148,7 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
         handConfigurationInterface.SetActive(true);
         currentInterface = handConfigurationInterface;
         if (controller.avatarSetupScript != null) {
+            controller.disableAllTargets();
             controller.enableHandConfigurationTargets();     
         }
     }
@@ -153,6 +157,7 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
         headConfigurationInterface.SetActive(true);
         currentInterface = headConfigurationInterface;
         if (controller.avatarSetupScript != null) {
+            controller.disableAllTargets();
             controller.enableHeadConfigurationTargets();
         }
     }
@@ -161,6 +166,7 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
         bodyConfigurationInterface.SetActive(true);
         currentInterface = bodyConfigurationInterface;
         if (controller.avatarSetupScript != null) {
+            controller.disableAllTargets();
             controller.enableBodyConfigurationTargets();  
         }
     }
@@ -169,7 +175,7 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
         movementDescriptionInterface.SetActive(true);
 
         switch(selectedGroup){
-            case GROUP.FINGER_MOVEMENT:
+            case GROUP.FINGER_MOVEMENT: { 
                 movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(true); //finger
                 currentInterface = movementDescriptionInterface.transform.GetChild(2).gameObject;
 
@@ -180,8 +186,8 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
                 killChildren(movementDescriptionInterface.transform.GetChild(3).GetChild(1).gameObject);
 
                 break;
-
-            case GROUP.HEAD:
+            }
+            case GROUP.HEAD: { 
                 movementDescriptionInterface.transform.GetChild(3).gameObject.SetActive(true); //head
                 currentInterface = movementDescriptionInterface.transform.GetChild(3).gameObject;
 
@@ -192,8 +198,11 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
                 killChildren(movementDescriptionInterface.transform.GetChild(2).GetChild(1).gameObject);
 
                 break;
+            }
+            default: { //hand movement interface
+                movementDescriptionInterface.transform.GetChild(1).gameObject.SetActive(true); //hand
+                currentInterface = movementDescriptionInterface.transform.GetChild(1).gameObject;
 
-            default: //hand movement interface
                 if (selectedGroup.ToString().Contains("CURVE") || selectedGroup.ToString().Contains("CIRCLE")) {
                     movementDescriptionInterface.transform.GetChild(1).GetComponent<AddHandPosition>().addCurveTrajectoryOptions();
                     movementDescriptionInterface.transform.GetChild(1).GetChild(3).gameObject.SetActive(true);
@@ -201,10 +210,7 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
                 else {
                     movementDescriptionInterface.transform.GetChild(1).GetComponent<AddHandPosition>().removeCurveTrajectoryOptions();
                     movementDescriptionInterface.transform.GetChild(1).GetChild(3).gameObject.SetActive(false);
-                }
-
-                movementDescriptionInterface.transform.GetChild(1).gameObject.SetActive(true); //hand
-                currentInterface = movementDescriptionInterface.transform.GetChild(1).gameObject;
+                }              
 
                 movementDescriptionInterface.transform.GetChild(2).gameObject.SetActive(false); //finger
                 killChildren(movementDescriptionInterface.transform.GetChild(2).GetChild(1).gameObject);
@@ -213,14 +219,16 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
                 killChildren(movementDescriptionInterface.transform.GetChild(3).GetChild(1).gameObject);
 
                 break;
+            }
         }
         if (controller.avatarSetupScript != null) {
+            controller.disableAllTargets();
             controller.enableMovementConfigurationTargets(selectedGroup);
         }
     }
 
     public void killChildren(GameObject obj) {
-       for(int i=0; i<obj.transform.childCount; i++) { 
+       for(int i=1; i<obj.transform.childCount; i++) { 
              Destroy(obj.transform.GetChild(i).gameObject);
        }
     }
@@ -230,7 +238,6 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
             return Convert.ToInt32(idInputField.text);
         }
         catch {
-            displayMessage();
             return 0;
         }
     }
@@ -238,9 +245,6 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
     public void save() {
         if (controller.symbol != null) {
             controller.save(currentInterface);
-        }
-        else {
-            displayMessage();
         }
     }
 
@@ -250,7 +254,4 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
         }
     }
 
-    public void displayMessage() {
-
-    }
 }

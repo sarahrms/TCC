@@ -339,8 +339,8 @@ public class TermCaptureCanvasController : MonoBehaviour {
     }
 
     public void loadLeftHandFingerMovementConfiguration() {
-        if (maoEsquerdaMovimentoFileDropdown.value != 0) {
-            string fileName = maoEsquerdaMovimentoFileDropdown.options[maoEsquerdaMovimentoFileDropdown.value].text + ".json";
+        if (maoEsquerdaFingerMovementFileDropdown.value != 0) {
+            string fileName = maoEsquerdaFingerMovementFileDropdown.options[maoEsquerdaFingerMovementFileDropdown.value].text + ".json";
             string filePath = getFingerMovementFilePath().ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
             controller.loadMovementConfiguration(configuration, false);

@@ -12,7 +12,6 @@ public class FingerComponent : BasicBodyComponent {
         intermediatePhalange = proximalPhalange.GetChild(0);
         distalPhalange = intermediatePhalange.GetChild(0);
         fingerNail = distalPhalange.GetChild(0);
-        initialFingerNailPosition = fingerNail.position;
         setLine();
     }
 
@@ -39,6 +38,8 @@ public class FingerComponent : BasicBodyComponent {
         fingerNailTarget.position = fingerNail.position;
         fingerNailTarget.rotation = fingerNail.rotation;
         fingerNailTarget.localScale = fingerNail.localScale;
+
+        initialFingerNailPosition = fingerNail.position;
 
         RootMotion.FinalIK.FABRIK script = proximalPhalange.gameObject.AddComponent<RootMotion.FinalIK.FABRIK>();
         script.solver.target = fingerNailTarget;

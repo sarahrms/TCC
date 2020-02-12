@@ -5,7 +5,7 @@ public class BodyController : BasicBodyController {
     public Vector3 initialSpinePosition;
     public ArmController rightArmController, leftArmController;
     public HeadController headController;
-    public float speed = 1;
+    public float speed = 1, constant = 0.1f;
 
     RootMotion.FinalIK.FullBodyBipedIK ikScript;
 
@@ -53,7 +53,7 @@ public class BodyController : BasicBodyController {
     }
 
     public void update() {
-        ikScript.solver.bodyEffector.position = Vector3.Lerp(ikScript.solver.bodyEffector.position, spineTarget.transform.position, 1*speed);
+        ikScript.solver.bodyEffector.position = Vector3.Lerp(ikScript.solver.bodyEffector.position, spineTarget.transform.position, constant * speed);
         headController.update();
         rightArmController.update();
         leftArmController.update();

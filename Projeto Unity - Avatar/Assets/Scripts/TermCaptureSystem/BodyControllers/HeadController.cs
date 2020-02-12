@@ -60,8 +60,10 @@ public class HeadController : BasicBodyController {
     }
 
     public bool isArrived() {
-        //IMPLEMENTAR//
-        return false;
+        Vector3 distancePosition, distanceRotation;
+        distancePosition = headTarget.transform.localPosition - headTargetPosition;
+        distanceRotation = head.transform.rotation.eulerAngles - headTargetRotation.eulerAngles;
+        return (distancePosition.sqrMagnitude < 1 && distanceRotation.sqrMagnitude < 1);
     }
 
 }

@@ -14,7 +14,9 @@ public class SymbolCaptureAvatarSetup : MonoBehaviour {
     }
 
     public void FixedUpdate() {
-        body.update();
+        if (body != null) { 
+            body.update();
+        }
     }
 
     public void reset() {

@@ -36,7 +36,7 @@ public class AddHandPosition : MonoBehaviour {
             obj.GetComponent<Text>().text = "Configuração " + positionAggregator.childCount.ToString() + ":";
             obj.GetComponent<SetHandPosition>().init();
             if (curveMovement) {
-                addOption(obj);
+                addOption(positionAggregator.GetChild(positionAggregator.childCount - 2).gameObject);
             }
             addButton.transform.position -= offset;            
         }
@@ -64,12 +64,12 @@ public class AddHandPosition : MonoBehaviour {
     }
 
     public void addCurveTrajectoryOptions() {
-        Debug.Log(positionAggregator.childCount);
         curveMovement = true;
         for(int i=0; i<positionAggregator.childCount; i++) {
             GameObject position = positionAggregator.GetChild(i).gameObject;
             addOption(position);
-        }        
+        }
+        removeOption(positionAggregator.GetChild(positionAggregator.childCount-1).gameObject);        
     }
 
     public void removeCurveTrajectoryOptions() {

@@ -12,11 +12,10 @@ public class HandController : BasicBodyController {
     public TRAJECTORY_DIRECTION trajectoryDirection = TRAJECTORY_DIRECTION.CLOCK_WISE;
     public Vector3 initialWristPosition, lastTargetPosition;
     public Quaternion initialWristRotation;
-    public int degree = 0;
     public Transform wrist, wristTarget;
     public List<FingerController> fingerControllers;
     public RootMotion.FinalIK.FullBodyBipedIK ikScript;
-    public float speed = 1, radius = 1.0f, constant = 0.15f;
+    public float speed = 1, radius = 1.0f, constant = 5f;
 
     public HandController(Transform wrist) {
         this.wrist = wrist;
@@ -73,7 +72,6 @@ public class HandController : BasicBodyController {
     }
 
     public void setTarget(Vector3 targetPosition, Vector3 targetRotation) {
-        degree = 0;
         lastTargetPosition = wristTarget.position;
         wristTarget.position = targetPosition;
         wristTarget.rotation = Quaternion.Euler(targetRotation);
@@ -103,53 +101,63 @@ public class HandController : BasicBodyController {
 
                 int direction = trajectoryDirection.Equals(TRAJECTORY_DIRECTION.CLOCK_WISE) ? 1 : -1;
 
+                Vector3 targetPosition = new Vector3();
+
                 switch (trajectoryPlane) {
-                    case TRAJECTORY_PLANE.XY:
-                        centerObj.Rotate(new Vector3(0,0, constant * speed * Time.fixedDeltaTime * direction));                       
+                    case TRAJECTORY_PLANE.XY: { 
+                        centerObj.Rotate(new Vector3(0, 0, constant * speed * direction));
+                        targetPosition = rotatedObj.position;
+                        Vector3 zLerp = Vector3.Lerp(new Vector3(0, 0, targetPosition.z), new Vector3(0, 0, wristTarget.position.z), constant * speed * Time.fixedDeltaTime);
+                        targetPosition.z = zLerp.z;
                         break;
+                    }
                     case TRAJECTORY_PLANE.XZ:
-                        centerObj.Rotate(new Vector3(0, constant * speed * Time.fixedDeltaTime * direction, 0));
+                        centerObj.Rotate(new Vector3(0, constant * speed * direction, 0));
                         break;
                     case TRAJECTORY_PLANE.YZ:
-                        centerObj.Rotate(new Vector3(constant * speed * Time.fixedDeltaTime * direction, 0, 0));
+                        centerObj.Rotate(new Vector3(constant * speed * direction, 0, 0));
                         break;
                 }
-                Vector3 targetPosition = rotatedObj.position;
+                
+                GameObject.Destroy(centerObj.gameObject);
+                GameObject.Destroy(rotatedObj.gameObject);
 
-                Destroy(centerObj.gameObject);
-                Destroy(rotatedObj.gameObject);
-
-                ikScript.solver.rightHandEffector.position = Vector3.Lerp(ikScript.solver.rightHandEffector.position, targetPosition, constant * speed * Time.fixedDeltaTime);
+                ikScript.solver.rightHandEffector.position = Vector3.Lerp(ikScript.solver.rightHandEffector.position, targetPosition, 1);
                 ikScript.solver.rightHandEffector.rotation = Quaternion.Lerp(ikScript.solver.rightHandEffector.rotation, wristTarget.rotation, constant * speed * Time.fixedDeltaTime);
             }
             else {
-                Vector3 center = lastTargetPosition + (wristTarget.position - lastTargetPosition) / 2;
+                Vector3 centerPoint = lastTargetPosition + (wristTarget.position - lastTargetPosition) / 2;
+
+                Transform centerObj = new GameObject().transform;
+                centerObj.position = centerPoint;
+
+                Transform rotatedObj = new GameObject().transform;
+                rotatedObj.position = ikScript.solver.leftHandEffector.position;
+                rotatedObj.SetParent(centerObj);
+
+                int direction = trajectoryDirection.Equals(TRAJECTORY_DIRECTION.CLOCK_WISE) ? 1 : -1;
+
                 Vector3 targetPosition = new Vector3();
                 switch (trajectoryPlane) {
-                    case TRAJECTORY_PLANE.XY:
-                        Transform centerObj = new GameObject().transform;
-                        centerObj.position = center;
-
-                        Transform rotateObj = new GameObject().transform;
-                        rotateObj.position = ikScript.solver.leftHandEffector.position;
-                        rotateObj.SetParent(centerObj);
-
-                        centerObj.Rotate(new Vector3(0, 0, constant * speed * Time.fixedDeltaTime));
-
-                        targetPosition = rotateObj.position;
-
-                        Destroy(centerObj.gameObject);
-                        Destroy(rotateObj.gameObject);
-
+                    case TRAJECTORY_PLANE.XY: { 
+                        centerObj.Rotate(new Vector3(0, 0, speed * direction));
+                        targetPosition = rotatedObj.position;
+                        Vector3 zLerp = Vector3.Lerp(new Vector3(0, 0, targetPosition.z), new Vector3(0, 0, wristTarget.position.z), constant * speed * Time.fixedDeltaTime);
+                        targetPosition.z = zLerp.z;
                         break;
+                    }
                     case TRAJECTORY_PLANE.XZ:
-
+                        centerObj.Rotate(new Vector3(0, speed * direction, 0));
                         break;
                     case TRAJECTORY_PLANE.YZ:
-
+                        centerObj.Rotate(new Vector3(speed * direction, 0, 0));
                         break;
                 }
-                ikScript.solver.leftHandEffector.position = Vector3.Lerp(ikScript.solver.leftHandEffector.position, targetPosition, constant * speed * Time.fixedDeltaTime);
+                
+                GameObject.Destroy(centerObj.gameObject);
+                GameObject.Destroy(rotatedObj.gameObject);
+
+                ikScript.solver.leftHandEffector.position = Vector3.Lerp(ikScript.solver.leftHandEffector.position, targetPosition, 1);
                 ikScript.solver.leftHandEffector.rotation = Quaternion.Lerp(ikScript.solver.leftHandEffector.rotation, wristTarget.rotation, constant * speed * Time.fixedDeltaTime);
             }
         }
@@ -159,17 +167,16 @@ public class HandController : BasicBodyController {
     }
 
     public bool isWristArrived() {
-        Vector3 distance;
+        Vector3 distancePosition, distanceRotation;
         if (wrist.name == "mixamorig:RightHand") {
-            distance = ikScript.solver.rightHandEffector.position - wristTarget.position;
+            distancePosition = ikScript.solver.rightHandEffector.position - wristTarget.position;
+            distanceRotation = ikScript.solver.rightHandEffector.rotation.eulerAngles - wristTarget.rotation.eulerAngles;
         }
         else {
-            distance = ikScript.solver.leftHandEffector.position - wristTarget.position;
+            distancePosition = ikScript.solver.leftHandEffector.position - wristTarget.position;
+            distanceRotation = ikScript.solver.leftHandEffector.rotation.eulerAngles - wristTarget.rotation.eulerAngles;
         }
-        if (distance.sqrMagnitude < 1) {
-            return true;
-        }
-        return false;
+        return (distancePosition.sqrMagnitude < 1 && distanceRotation.sqrMagnitude < 1);
     }
 
     public bool isFingersArrived() {

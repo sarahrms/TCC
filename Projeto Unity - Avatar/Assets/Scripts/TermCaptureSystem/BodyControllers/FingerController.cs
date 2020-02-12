@@ -6,7 +6,7 @@ public class FingerController : BasicBodyController {
     public Vector3 fingerNailInitialPosition, fingerNailTargetPosition;
     public Transform fingerNail, distalPhalange, intermediatePhalange, proximalPhalange,
         fingerNailTarget;
-    public float speed = 1;
+    public float speed = 1, constant = 0.2f;
 
     public FingerController(Transform proximalPhalangeTransform) {
         proximalPhalange = proximalPhalangeTransform;
@@ -62,7 +62,7 @@ public class FingerController : BasicBodyController {
       //  proximalPhalange;
     }
     public void update() {
-        fingerNailTarget.transform.localPosition = Vector3.Lerp(fingerNailTarget.transform.localPosition, fingerNailTargetPosition, 0.05f * speed);
+        fingerNailTarget.transform.localPosition = Vector3.Lerp(fingerNailTarget.transform.localPosition, fingerNailTargetPosition, constant * speed);
     }
 
     public void setSpeed(float speed) {

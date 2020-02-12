@@ -92,20 +92,13 @@ public class TermCaptureSystemController : MonoBehaviour {
         switch (currentConfiguration.movementType) {
             case MOVEMENT_TYPE.HANDS_MOVEMENT:
                 loadHandMovementConfiguration();
-                HandController handController;
-                if (isRightHand) {
-                    handController = avatarSetupScript.bodyController.rightArmController.handController;
-                }
-                else {
-                    handController = avatarSetupScript.bodyController.leftArmController.handController;
-                }
                 break;
             case MOVEMENT_TYPE.FINGERS_MOVEMENT:
                 loadFingersMovementConfiguration();
                 break;
             case MOVEMENT_TYPE.HEAD_MOVEMENT:
                 loadHeadMovementConfiguration();
-                break;
+                break; 
         }
     }
 
@@ -123,8 +116,10 @@ public class TermCaptureSystemController : MonoBehaviour {
         else {
             handController = avatarSetupScript.bodyController.leftArmController.handController;
         }
-        handController.trajectoryDirection =  currentConfiguration.trajectoryDirections[currentIndex-1];
+
         handController.trajectoryPlane = currentConfiguration.trajectoryPlane;
+        handController.trajectoryDirection = (currentIndex==0) ? currentConfiguration.trajectoryDirections[currentIndex] 
+                                                 : currentConfiguration.trajectoryDirections[currentIndex-1];
         handController.trajectoryType = (currentIndex == 0) ? TRAJECTORY_TYPE.STRAIGHT : currentConfiguration.trajectoryType;
     }
 
@@ -148,9 +143,9 @@ public class TermCaptureSystemController : MonoBehaviour {
         }
     }
 
-    public void loadHandConfiguration(HandConfiguration configuration, bool isRightHand) {
+    public void loadHandConfiguration(HandConfiguration configuration, bool right) {
         for (int i = 0; i < configuration.positions.Count; i++) {
-           if (isRightHand) {
+            if (right) {
                 FingerController fingerController = avatarSetupScript.bodyController.rightArmController.handController.fingerControllers[i];
                 Vector3 position = configuration.positions[i];
                 fingerController.setTarget(position);
@@ -163,15 +158,19 @@ public class TermCaptureSystemController : MonoBehaviour {
         }
     }
 
-    public void loadWristConfiguration(WristConfiguration configuration, bool isRightHand) {
+    public void loadWristConfiguration(WristConfiguration configuration, bool right) {
         HandController handController;
-        if (isRightHand) { 
+        if (right) { 
             handController = avatarSetupScript.bodyController.rightArmController.handController;
+            handController.setTarget(configuration.handPosition, configuration.handRotation);
         }      
         else {
             handController = avatarSetupScript.bodyController.leftArmController.handController;
+            Vector3 position = new Vector3(-configuration.handPosition.x, configuration.handPosition.y, configuration.handPosition.z);
+            Vector3 rotation = new Vector3(-configuration.handRotation.x, configuration.handRotation.y, configuration.handRotation.x);
+            handController.setTarget(position, rotation); 
         }
-        handController.setTarget(configuration.handPosition, configuration.handRotation);
+
     }
 
     public void loadFaceConfiguration(FaceConfiguration configuration) {
