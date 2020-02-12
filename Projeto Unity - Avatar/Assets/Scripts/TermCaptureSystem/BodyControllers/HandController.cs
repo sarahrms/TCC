@@ -140,17 +140,17 @@ public class HandController : BasicBodyController {
                 Vector3 targetPosition = new Vector3();
                 switch (trajectoryPlane) {
                     case TRAJECTORY_PLANE.XY: { 
-                        centerObj.Rotate(new Vector3(0, 0, speed * direction));
+                        centerObj.Rotate(new Vector3(0, 0, constant * speed * direction));
                         targetPosition = rotatedObj.position;
                         Vector3 zLerp = Vector3.Lerp(new Vector3(0, 0, targetPosition.z), new Vector3(0, 0, wristTarget.position.z), constant * speed * Time.fixedDeltaTime);
                         targetPosition.z = zLerp.z;
                         break;
                     }
                     case TRAJECTORY_PLANE.XZ:
-                        centerObj.Rotate(new Vector3(0, speed * direction, 0));
+                        centerObj.Rotate(new Vector3(0, constant * speed * direction, 0));
                         break;
                     case TRAJECTORY_PLANE.YZ:
-                        centerObj.Rotate(new Vector3(speed * direction, 0, 0));
+                        centerObj.Rotate(new Vector3(contant * speed * direction, 0, 0));
                         break;
                 }
                 
