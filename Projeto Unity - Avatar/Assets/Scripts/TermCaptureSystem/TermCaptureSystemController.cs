@@ -8,7 +8,10 @@ public class TermCaptureSystemController : MonoBehaviour {
     public HandComponent rightHand, leftHand;
     public MovementConfiguration currentConfiguration;
     public int currentIndex;
-    public bool isRightHand, isPlaying = false;
+    public bool isRightHand, isPlaying = false, overwriteRightHand = false, overwriteLeftHand = false;
+    Vector3 rightHandInitialPosition, leftHandInitialPosition;
+    Vector3 initialLeftHandTargetRotation = new Vector3(16.911f, 54.966f, 157.637f);
+    Vector3 initialRightHandTargetRotation = new Vector3(18.148f, -54.532f, -157.141f);
 
     void Start() {
         avatarSetupScript = GameObject.Find("Avatar").GetComponent<TermCaptureAvatarSetup>();
@@ -27,7 +30,7 @@ public class TermCaptureSystemController : MonoBehaviour {
                     if(isRightHand) {
                         if (avatarSetupScript.bodyController.rightArmController.handController.isWristArrived()) {
                             if(++currentIndex < currentConfiguration.configurationList.Count) {
-                                loadHandMovementConfiguration();
+                                loadHandMovementConfiguration(overwriteRightHand, overwriteLeftHand);
                             }
                             else {
                                 isPlaying = false;
@@ -38,7 +41,7 @@ public class TermCaptureSystemController : MonoBehaviour {
                     else {
                         if (avatarSetupScript.bodyController.leftArmController.handController.isWristArrived()) {
                             if (++currentIndex < currentConfiguration.configurationList.Count) {
-                                loadHandMovementConfiguration();
+                                loadHandMovementConfiguration(overwriteRightHand, overwriteLeftHand);
                             }
                             else {
                                 isPlaying = false;
@@ -83,7 +86,7 @@ public class TermCaptureSystemController : MonoBehaviour {
         }
     }
 
-    public void loadMovementConfiguration(MovementConfiguration configuration, bool isRight) {
+    public void loadMovementConfiguration(MovementConfiguration configuration, bool isRight, bool overwriteRightHand, bool overwriteLeftHand) {
         configuration.loadConfigurationList();
         isRightHand = isRight;
         isPlaying = true;
@@ -91,7 +94,7 @@ public class TermCaptureSystemController : MonoBehaviour {
         currentIndex = 0;
         switch (currentConfiguration.movementType) {
             case MOVEMENT_TYPE.HANDS_MOVEMENT:
-                loadHandMovementConfiguration();
+                loadHandMovementConfiguration(overwriteRightHand, overwriteLeftHand);
                 break;
             case MOVEMENT_TYPE.FINGERS_MOVEMENT:
                 loadFingersMovementConfiguration();
@@ -102,9 +105,14 @@ public class TermCaptureSystemController : MonoBehaviour {
         }
     }
 
-    public void loadHandMovementConfiguration() {
+    public void loadHandMovementConfiguration(bool overwriteRightHand, bool overwriteLeftHand) {
+        this.overwriteRightHand = overwriteRightHand;
+        this.overwriteLeftHand = overwriteLeftHand;
+        rightHandInitialPosition = avatarSetupScript.bodyController.rightArmController.handController.ikScript.solver.rightHandEffector.position;
+        leftHandInitialPosition = avatarSetupScript.bodyController.leftArmController.handController.ikScript.solver.leftHandEffector.position;
         WristConfiguration wristConfiguration = (WristConfiguration) currentConfiguration.configurationList[currentIndex];
-        loadWristConfiguration(wristConfiguration, isRightHand);
+        loadWristConfiguration(wristConfiguration, isRightHand, (isRightHand && overwriteRightHand)
+                                                                || (!isRightHand && overwriteLeftHand));
         setWristTrajectory();
     }
 
@@ -158,19 +166,24 @@ public class TermCaptureSystemController : MonoBehaviour {
         }
     }
 
-    public void loadWristConfiguration(WristConfiguration configuration, bool right) {/////////////////////////////////////////
+    public void loadWristConfiguration(WristConfiguration configuration, bool right, bool overwriteHandPosition) {/////////////////////////////////////////
         HandController handController;
         if (right) { 
             handController = avatarSetupScript.bodyController.rightArmController.handController;
-            handController.setTarget(configuration.handPosition, configuration.handRotation);
+            if (overwriteHandPosition) {
+                handController.setTarget(configuration.handPosition + (configuration.handPosition - rightHandInitialPosition), configuration.handRotation);
+            }
+            else {
+                handController.setTarget(configuration.handPosition, configuration.handRotation);
+            }
         }      
         else {
             handController = avatarSetupScript.bodyController.leftArmController.handController;
             Vector3 position = new Vector3(-configuration.handPosition.x, configuration.handPosition.y, configuration.handPosition.z);
-            Vector3 rotation = new Vector3(-configuration.handRotation.x, configuration.handRotation.y, configuration.handRotation.x);
+            
+            Vector3 rotation = new Vector3(configuration.handRotation.x, -configuration.handRotation.y, -configuration.handRotation.z);
             handController.setTarget(position, rotation); //FIX ME/////////////////////////////////////////////////////////////
-        }//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        }
     }
 
     public void loadFaceConfiguration(FaceConfiguration configuration) {

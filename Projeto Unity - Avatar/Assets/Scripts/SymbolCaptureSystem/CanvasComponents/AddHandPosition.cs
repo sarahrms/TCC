@@ -37,10 +37,11 @@ public class AddHandPosition : MonoBehaviour {
             obj.GetComponent<SetHandPosition>().init();
             if (curveMovement) {
                 addOption(positionAggregator.GetChild(positionAggregator.childCount - 2).gameObject);
+                removeOption(obj);
             }
             addButton.transform.position -= offset;            
         }
-        if (positionAggregator.childCount == 5) {
+        else if (positionAggregator.childCount == 5) {
             addButton.gameObject.SetActive(false);
         }
     }
@@ -69,7 +70,9 @@ public class AddHandPosition : MonoBehaviour {
             GameObject position = positionAggregator.GetChild(i).gameObject;
             addOption(position);
         }
-        removeOption(positionAggregator.GetChild(positionAggregator.childCount-1).gameObject);        
+        if (positionAggregator.childCount != 0) { 
+            removeOption(positionAggregator.GetChild(positionAggregator.childCount-1).gameObject);    
+        }
     }
 
     public void removeCurveTrajectoryOptions() {

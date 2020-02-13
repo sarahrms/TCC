@@ -104,21 +104,29 @@ public class HandController : BasicBodyController {
                 Vector3 targetPosition = new Vector3();
 
                 switch (trajectoryPlane) {
-                    case TRAJECTORY_PLANE.XY: { 
+                    case TRAJECTORY_PLANE.XY: {
                         centerObj.Rotate(new Vector3(0, 0, constant * speed * direction));
                         targetPosition = rotatedObj.position;
                         Vector3 zLerp = Vector3.Lerp(new Vector3(0, 0, targetPosition.z), new Vector3(0, 0, wristTarget.position.z), constant * speed * Time.fixedDeltaTime);
                         targetPosition.z = zLerp.z;
                         break;
                     }
-                    case TRAJECTORY_PLANE.XZ:
+                    case TRAJECTORY_PLANE.XZ: { 
                         centerObj.Rotate(new Vector3(0, constant * speed * direction, 0));
+                        targetPosition = rotatedObj.position;
+                        Vector3 yLerp = Vector3.Lerp(new Vector3(0, targetPosition.y, 0), new Vector3(0, wristTarget.position.y, 0), constant * speed * Time.fixedDeltaTime);
+                        targetPosition.y = yLerp.y;
                         break;
-                    case TRAJECTORY_PLANE.YZ:
+                    }
+                    case TRAJECTORY_PLANE.YZ: { 
                         centerObj.Rotate(new Vector3(constant * speed * direction, 0, 0));
+                        targetPosition = rotatedObj.position;
+                        Vector3 xLerp = Vector3.Lerp(new Vector3(targetPosition.x, 0, 0), new Vector3(wristTarget.position.x, 0, 0), constant * speed * Time.fixedDeltaTime);
+                        targetPosition.x = xLerp.x;
                         break;
+                    }
                 }
-                
+
                 GameObject.Destroy(centerObj.gameObject);
                 GameObject.Destroy(rotatedObj.gameObject);
 
@@ -146,12 +154,20 @@ public class HandController : BasicBodyController {
                         targetPosition.z = zLerp.z;
                         break;
                     }
-                    case TRAJECTORY_PLANE.XZ:
+                    case TRAJECTORY_PLANE.XZ: { 
                         centerObj.Rotate(new Vector3(0, constant * speed * direction, 0));
+                        targetPosition = rotatedObj.position;
+                        Vector3 yLerp = Vector3.Lerp(new Vector3(0, targetPosition.y, 0), new Vector3(0, wristTarget.position.y, 0), constant * speed * Time.fixedDeltaTime);
+                        targetPosition.y = yLerp.y;
                         break;
-                    case TRAJECTORY_PLANE.YZ:
-                        centerObj.Rotate(new Vector3(contant * speed * direction, 0, 0));
+                    }
+                    case TRAJECTORY_PLANE.YZ: { 
+                        centerObj.Rotate(new Vector3(constant * speed * direction, 0, 0));
+                        targetPosition = rotatedObj.position;
+                        Vector3 xLerp = Vector3.Lerp(new Vector3(targetPosition.x, 0, 0), new Vector3(wristTarget.position.x, 0, 0), constant * speed * Time.fixedDeltaTime);
+                        targetPosition.x = xLerp.x;
                         break;
+                    }
                 }
                 
                 GameObject.Destroy(centerObj.gameObject);

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TermCaptureCanvasController : MonoBehaviour {
-    public Transform frontCameraTransform, topCameraTransform, rightCameraTransform, leftCameraTransform;
+    public Vector3 frontCameraPosition, topCameraPosition, rightCameraPosition, leftCameraPosition;
     public Camera frontCamera, topCamera, rightCamera, leftCamera;
     public Toggle rightHandToggle, leftHandToggle;
     public bool overwriteRightHand = false, overwriteLeftHand =  false;
@@ -36,39 +36,53 @@ public class TermCaptureCanvasController : MonoBehaviour {
 
     public void setDraggingObject(bool state) {
         frontCamera.GetComponent<CameraDrag>().setEnabled(!state);
-        topCamera.GetComponent<CameraDrag>().setEnabled(!state);
         leftCamera.GetComponent<CameraDrag>().setEnabled(!state);
         rightCamera.GetComponent<CameraDrag>().setEnabled(!state);
     }
 
     void getInitialPositions() {
-        frontCameraTransform = frontCamera.gameObject.transform;
-        topCameraTransform = topCamera.gameObject.transform;
-        leftCameraTransform = leftCamera.gameObject.transform;
-        rightCameraTransform = rightCamera.gameObject.transform;
+        frontCameraPosition = frontCamera.gameObject.transform.position;
+        topCameraPosition = topCamera.gameObject.transform.position;
+        leftCameraPosition = leftCamera.gameObject.transform.position;
+        rightCameraPosition = rightCamera.gameObject.transform.position;
     }
     
     void disableAllCameras() {
         frontCamera.enabled = false;
-        frontCamera.gameObject.transform.position = frontCameraTransform.position;
-        frontCamera.gameObject.transform.rotation = frontCameraTransform.rotation;
+        frontCamera.gameObject.transform.position = frontCameraPosition;
 
         topCamera.enabled = false;
-        topCamera.gameObject.transform.position = topCameraTransform.position;
-        topCamera.gameObject.transform.rotation = topCameraTransform.rotation;
+        topCamera.gameObject.transform.position = topCameraPosition;
 
         leftCamera.enabled = false;
-        leftCamera.gameObject.transform.position = leftCameraTransform.position;
-        leftCamera.gameObject.transform.rotation = leftCameraTransform.rotation;
+        leftCamera.gameObject.transform.position = leftCameraPosition;
 
         rightCamera.enabled = false;
-        rightCamera.gameObject.transform.position = rightCameraTransform.position;
-        rightCamera.gameObject.transform.rotation = rightCameraTransform.rotation;
+        rightCamera.gameObject.transform.position = rightCameraPosition;
     }
     
     void setCameras() {
         disableAllCameras();
         frontCamera.enabled = true;
+    }
+
+    public void changeCamera() {
+        int option = cameraDropdown.value;
+        disableAllCameras();
+        switch (option) {
+            case 0:
+                frontCamera.enabled = true;
+                break;
+            case 1:
+                rightCamera.enabled = true;
+                break;
+            case 2:
+                leftCamera.enabled = true;
+                break;
+            case 3:
+                topCamera.enabled = true;
+                break;
+        }
     }
 
     public void changeFileOptions(Dropdown fileDropdown, DirectoryInfo levelDirectoryPath) {
@@ -305,7 +319,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string fileName = maoDireitaMovimentoFileDropdown.options[maoDireitaMovimentoFileDropdown.value].text + ".json";
             string filePath = getMovementFilePath(maoDireitaMovimentoDropdown).ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
-            controller.loadMovementConfiguration(configuration, true);           
+            controller.loadMovementConfiguration(configuration, true, overwriteRightHand, overwriteLeftHand);           
         }
         else {
             controller.avatarSetupScript.bodyController.rightArmController.handController.resetWrist();
@@ -317,7 +331,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string fileName = maoEsquerdaMovimentoFileDropdown.options[maoEsquerdaMovimentoFileDropdown.value].text + ".json";
             string filePath = getMovementFilePath(maoEsquerdaMovimentoDropdown).ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
-            controller.loadMovementConfiguration(configuration, false);
+            controller.loadMovementConfiguration(configuration, false, overwriteRightHand, overwriteLeftHand);
         }
         else {
             controller.avatarSetupScript.bodyController.leftArmController.handController.resetWrist();
@@ -329,7 +343,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string fileName = maoDireitaFingerMovementFileDropdown.options[maoDireitaFingerMovementFileDropdown.value].text + ".json";
             string filePath = getFingerMovementFilePath().ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
-            controller.loadMovementConfiguration(configuration, true);
+            controller.loadMovementConfiguration(configuration, true, overwriteRightHand, overwriteLeftHand);
             disableRightHandConfigurationInterface();
         }
         else {
@@ -343,7 +357,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string fileName = maoEsquerdaFingerMovementFileDropdown.options[maoEsquerdaFingerMovementFileDropdown.value].text + ".json";
             string filePath = getFingerMovementFilePath().ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
-            controller.loadMovementConfiguration(configuration, false);
+            controller.loadMovementConfiguration(configuration, false, overwriteRightHand, overwriteLeftHand);
             disableLeftHandConfigurationInterface();
         }
         else {
@@ -357,7 +371,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string fileName = headMovementFileDropdown.options[headMovementFileDropdown.value].text + ".json";
             string filePath = getHeadMovementFilePath().ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
-            controller.loadMovementConfiguration(configuration, false);
+            controller.loadMovementConfiguration(configuration, false, overwriteRightHand, overwriteLeftHand);
         }
         else {
             controller.avatarSetupScript.bodyController.headController.reset();

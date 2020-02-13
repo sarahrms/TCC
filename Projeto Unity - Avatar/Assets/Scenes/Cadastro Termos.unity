@@ -2131,7 +2131,6 @@ GameObject:
   m_Component:
   - component: {fileID: 176174854}
   - component: {fileID: 176174853}
-  - component: {fileID: 176174852}
   - component: {fileID: 176174855}
   m_Layer: 0
   m_Name: Top Camera
@@ -2140,28 +2139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &176174852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 176174851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5fad3fd03bd2604194ca5801ac6fe6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1016647485}
-  enabed: 1
-  distance: 1
-  xSpeed: 1
-  ySpeed: 10
-  yMinLimit: 0
-  yMaxLimit: 0
-  distanceMin: 50
-  distanceMax: 50
-  smoothTime: 10
 --- !u!20 &176174853
 Camera:
   m_ObjectHideFlags: 0
@@ -7985,7 +7962,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1196022079}
         m_MethodName: changeCamera
         m_Mode: 1
         m_Arguments:
@@ -14377,8 +14354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avatarSetupScript: {fileID: 0}
-  currentConfigurationType: 0
-  currentConfigurationIndex: 0
+  currentIndex: 0
   isRightHand: 0
   isPlaying: 0
 --- !u!1 &1206476644
