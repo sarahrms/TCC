@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HeadComponent : BasicBodyComponent {
-    public Transform head, headTarget;
-    public Vector3 initialHeadPosition;
-    public Quaternion initialHeadRotation;
+    public Transform spineRoot, spine, neck, head, headTarget;
+    public Vector3 initialNeckPosition, initialHeadPosition;
+    public Quaternion initialNeckRotation,initialHeadRotation;
     public float radius = 1.5f;
-    public RootMotion.FinalIK.FullBodyBipedIK ikScript;
+    public RootMotion.FinalIK.LimbIK ikScript;
 
-    public HeadComponent(Transform headTransform) {
+    public HeadComponent(Transform headTransform) {        
         head = headTransform;
-        initialHeadPosition = headTransform.position;
-        initialHeadRotation = headTransform.rotation;
+        neck = head.parent;
+        spine = neck.parent;
+        spineRoot = spine.parent;
+
+        initialNeckPosition = neck.position;
+        initialNeckRotation = neck.rotation;
+        initialHeadPosition = head.position;
+        initialHeadRotation = head.rotation;
         setLine();
     }
 
     public void update() {
-       drawLine(headTarget.position, head.position);
+        drawLine(headTarget.position, head.position);
     }
 
     public void reset() {
@@ -26,13 +32,6 @@ public class HeadComponent : BasicBodyComponent {
     }
 
     public void setIkTargets(Transform neck) {
-        RootMotion.FinalIK.IKSolver.Bone[] bones = new RootMotion.FinalIK.IKSolver.Bone[2];
-
-        bones[0] = new RootMotion.FinalIK.IKSolver.Bone();
-        bones[0].transform = neck;
-        bones[1] = new RootMotion.FinalIK.IKSolver.Bone();
-        bones[1].transform = head;
-
         headTarget = new GameObject().transform;
         headTarget.name = head.name + " - Target";
         headTarget.position = head.position;
@@ -40,11 +39,12 @@ public class HeadComponent : BasicBodyComponent {
         headTarget.localScale = head.localScale;
         headTarget.SetParent(neck);
 
-        RootMotion.FinalIK.FABRIK script = neck.gameObject.AddComponent<RootMotion.FinalIK.FABRIK>();
-        script.solver.target = headTarget;
-        script.solver.IKPositionWeight = 1;
-        script.solver.bones = bones;
-        script.enabled = true;
+        ikScript = spineRoot.gameObject.AddComponent<RootMotion.FinalIK.LimbIK>();
+        ikScript.solver.target = headTarget;
+        ikScript.solver.IKPositionWeight = 1;
+        ikScript.solver.IKRotationWeight = 1;
+        ikScript.solver.SetChain(spineRoot, spine, neck, head);
+        ikScript.enabled = true;
     }
 
     public void createGizmo() {

@@ -4004,12 +4004,12 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1196022074}
-        m_MethodName: 
+      - m_Target: {fileID: 1196022079}
+        m_MethodName: setToggleMaoDireita
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -14304,10 +14304,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8261f340d7d736f4d9d6d099a4502bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontCameraTransform: {fileID: 534669905}
-  topCameraTransform: {fileID: 176174854}
-  rightCameraTransform: {fileID: 933490465}
-  leftCameraTransform: {fileID: 565033889}
+  frontCameraPosition: {x: 0, y: 0, z: 0}
+  topCameraPosition: {x: 0, y: 0, z: 0}
+  rightCameraPosition: {x: 0, y: 0, z: 0}
+  leftCameraPosition: {x: 0, y: 0, z: 0}
   frontCamera: {fileID: 534669904}
   topCamera: {fileID: 176174853}
   rightCamera: {fileID: 933490464}
@@ -14357,6 +14357,7 @@ MonoBehaviour:
   currentIndex: 0
   isRightHand: 0
   isPlaying: 0
+  overwriteHand: 0
 --- !u!1 &1206476644
 GameObject:
   m_ObjectHideFlags: 0
@@ -16720,7 +16721,18 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1196022079}
+        m_MethodName: setToggleMaoEsquerda
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 0
@@ -22605,7 +22617,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1196022079}
-        m_MethodName: loadLeftHandFingerMovementConfiguration
+        m_MethodName: loadHeadMovementConfiguration
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

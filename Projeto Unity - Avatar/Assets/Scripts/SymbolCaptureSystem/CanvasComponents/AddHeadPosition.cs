@@ -14,6 +14,7 @@ public class AddHeadPosition : MonoBehaviour {
     void Start() {
         StartCoroutine(init());
     }
+
     IEnumerator init() {
         yield return new WaitForSeconds(0.2f);
         positionPrefab = Resources.Load("HeadPosition") as GameObject;
@@ -39,25 +40,21 @@ public class AddHeadPosition : MonoBehaviour {
         }
     }
 
-
     public void rotacionarX() {
         float currentSliderValue = sliderX.value;
         headTarget.Rotate(currentSliderValue - lastXValue, 0, 0);
-        head.Rotate(currentSliderValue - lastXValue, 0, 0);
         lastXValue = currentSliderValue;
     }
 
     public void rotacionarY() {
         float currentSliderValue = sliderY.value;
         headTarget.Rotate(0, currentSliderValue - lastYValue, 0);
-        head.Rotate(0, currentSliderValue - lastYValue, 0);
         lastYValue = currentSliderValue;
     }
 
     public void rotacionarZ() {
         float currentSliderValue = sliderZ.value;
         headTarget.Rotate(0, 0, currentSliderValue - lastZValue);
-        head.Rotate(0, 0, currentSliderValue - lastZValue);
         lastZValue = currentSliderValue;
     }
 

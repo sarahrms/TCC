@@ -1,27 +1,26 @@
 ﻿using UnityEngine;
 
 public class HeadController : BasicBodyController {
-    public Vector3 initialHeadPosition, headTargetPosition;
-    public Quaternion initialHeadRotation, headTargetRotation;
-    public Transform head, headTarget;
+    public Transform spineRoot, spine, neck, head, headTarget;
+    public Vector3 headTargetPosition, initialNeckPosition, initialHeadPosition;
+    public Quaternion headTargetRotation, initialNeckRotation, initialHeadRotation;
     public HandController handController;
-    public RootMotion.FinalIK.FullBodyBipedIK ikScript;
-    public float speed = 1, constant = 0.15f;
+    public RootMotion.FinalIK.LimbIK ikScript;
+    public float speed = 1, constant = 0.2f;
 
     public HeadController(Transform headTransform) {
         head = headTransform;
-        initialHeadPosition = headTransform.position;
-        initialHeadRotation = headTransform.rotation;
+        neck = head.parent;
+        spine = neck.parent;
+        spineRoot = spine.parent;
+
+        initialNeckPosition = neck.position;
+        initialNeckRotation = neck.rotation;
+        initialHeadPosition = head.position;
+        initialHeadRotation = head.rotation;
     }
 
     public void setIkTargets(Transform neck) {
-        RootMotion.FinalIK.IKSolver.Bone[] bones = new RootMotion.FinalIK.IKSolver.Bone[2];
-
-        bones[0] = new RootMotion.FinalIK.IKSolver.Bone();
-        bones[0].transform = neck;
-        bones[1] = new RootMotion.FinalIK.IKSolver.Bone();
-        bones[1].transform = head;
-
         headTarget = new GameObject().transform;
         headTarget.name = head.name + " - Target";
         headTarget.position = head.position;
@@ -29,16 +28,18 @@ public class HeadController : BasicBodyController {
         headTarget.localScale = head.localScale;
         headTarget.SetParent(neck);
 
-        RootMotion.FinalIK.FABRIK script = neck.gameObject.AddComponent<RootMotion.FinalIK.FABRIK>();
-        script.solver.target = headTarget;
-        script.solver.IKPositionWeight = 1;
-        
-        script.solver.bones = bones;
-        script.enabled = true;
+        headTargetPosition = headTarget.position;
+        headTargetRotation = headTarget.rotation;
+
+        ikScript = spineRoot.gameObject.AddComponent<RootMotion.FinalIK.LimbIK>();
+        ikScript.solver.target = headTarget;
+        ikScript.solver.IKPositionWeight = 1;
+        ikScript.solver.IKRotationWeight = 1;
+        ikScript.solver.SetChain(spineRoot, spine, neck, head);
+        ikScript.enabled = true;
     }
 
     public void resetAnimation() { }
-
 
     public void reset() {
         headTarget.position = initialHeadPosition;
@@ -55,14 +56,14 @@ public class HeadController : BasicBodyController {
     }
 
     public void update() {
-        headTarget.transform.localPosition = Vector3.Lerp(headTarget.transform.localPosition, headTargetPosition, constant * speed);
-        head.transform.rotation = Quaternion.Lerp(head.transform.rotation, headTargetRotation, constant * speed);
+        headTarget.transform.position = Vector3.Lerp(headTarget.transform.position, headTargetPosition, constant * speed);
+        headTarget.transform.rotation = Quaternion.Lerp(headTarget.transform.rotation, headTargetRotation, constant * speed);
     }
 
     public bool isArrived() {
         Vector3 distancePosition, distanceRotation;
-        distancePosition = headTarget.transform.localPosition - headTargetPosition;
-        distanceRotation = head.transform.rotation.eulerAngles - headTargetRotation.eulerAngles;
+        distancePosition = headTarget.transform.position - headTargetPosition;
+        distanceRotation = headTarget.transform.rotation.eulerAngles - headTargetRotation.eulerAngles;
         return (distancePosition.sqrMagnitude < 1 && distanceRotation.sqrMagnitude < 1);
     }
 

@@ -319,7 +319,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string fileName = maoDireitaMovimentoFileDropdown.options[maoDireitaMovimentoFileDropdown.value].text + ".json";
             string filePath = getMovementFilePath(maoDireitaMovimentoDropdown).ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
-            controller.loadMovementConfiguration(configuration, true, overwriteRightHand, overwriteLeftHand);           
+            controller.loadMovementConfiguration(configuration, true, overwriteRightHand);           
         }
         else {
             controller.avatarSetupScript.bodyController.rightArmController.handController.resetWrist();
@@ -331,7 +331,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string fileName = maoEsquerdaMovimentoFileDropdown.options[maoEsquerdaMovimentoFileDropdown.value].text + ".json";
             string filePath = getMovementFilePath(maoEsquerdaMovimentoDropdown).ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
-            controller.loadMovementConfiguration(configuration, false, overwriteRightHand, overwriteLeftHand);
+            controller.loadMovementConfiguration(configuration, false, overwriteLeftHand);
         }
         else {
             controller.avatarSetupScript.bodyController.leftArmController.handController.resetWrist();
@@ -343,7 +343,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string fileName = maoDireitaFingerMovementFileDropdown.options[maoDireitaFingerMovementFileDropdown.value].text + ".json";
             string filePath = getFingerMovementFilePath().ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
-            controller.loadMovementConfiguration(configuration, true, overwriteRightHand, overwriteLeftHand);
+            controller.loadMovementConfiguration(configuration, true, false);
             disableRightHandConfigurationInterface();
         }
         else {
@@ -357,7 +357,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string fileName = maoEsquerdaFingerMovementFileDropdown.options[maoEsquerdaFingerMovementFileDropdown.value].text + ".json";
             string filePath = getFingerMovementFilePath().ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
-            controller.loadMovementConfiguration(configuration, false, overwriteRightHand, overwriteLeftHand);
+            controller.loadMovementConfiguration(configuration, false, false);
             disableLeftHandConfigurationInterface();
         }
         else {
@@ -371,7 +371,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
             string fileName = headMovementFileDropdown.options[headMovementFileDropdown.value].text + ".json";
             string filePath = getHeadMovementFilePath().ToString() + "\\" + fileName;
             MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
-            controller.loadMovementConfiguration(configuration, false, overwriteRightHand, overwriteLeftHand);
+            controller.loadMovementConfiguration(configuration, false, false);
         }
         else {
             controller.avatarSetupScript.bodyController.headController.reset();
@@ -423,7 +423,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
     }
 
     public void salvarTermoSimples() {
-        SimpleTerm termo = new SimpleTerm();
+     /* SimpleTerm termo = new SimpleTerm();
         termo.name = nomeTermoSimples.text;
         termo.rightHandConfigurationPath =
         termo.leftHandConfigurationPath =
@@ -442,11 +442,11 @@ public class TermCaptureCanvasController : MonoBehaviour {
         termo.rightHandFingersMovementConfigurationPath = getFingerMovementFilePath().ToString() + "\\" + maoDireitaFingerMovementFileDropdown.options[maoDireitaFingerMovementFileDropdown.value].text + ".json";
         termo.leftHandFingersMovementConfigurationPath = getFingerMovementFilePath().ToString() + "\\" + maoEsquerdaFingerMovementFileDropdown.options[maoEsquerdaFingerMovementFileDropdown.value].text + ".json";
         termo.headMovementConfigurationPath = getHeadMovementFilePath().ToString() + "\\" + headMovementFileDropdown.options[headMovementFileDropdown.value].text + ".json";
-        termo.save();
+        termo.save();*/
 }
 
     public void salvarTermoComposto() {
-        CompositeTerm termo = new CompositeTerm();
+     /* CompositeTerm termo = new CompositeTerm();
         termo.name = nomeTermoComposto.text;
         termo.termList = new List<string>();
         Transform termAggregator = compositeCanvas.transform.GetChild(3);
@@ -454,7 +454,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
             Transform term = termAggregator.GetChild(i).GetChild(0);
             termo.termList.Add(term.GetComponent<Dropdown>().options[term.GetComponent<Dropdown>().value].text);
         }
-        termo.save();
+        termo.save();*/
     }
 
     public void activateCompositeTerm() {
