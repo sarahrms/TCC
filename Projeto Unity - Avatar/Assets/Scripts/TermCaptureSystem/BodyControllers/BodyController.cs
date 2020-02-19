@@ -17,7 +17,7 @@ public class BodyController : BasicBodyController {
         headController = new HeadController(GameObject.Find("mixamorig:Head").transform);
     }
 
-    public void setIkTargets(RootMotion.FinalIK.FullBodyBipedIK ikScript) {
+    public void setIkTargets(RootMotion.FinalIK.FullBodyBipedIK ikScript, bool createGizmo) {
         this.ikScript = ikScript;
 
         spineTarget = new GameObject().transform;
@@ -29,8 +29,8 @@ public class BodyController : BasicBodyController {
         ikScript.solver.bodyEffector.positionWeight = 1;
         ikScript.solver.bodyEffector.maintainRelativePositionWeight = 1;
 
-        rightArmController.setIkTargets(ikScript);
-        leftArmController.setIkTargets(ikScript);
+        rightArmController.setIkTargets(ikScript, createGizmo);
+        leftArmController.setIkTargets(ikScript, createGizmo);
         headController.setIkTargets(GameObject.Find("mixamorig:Neck").transform);
     }
 

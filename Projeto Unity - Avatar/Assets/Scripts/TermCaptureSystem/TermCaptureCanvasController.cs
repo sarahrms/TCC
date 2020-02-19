@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TermCaptureCanvasController : MonoBehaviour {
-    public Vector3 frontCameraPosition, topCameraPosition, rightCameraPosition, leftCameraPosition;
+    public Vector3 frontCameraPosition, frontCameraRotation, topCameraPosition, topCameraRotation, rightCameraPosition, rightCameraRotation,
+        leftCameraPosition, leftCameraRotation;
     public Camera frontCamera, topCamera, rightCamera, leftCamera;
     public Toggle rightHandToggle, leftHandToggle;
     public bool overwriteRightHand = false, overwriteLeftHand =  false;
+    public bool isWord = false;
 
     public TermCaptureSystemController controller;
     public GROUP selectedGroup;
@@ -22,16 +24,21 @@ public class TermCaptureCanvasController : MonoBehaviour {
     public GameObject simpleCanvas, compositeCanvas;
 
     void Start() {
-        getInitialPositions();
+        getInitialCameraPositions();
         setCameras();
-        changeFileOptionsMaoEsquerda();
-        changeFileOptionsMaoDireita();
-        changeFileOptionsRosto();
-        changeFileOptionsBody();
-        changeFileOptionsMovementRightHand();
-        changeFileOptionsMovementLeftHand();
-        changeFileOptionsFingersMovement();
-        changeFileOptionsHeadMovement();
+        if (isWord) {
+
+        }
+        else { 
+            changeFileOptionsMaoEsquerda();
+            changeFileOptionsMaoDireita();
+            changeFileOptionsRosto();
+            changeFileOptionsBody();
+            changeFileOptionsMovementRightHand();
+            changeFileOptionsMovementLeftHand();
+            changeFileOptionsFingersMovement();
+            changeFileOptionsHeadMovement();
+        }
     }
 
     public void setDraggingObject(bool state) {
@@ -40,27 +47,35 @@ public class TermCaptureCanvasController : MonoBehaviour {
         rightCamera.GetComponent<CameraDrag>().setEnabled(!state);
     }
 
-    void getInitialPositions() {
+    void getInitialCameraPositions() {
         frontCameraPosition = frontCamera.gameObject.transform.position;
+        frontCameraRotation = frontCamera.gameObject.transform.rotation.eulerAngles;
         topCameraPosition = topCamera.gameObject.transform.position;
+        topCameraRotation = topCamera.gameObject.transform.rotation.eulerAngles;
         leftCameraPosition = leftCamera.gameObject.transform.position;
+        leftCameraRotation = leftCamera.gameObject.transform.rotation.eulerAngles;
         rightCameraPosition = rightCamera.gameObject.transform.position;
+        rightCameraRotation = rightCamera.gameObject.transform.rotation.eulerAngles;
     }
-    
+
     void disableAllCameras() {
         frontCamera.enabled = false;
         frontCamera.gameObject.transform.position = frontCameraPosition;
+        frontCamera.gameObject.transform.rotation = Quaternion.Euler(frontCameraRotation);
 
         topCamera.enabled = false;
         topCamera.gameObject.transform.position = topCameraPosition;
+        topCamera.gameObject.transform.rotation = Quaternion.Euler(topCameraRotation);
 
         leftCamera.enabled = false;
         leftCamera.gameObject.transform.position = leftCameraPosition;
+        leftCamera.gameObject.transform.rotation = Quaternion.Euler(leftCameraRotation);
 
         rightCamera.enabled = false;
         rightCamera.gameObject.transform.position = rightCameraPosition;
+        rightCamera.gameObject.transform.rotation = Quaternion.Euler(rightCameraRotation);
     }
-    
+
     void setCameras() {
         disableAllCameras();
         frontCamera.enabled = true;
@@ -292,9 +307,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
 
     public void loadFaceConfiguration() {
        if (rostoFileDropdown.value != 0) {
-            string fileName = rostoFileDropdown.options[rostoFileDropdown.value].text + ".json";
-            string filePath = getRostoFilePath(rostoDropdown).ToString() + "\\" + fileName;
-            FaceConfiguration configuration = controller.loadConfiguration<FaceConfiguration>(filePath);
+            FaceConfiguration configuration = controller.loadConfiguration<FaceConfiguration>(getFaceConfigurationPath());
             controller.loadFaceConfiguration(configuration);
         }
         else {
@@ -304,9 +317,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
 
     public void loadBodyConfiguration() {
         if (bodyFileDropdown.value != 0) {
-            string fileName = bodyFileDropdown.options[bodyFileDropdown.value].text + ".json";
-            string filePath = getBodyFilePath(bodyDropdown).ToString() + "\\" + fileName;
-            BodyConfiguration configuration = controller.loadConfiguration<BodyConfiguration>(filePath);
+            BodyConfiguration configuration = controller.loadConfiguration<BodyConfiguration>(getBodyConfigurationPath());
             controller.loadBodyConfiguration(configuration);
         }
         else {
@@ -316,9 +327,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
 
     public void loadRightHandMovementConfiguration() {
         if (maoDireitaMovimentoFileDropdown.value != 0) {
-            string fileName = maoDireitaMovimentoFileDropdown.options[maoDireitaMovimentoFileDropdown.value].text + ".json";
-            string filePath = getMovementFilePath(maoDireitaMovimentoDropdown).ToString() + "\\" + fileName;
-            MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
+            MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(getRightHandMovementConfigurationPath());
             controller.loadMovementConfiguration(configuration, true, overwriteRightHand);           
         }
         else {
@@ -327,10 +336,8 @@ public class TermCaptureCanvasController : MonoBehaviour {
     }
 
     public void loadLeftHandMovementConfiguration() {
-        if (maoEsquerdaMovimentoFileDropdown.value != 0) {
-            string fileName = maoEsquerdaMovimentoFileDropdown.options[maoEsquerdaMovimentoFileDropdown.value].text + ".json";
-            string filePath = getMovementFilePath(maoEsquerdaMovimentoDropdown).ToString() + "\\" + fileName;
-            MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(filePath);
+        if (maoEsquerdaMovimentoFileDropdown.value != 0) {           
+            MovementConfiguration configuration = controller.loadConfiguration<MovementConfiguration>(getLeftHandMovementConfigurationPath());
             controller.loadMovementConfiguration(configuration, false, overwriteLeftHand);
         }
         else {
@@ -422,39 +429,93 @@ public class TermCaptureCanvasController : MonoBehaviour {
         overwriteRightHand = rightHandToggle.isOn;
     }
 
-    public void salvarTermoSimples() {
-     /* SimpleTerm termo = new SimpleTerm();
+    public void salvarTermo() {
+        Term termo = new Term();
         termo.name = nomeTermoSimples.text;
-        termo.rightHandConfigurationPath =
-        termo.leftHandConfigurationPath =
-        termo.faceConfigurationPath = getRostoFilePath(rostoDropdown).ToString() + "\\" + rostoFileDropdown.options[rostoFileDropdown.value].text + ".json";
-        termo.bodyConfigurationPath = 
-        termo.rightHandMovementConfigurationPath = getHandFilePath(maoDireitaDropdown).ToString() + "\\" + maoDireitaFileDropdown.options[maoDireitaFileDropdown.value].text + ".json";
-        termo.leftHandMovementConfigurationPath = getHandFilePath(maoEsquerdaDropdown).ToString() + "\\" + maoEsquerdaFileDropdown.options[maoEsquerdaFileDropdown.value].text + ".json";
-        termo.overwriteRightHand = overwriteRightHand;
-        termo.overwriteLeftHand = overwriteLeftHand;
+
+        BodyData bodyData = new BodyData();
+        bodyData.faceConfigurationPath = getFaceConfigurationPath();
+        bodyData.bodyConfigurationPath = getBodyConfigurationPath();
+        bodyData.headMovementConfigurationPath = getHeadMovementConfigurationPath();
+
+        ArmData rightArmData = new ArmData();
         Transform rightHand = GameObject.Find("mixamorig:RightHand - Target").transform;
+        rightArmData.handMovementConfigurationPath = getRightHandMovementConfigurationPath();
+        rightArmData.handPosition = rightHand.position;
+        rightArmData.handRotation = rightHand.rotation.eulerAngles;
+        rightArmData.overwritetHand = overwriteRightHand;
+
+        HandData rightHandData = new HandData();
+        rightHandData.handConfigurationPath = getRightHandConfigurationPath();
+        rightHandData.fingersMovementConfigurationPath = getRightHandFingersMovementConfigurationPath();
+
+        ArmData leftArmData = new ArmData();
         Transform leftHand = GameObject.Find("mixamorig:LeftHand - Target").transform;
-        termo.rightHandPosition = rightHand.position;
-        termo.rightHandRotation = rightHand.rotation.eulerAngles;
-        termo.leftHandPosition = leftHand.position;
-        termo.leftHandRotation = leftHand.rotation.eulerAngles;
-        termo.rightHandFingersMovementConfigurationPath = getFingerMovementFilePath().ToString() + "\\" + maoDireitaFingerMovementFileDropdown.options[maoDireitaFingerMovementFileDropdown.value].text + ".json";
-        termo.leftHandFingersMovementConfigurationPath = getFingerMovementFilePath().ToString() + "\\" + maoEsquerdaFingerMovementFileDropdown.options[maoEsquerdaFingerMovementFileDropdown.value].text + ".json";
-        termo.headMovementConfigurationPath = getHeadMovementFilePath().ToString() + "\\" + headMovementFileDropdown.options[headMovementFileDropdown.value].text + ".json";
-        termo.save();*/
+        leftArmData.handMovementConfigurationPath = getLeftHandMovementConfigurationPath();
+        leftArmData.handPosition = leftHand.position;
+        leftArmData.handRotation = leftHand.rotation.eulerAngles;
+        leftArmData.overwritetHand = overwriteLeftHand;
+
+        HandData leftHandData = new HandData();
+        leftHandData.handConfigurationPath = getLeftHandConfigurationPath();
+        leftHandData.fingersMovementConfigurationPath = getLeftHandFingersMovementConfigurationPath();
+
+        rightArmData.handData = rightHandData;
+        leftArmData.handData = leftHandData;
+
+        bodyData.rightArm = rightArmData;
+        bodyData.leftArm = leftArmData;
+
+        termo.bodyData = bodyData;
+        termo.save();
 }
 
-    public void salvarTermoComposto() {
-     /* CompositeTerm termo = new CompositeTerm();
-        termo.name = nomeTermoComposto.text;
-        termo.termList = new List<string>();
+    public string getFaceConfigurationPath() {
+        return getRostoFilePath(rostoDropdown).ToString() + "\\" + rostoFileDropdown.options[rostoFileDropdown.value].text + ".json";
+    }
+
+    public string getBodyConfigurationPath() {
+        return getBodyFilePath(bodyDropdown).ToString() + "\\" + bodyFileDropdown.options[bodyFileDropdown.value].text + ".json"; ;
+    }
+
+    public string getHeadMovementConfigurationPath() {
+        return getHeadMovementFilePath().ToString() + "\\" + headMovementFileDropdown.options[headMovementFileDropdown.value].text + ".json";
+    }
+
+    public string getRightHandConfigurationPath() { 
+        return getHandFilePath(maoDireitaDropdown).ToString() + "\\" + maoDireitaFileDropdown.options[maoDireitaFileDropdown.value].text + ".json";
+    }
+
+    public string getLeftHandConfigurationPath() { 
+        return getHandFilePath(maoEsquerdaDropdown).ToString() + "\\" + maoEsquerdaFileDropdown.options[maoEsquerdaFileDropdown.value].text + ".json";
+    }
+
+    public string getRightHandMovementConfigurationPath() {
+        return getMovementFilePath(maoDireitaMovimentoDropdown).ToString() + "\\" + maoDireitaMovimentoFileDropdown.options[maoDireitaMovimentoFileDropdown.value].text + ".json";
+    }
+
+    public string getLeftHandMovementConfigurationPath() {
+        return getMovementFilePath(maoEsquerdaMovimentoDropdown).ToString() + "\\" + maoEsquerdaMovimentoFileDropdown.options[maoEsquerdaMovimentoFileDropdown.value].text + ".json";
+    }
+
+    public string getRightHandFingersMovementConfigurationPath() {
+        return getFingerMovementFilePath().ToString() + "\\" + maoDireitaFingerMovementFileDropdown.options[maoDireitaFingerMovementFileDropdown.value].text + ".json";
+    }
+
+    public string getLeftHandFingersMovementConfigurationPath() {
+        return getFingerMovementFilePath().ToString() + "\\" + maoEsquerdaFingerMovementFileDropdown.options[maoEsquerdaFingerMovementFileDropdown.value].text + ".json";
+    }
+
+    public void salvarPalavra() {
+        Word palavra = new Word();
+        palavra.name = nomeTermoComposto.text;
+        palavra.termList = new List<string>();
         Transform termAggregator = compositeCanvas.transform.GetChild(3);
         for(int i=1; i<termAggregator.childCount; i++) { 
-            Transform term = termAggregator.GetChild(i).GetChild(0);
-            termo.termList.Add(term.GetComponent<Dropdown>().options[term.GetComponent<Dropdown>().value].text);
+            Transform termo = termAggregator.GetChild(i).GetChild(0);
+            palavra.termList.Add(termo.GetComponent<Dropdown>().options[termo.GetComponent<Dropdown>().value].text);
         }
-        termo.save();*/
+        palavra.save();
     }
 
     public void activateCompositeTerm() {

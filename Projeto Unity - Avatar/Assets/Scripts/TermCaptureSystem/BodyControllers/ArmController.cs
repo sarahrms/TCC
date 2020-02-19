@@ -13,7 +13,7 @@ public class ArmController : BasicBodyController {
         handController = new HandController(shoulder.GetChild(0).GetChild(0).transform);
     }
 
-    public void setIkTargets(RootMotion.FinalIK.FullBodyBipedIK ikScript) {
+    public void setIkTargets(RootMotion.FinalIK.FullBodyBipedIK ikScript, bool createGizmo) {
         this.ikScript = ikScript;
 
         shoulderTarget = new GameObject().transform;
@@ -25,10 +25,12 @@ public class ArmController : BasicBodyController {
         ikScript.solver.rightShoulderEffector.positionWeight = 1;
         ikScript.solver.rightShoulderEffector.maintainRelativePositionWeight = 1;
 
-        handController.setIkTargets(ikScript);
-        handController.createGizmo();
-        handController.createCollider();
-        handController.setMouseDrag();
+        if (createGizmo) { 
+            handController.setIkTargets(ikScript);
+            handController.createGizmo();
+            handController.createCollider();
+            handController.setMouseDrag();
+        }
     }
 
     public void reset() {

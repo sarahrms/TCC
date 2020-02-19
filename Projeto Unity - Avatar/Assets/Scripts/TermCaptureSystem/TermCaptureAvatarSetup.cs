@@ -9,7 +9,7 @@ public class TermCaptureAvatarSetup : MonoBehaviour {
     public void init() {
         ikScript = gameObject.GetComponent<RootMotion.FinalIK.FullBodyBipedIK>();
         bodyController = new BodyController(GameObject.Find("mixamorig:Spine").transform);
-        bodyController.setIkTargets(ikScript);
+        bodyController.setIkTargets(ikScript, true);
     }
 
     public void update() {

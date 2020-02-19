@@ -13,14 +13,18 @@ public class TermCaptureSystemController : MonoBehaviour {
     //Vector3 initialLeftHandTargetRotation = new Vector3(16.911f, 54.966f, 157.637f);
     //Vector3 initialRightHandTargetRotation = new Vector3(18.148f, -54.532f, -157.141f);
 
-    void Start() {
-        avatarSetupScript = GameObject.Find("Avatar").GetComponent<TermCaptureAvatarSetup>();
-        avatarSetupScript.init();
+    void Start() {       
+        if(GameObject.Find("Avatar") != null){
+            avatarSetupScript = GameObject.Find("Avatar").GetComponent<TermCaptureAvatarSetup>();
+            avatarSetupScript.init(); 
+        }
     }
 
     private void Update() {
-        avatarSetupScript.update();
-        updateConfiguration();
+        if (avatarSetupScript != null) {
+            avatarSetupScript.update();
+            updateConfiguration();
+        }
     }
 
     public void updateConfiguration() {

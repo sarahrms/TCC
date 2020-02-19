@@ -42,7 +42,6 @@ public class BodyComponent : BasicBodyComponent {
         spineTarget.localScale = spine.localScale;
 
         ikScript.solver.bodyEffector.positionWeight = 1;
-        ikScript.solver.bodyEffector.maintainRelativePositionWeight = 1;
 
         rightArm.setIkTargets(ikScript);
         leftArm.setIkTargets(ikScript);

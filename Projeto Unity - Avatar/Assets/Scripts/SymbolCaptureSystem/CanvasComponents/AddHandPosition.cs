@@ -41,7 +41,7 @@ public class AddHandPosition : MonoBehaviour {
             }
             addButton.transform.position -= offset;            
         }
-        else if (positionAggregator.childCount == 5) {
+        if (positionAggregator.childCount == 5) {
             addButton.gameObject.SetActive(false);
         }
     }

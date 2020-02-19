@@ -42,8 +42,8 @@ public class HeadController : BasicBodyController {
     public void resetAnimation() { }
 
     public void reset() {
-        headTarget.position = initialHeadPosition;
-        headTarget.rotation = initialHeadRotation;
+        headTargetPosition = initialHeadPosition;
+        headTargetRotation = initialHeadRotation;
     }
 
     public void setSpeed(float speed) {

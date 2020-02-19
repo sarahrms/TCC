@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class HeadComponent : BasicBodyComponent {
     public Transform spineRoot, spine, neck, head, headTarget;
-    public Vector3 initialNeckPosition, initialHeadPosition;
-    public Quaternion initialNeckRotation,initialHeadRotation;
+    public Vector3 initialHeadPosition;
+    public Quaternion initialHeadRotation;
     public float radius = 1.5f;
     public RootMotion.FinalIK.LimbIK ikScript;
 
@@ -15,8 +15,6 @@ public class HeadComponent : BasicBodyComponent {
         spine = neck.parent;
         spineRoot = spine.parent;
 
-        initialNeckPosition = neck.position;
-        initialNeckRotation = neck.rotation;
         initialHeadPosition = head.position;
         initialHeadRotation = head.rotation;
         setLine();

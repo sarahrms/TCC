@@ -73,6 +73,9 @@
     <Compile Include="Assets\Scripts\Notation\Symbol\Symbol.cs" />
     <Compile Include="Assets\Scripts\Notation\Symbol\WristConfiguration.cs" />
     <Compile Include="Assets\Scripts\Notation\Term\Term.cs" />
+    <Compile Include="Assets\Scripts\SignalingSystem\SignalingAvatarSetup.cs" />
+    <Compile Include="Assets\Scripts\SignalingSystem\SignalingCanvasController.cs" />
+    <Compile Include="Assets\Scripts\SignalingSystem\SignalingSystemController.cs" />
     <Compile Include="Assets\Scripts\SymbolCaptureSystem\BodyComponents\ArmComponent.cs" />
     <Compile Include="Assets\Scripts\SymbolCaptureSystem\BodyComponents\BasicBodyComponent.cs" />
     <Compile Include="Assets\Scripts\SymbolCaptureSystem\BodyComponents\BodyComponent.cs" />

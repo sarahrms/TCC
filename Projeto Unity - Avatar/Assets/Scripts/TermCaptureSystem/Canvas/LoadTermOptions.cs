@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class LoadTermOptions : MonoBehaviour {
     public Dropdown dropdown;
     void Start() {
-        DirectoryInfo levelDirectoryPath = new DirectoryInfo("Assets\\Term");
+        DirectoryInfo levelDirectoryPath = new DirectoryInfo("Assets\\Terms");
         changeFileOptions(dropdown, levelDirectoryPath);
     }
 

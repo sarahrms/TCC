@@ -5,7 +5,8 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 public class SymbolCaptureCanvasController : MonoBehaviour {
-    public Transform frontCameraTransform, topCameraTransform, rightCameraTransform, leftCameraTransform;
+    public Vector3 frontCameraPosition, frontCameraRotation, topCameraPosition, topCameraRotation, rightCameraPosition, rightCameraRotation,
+        leftCameraPosition, leftCameraRotation;
     public Camera frontCamera, topCamera, rightCamera, leftCamera;
     public GameObject handConfigurationInterface, headConfigurationInterface, bodyConfigurationInterface, 
         movementDescriptionInterface, currentInterface; 
@@ -35,28 +36,32 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
     }
 
     void getInitialCameraPositions() {
-        frontCameraTransform = frontCamera.gameObject.transform;
-        topCameraTransform = topCamera.gameObject.transform;
-        leftCameraTransform = leftCamera.gameObject.transform;
-        rightCameraTransform = rightCamera.gameObject.transform;
+        frontCameraPosition = frontCamera.gameObject.transform.position;
+        frontCameraRotation = frontCamera.gameObject.transform.rotation.eulerAngles;
+        topCameraPosition = topCamera.gameObject.transform.position;
+        topCameraRotation = topCamera.gameObject.transform.rotation.eulerAngles;
+        leftCameraPosition = leftCamera.gameObject.transform.position;
+        leftCameraRotation = leftCamera.gameObject.transform.rotation.eulerAngles;
+        rightCameraPosition = rightCamera.gameObject.transform.position;
+        rightCameraRotation = rightCamera.gameObject.transform.rotation.eulerAngles;
     }
 
     void disableAllCameras() {
         frontCamera.enabled = false;
-        frontCamera.gameObject.transform.position = frontCameraTransform.position;
-        frontCamera.gameObject.transform.rotation = frontCameraTransform.rotation;
+        frontCamera.gameObject.transform.position = frontCameraPosition;
+        frontCamera.gameObject.transform.rotation = Quaternion.Euler(frontCameraRotation);
 
         topCamera.enabled = false;
-        topCamera.gameObject.transform.position = topCameraTransform.position;
-        topCamera.gameObject.transform.rotation = topCameraTransform.rotation;
+        topCamera.gameObject.transform.position = topCameraPosition;
+        topCamera.gameObject.transform.rotation = Quaternion.Euler(topCameraRotation);
 
         leftCamera.enabled = false;
-        leftCamera.gameObject.transform.position = leftCameraTransform.position;
-        leftCamera.gameObject.transform.rotation = leftCameraTransform.rotation;
+        leftCamera.gameObject.transform.position = leftCameraPosition;
+        leftCamera.gameObject.transform.rotation = Quaternion.Euler(leftCameraRotation);
 
         rightCamera.enabled = false;
-        rightCamera.gameObject.transform.position = rightCameraTransform.position;
-        rightCamera.gameObject.transform.rotation = rightCameraTransform.rotation;
+        rightCamera.gameObject.transform.position = rightCameraPosition;
+        rightCamera.gameObject.transform.rotation = Quaternion.Euler(rightCameraRotation);
     }
 
     void setCameras() {
@@ -117,7 +122,6 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
     public void changeSelectedGroup() {
         selectedGroup = Symbol.typeMap[selectedType][groupDropdown.value];
         controller.changeGroup(getId(), selectedGroup);
-        controller.reset();
         disableAllInterfaces();
         switch (tipoDropdown.value) {
             case 0:
@@ -135,6 +139,7 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
             default:
                 break;
         }
+        controller.reset();
     }
 
     public void disableAllInterfaces(){
@@ -158,7 +163,6 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
         currentInterface = headConfigurationInterface;
         if (controller.avatarSetupScript != null) {
             controller.disableAllTargets();
-            controller.enableHeadConfigurationTargets();
         }
     }
 
