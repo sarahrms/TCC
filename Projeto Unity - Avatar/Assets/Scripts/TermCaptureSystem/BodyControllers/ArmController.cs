@@ -25,8 +25,9 @@ public class ArmController : BasicBodyController {
         ikScript.solver.rightShoulderEffector.positionWeight = 1;
         ikScript.solver.rightShoulderEffector.maintainRelativePositionWeight = 1;
 
+        handController.setIkTargets(ikScript);
+
         if (createGizmo) { 
-            handController.setIkTargets(ikScript);
             handController.createGizmo();
             handController.createCollider();
             handController.setMouseDrag();

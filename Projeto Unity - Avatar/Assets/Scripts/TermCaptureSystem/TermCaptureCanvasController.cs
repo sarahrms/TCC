@@ -443,7 +443,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
         rightArmData.handMovementConfigurationPath = getRightHandMovementConfigurationPath();
         rightArmData.handPosition = rightHand.position;
         rightArmData.handRotation = rightHand.rotation.eulerAngles;
-        rightArmData.overwritetHand = overwriteRightHand;
+        rightArmData.overwriteHand = overwriteRightHand;
 
         HandData rightHandData = new HandData();
         rightHandData.handConfigurationPath = getRightHandConfigurationPath();
@@ -454,7 +454,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
         leftArmData.handMovementConfigurationPath = getLeftHandMovementConfigurationPath();
         leftArmData.handPosition = leftHand.position;
         leftArmData.handRotation = leftHand.rotation.eulerAngles;
-        leftArmData.overwritetHand = overwriteLeftHand;
+        leftArmData.overwriteHand = overwriteLeftHand;
 
         HandData leftHandData = new HandData();
         leftHandData.handConfigurationPath = getLeftHandConfigurationPath();
@@ -516,16 +516,5 @@ public class TermCaptureCanvasController : MonoBehaviour {
             palavra.termList.Add(termo.GetComponent<Dropdown>().options[termo.GetComponent<Dropdown>().value].text);
         }
         palavra.save();
-    }
-
-    public void activateCompositeTerm() {
-        if (canvasTypeDropdown.value == 0) {
-            simpleCanvas.SetActive(true);
-            compositeCanvas.SetActive(false);
-        }
-        else {
-            simpleCanvas.SetActive(false);
-            compositeCanvas.SetActive(true);
-        }
     }
 }

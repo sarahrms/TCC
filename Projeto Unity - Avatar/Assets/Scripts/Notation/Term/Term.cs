@@ -43,7 +43,7 @@ public class BodyData {
 
 [System.Serializable]
 public class ArmData {
-    public bool overwritetHand;
+    public bool overwriteHand;
     public Vector3 handPosition, handRotation;
     public string handMovementConfigurationPath;
     public HandData handData;

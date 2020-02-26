@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SignalingCanvasController : MonoBehaviour {
-    public Vector3 frontCameraPosition, frontCameraRotation, topCameraPosition, topCameraRotation, rightCameraPosition, rightCameraRotation,
+    private Vector3 frontCameraPosition, frontCameraRotation, topCameraPosition, topCameraRotation, rightCameraPosition, rightCameraRotation,
         leftCameraPosition, leftCameraRotation;
     public Camera frontCamera, topCamera, rightCamera, leftCamera;
     public Dropdown cameraDropdown;

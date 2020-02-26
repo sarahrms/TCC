@@ -1947,7 +1947,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1196022079}
-        m_MethodName: salvarTermoSimples
+        m_MethodName: salvarTermo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13076,6 +13076,7 @@ MonoBehaviour:
   leftHandToggle: {fileID: 1367399810}
   overwriteRightHand: 0
   overwriteLeftHand: 0
+  isWord: 0
   controller: {fileID: 1196022080}
   selectedGroup: 0
   cameraDropdown: {fileID: 725132017}

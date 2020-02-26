@@ -11,10 +11,22 @@ public class SignalingSystemController : MonoBehaviour {
     public Term currentTerm;
     public int currentTermIndex = 0;
 
-    public bool isPlaying = false;
+    public bool isPlaying = false, isPlayingHead = false, isPlayingRightHand = false, isPlayingLeftHand = false,
+        isPlayingRightHandFingers, isPlayingLeftHandFingers;
 
     public MovementConfiguration currentHeadMovementConfiguration;
     public int currentHeadMovementConfigurationIndex = 0;
+
+    public bool overwriteRightHand, overwriteLeftHand;
+    public Vector3 rightHandPosition, leftHandPosition, rightHandRotation, leftHandRotation;
+    public Vector3 rightHandPositionOffset, leftHandPositionOffset, rightHandRotationOffset, leftHandRotationOffset;
+    public MovementConfiguration currentRightHandMovementConfiguration, currentLeftHandMovementConfiguration;
+    public int currentRightHandMovementConfigurationIndex = 0, currentLeftHandMovementConfigurationIndex = 0;
+
+    public MovementConfiguration currentRightHandFingersMovementConfiguration, currentLeftHandFingersMovementConfiguration;
+    public int currentRightHandFingersMovementConfigurationIndex = 0, currentLeftHandFingersMovementConfigurationIndex = 0;
+
+    public HandConfiguration currentRightHandConfiguration, currentLeftHandConfiguration;
 
     void Start() {
         avatarSetupScript = GameObject.Find("Avatar").GetComponent<SignalingAvatarSetup>();
@@ -26,209 +38,264 @@ public class SignalingSystemController : MonoBehaviour {
         updateConfiguration();
     }
 
+    public void updateHeadMovementConfiguration() {
+        if(isPlayingHead && avatarSetupScript.bodyController.headController.isArrived()) {
+            if (++currentHeadMovementConfigurationIndex < currentHeadMovementConfiguration.configurationList.Count) {
+                setHeadMovementConfiguration();
+            }
+            else {
+                isPlayingHead = false;
+            }
+        }
+    }
+
+    public void updateRightHandMovementConfiguration() {
+        if (isPlayingRightHand && avatarSetupScript.bodyController.rightArmController.handController.isWristArrived()) {
+            if (++currentRightHandMovementConfigurationIndex < currentRightHandMovementConfiguration.configurationList.Count) {
+                setRightHandMovementConfiguration();
+            }
+            else {
+                isPlayingRightHand = false;
+            }
+        }
+    }
+
+    public void updateLeftHandMovementConfiguration() {
+        if (isPlayingLeftHand && avatarSetupScript.bodyController.leftArmController.handController.isWristArrived()) {
+            if (++currentLeftHandMovementConfigurationIndex < currentLeftHandMovementConfiguration.configurationList.Count) {
+                setLeftHandMovementConfiguration();
+            }
+            else {
+                isPlayingLeftHand = false;
+            }
+        }
+    }
+
+    public void updateRightHandFingersMovementConfiguration() {
+        if (isPlayingRightHandFingers && avatarSetupScript.bodyController.rightArmController.handController.isFingersArrived()) {
+            if (++currentRightHandFingersMovementConfigurationIndex < currentRightHandFingersMovementConfiguration.configurationList.Count) {
+                setRightHandFingersMovementConfiguration();
+            }
+            else {
+                isPlayingRightHandFingers = false;
+            }
+        }
+    }
+
+    public void updateLeftHandFingersMovementConfiguration() {
+        if (isPlayingLeftHandFingers && avatarSetupScript.bodyController.leftArmController.handController.isFingersArrived()) {
+            if (++currentLeftHandFingersMovementConfigurationIndex < currentLeftHandFingersMovementConfiguration.configurationList.Count) {
+                setLeftHandFingersMovementConfiguration();
+            }
+            else {
+                isPlayingLeftHandFingers = false;
+            }
+        }
+    }
+
     public void updateConfiguration() {
-        /*
-           if (isPlaying) {
-               switch (currentConfiguration.movementType) {
-                   case MOVEMENT_TYPE.HANDS_MOVEMENT:
-                       if (isRightHand) {
-                           if (avatarSetupScript.bodyController.rightArmController.handController.isWristArrived()) {
-                               if (++currentIndex < currentConfiguration.configurationList.Count) {
-                                   loadHandMovementConfiguration();
-                               }
-                               else {
-                                   isPlaying = false;
-                                   positionOffset = new Vector3();
-                                   rotationOffset = new Vector3();
-                                   avatarSetupScript.bodyController.rightArmController.handController.trajectoryType = TRAJECTORY_TYPE.STRAIGHT;
-                               }
-                           }
-                       }
-                       else {
-                           if (avatarSetupScript.bodyController.leftArmController.handController.isWristArrived()) {
-                               if (++currentIndex < currentConfiguration.configurationList.Count) {
-                                   loadHandMovementConfiguration();
-                               }
-                               else {
-                                   isPlaying = false;
-                                   positionOffset = new Vector3();
-                                   rotationOffset = new Vector3();
-                                   avatarSetupScript.bodyController.leftArmController.handController.trajectoryType = TRAJECTORY_TYPE.STRAIGHT;
-                               }
-                           }
-                       }
-                       break;
-                   case MOVEMENT_TYPE.FINGERS_MOVEMENT:
-                       if (isRightHand) {
-                           if (avatarSetupScript.bodyController.rightArmController.handController.isFingersArrived()) {
-                               if (++currentIndex < currentConfiguration.configurationList.Count) {
-                                   loadFingersMovementConfiguration();
-                               }
-                               else {
-                                   isPlaying = false;
-                               }
-                           }
-                       }
-                       else {
-                           if (avatarSetupScript.bodyController.leftArmController.handController.isFingersArrived()) {
-                               if (++currentIndex < currentConfiguration.configurationList.Count) {
-                                   loadFingersMovementConfiguration();
-                               }
-                               else {
-                                   isPlaying = false;
-                               }
-                           }
-                       }
-                       break;
-                   case MOVEMENT_TYPE.HEAD_MOVEMENT:
-                       if (avatarSetupScript.bodyController.headController.isArrived()) {
-                           if (++currentIndex < currentConfiguration.configurationList.Count) {
-                               loadHeadMovementConfiguration();
-                           }
-                           else {
-                               isPlaying = false;
-                           }
-                       }
-                       break;
-               }
-           }*/
-       }
-    /*
-       public void loadMovementConfiguration(MovementConfiguration configuration, bool isRight, bool overwrite) {
-           configuration.loadConfigurationList();
-           overwriteHand = overwrite;
-           isRightHand = isRight;
-           isPlaying = true;
-           currentConfiguration = configuration;
-           currentIndex = 0;
-           switch (currentConfiguration.movementType) {
-               case MOVEMENT_TYPE.HANDS_MOVEMENT:
-                   loadHandMovementConfiguration();
-                   break;
-               case MOVEMENT_TYPE.FINGERS_MOVEMENT:
-                   loadFingersMovementConfiguration();
-                   break;
-               case MOVEMENT_TYPE.HEAD_MOVEMENT:
-                   loadHeadMovementConfiguration();
-                   break;
-           }
-       }
+        if (isPlaying) {
+            updateHeadMovementConfiguration();
+            updateRightHandMovementConfiguration();
+            updateLeftHandMovementConfiguration();
+            updateRightHandFingersMovementConfiguration();
+            updateLeftHandFingersMovementConfiguration();
+            isDone();
+        }
+        else {
+            nextTerm();
+        }
+    }
 
-       public void loadHandMovementConfiguration() {
-           WristConfiguration wristConfiguration = (WristConfiguration) currentConfiguration.configurationList[currentIndex];
-           loadWristConfiguration(wristConfiguration);
-           setWristTrajectory();
-       }
+    public void nextTerm() {
+        if (++currentTermIndex < currentTermList.Count) {
+            currentTerm = currentTermList[currentTermIndex];
+            loadBodyData(currentTerm.bodyData);
+            isPlaying = true;
+        }        
+    }
 
-       public void setWristTrajectory() {
-           HandController handController;
-           if (isRightHand) {
-               handController = avatarSetupScript.bodyController.rightArmController.handController;
-           }
-           else {
-               handController = avatarSetupScript.bodyController.leftArmController.handController;
-           }
+    public void isDone() {
+        isPlaying = isPlayingHead || isPlayingRightHand || isPlayingLeftHand || isPlayingRightHandFingers || isPlayingLeftHandFingers;
+    }
+   
+    public void setRightHandFingersMovementConfiguration() {
+        HandConfiguration handConfiguration = (HandConfiguration) currentRightHandFingersMovementConfiguration.configurationList[currentRightHandFingersMovementConfigurationIndex];
+        loadHandConfiguration(handConfiguration, true);
+    }
 
-           handController.trajectoryPlane = currentConfiguration.trajectoryPlane;
-           handController.trajectoryDirection = (currentIndex == 0) ? currentConfiguration.trajectoryDirections[currentIndex]
-                                                    : currentConfiguration.trajectoryDirections[currentIndex - 1];
-           handController.trajectoryType = (currentIndex == 0) ? TRAJECTORY_TYPE.STRAIGHT : currentConfiguration.trajectoryType;
-       }
+    public void setLeftHandFingersMovementConfiguration() {
+        HandConfiguration handConfiguration = (HandConfiguration) currentLeftHandFingersMovementConfiguration.configurationList[currentLeftHandFingersMovementConfigurationIndex];
+        loadHandConfiguration(handConfiguration, false);
+    }
 
-       public void loadFingersMovementConfiguration() {
-           HandConfiguration handConfiguration = (HandConfiguration) currentConfiguration.configurationList[currentIndex];
-           loadHandConfiguration(handConfiguration, isRightHand);
-       }
+    public void loadHandConfiguration(HandConfiguration configuration, bool right) {
+        for (int i = 0; i < configuration.positions.Count; i++) {
+            if (right) {
+                FingerController fingerController = avatarSetupScript.bodyController.rightArmController.handController.fingerControllers[i];
+                Vector3 position = configuration.positions[i];
+                fingerController.setTarget(position);
+            }
+            else {
+                FingerController fingerController = avatarSetupScript.bodyController.leftArmController.handController.fingerControllers[i];
+                Vector3 position = new Vector3(-configuration.positions[i].x, configuration.positions[i].y, configuration.positions[i].z);
+                fingerController.setTarget(position);
+            }
+        }
+    }
 
-       public void loadHeadMovementConfiguration() {
-           HeadConfiguration headConfiguration = (HeadConfiguration) currentConfiguration.configurationList[currentIndex];
-           loadHeadConfiguration(headConfiguration);
-       }
+    public void setRightHandConfiguration() {
+        loadHandConfiguration(currentRightHandConfiguration, true);
+    }
 
+    public void setLeftHandConfiguration() {
+        loadHandConfiguration(currentLeftHandConfiguration, false);
+    }
 
+    public void loadRightHandData(HandData handData) {
+        currentRightHandFingersMovementConfiguration = loadConfiguration<MovementConfiguration>(handData.fingersMovementConfigurationPath);
+        if (currentRightHandFingersMovementConfiguration != null) {
+            currentRightHandFingersMovementConfiguration.loadConfigurationList();
+            currentRightHandFingersMovementConfigurationIndex = 0;
+            setRightHandFingersMovementConfiguration();
+        }
+        else {
+            currentRightHandConfiguration = loadConfiguration<HandConfiguration>(handData.handConfigurationPath);
+            setRightHandConfiguration();
+        }
+    }
 
-       public void loadHandConfiguration(HandConfiguration configuration, bool right) {
-           for (int i = 0; i < configuration.positions.Count; i++) {
-               if (right) {
-                   FingerController fingerController = avatarSetupScript.bodyController.rightArmController.handController.fingerControllers[i];
-                   Vector3 position = configuration.positions[i];
-                   fingerController.setTarget(position);
-               }
-               else {
-                   FingerController fingerController = avatarSetupScript.bodyController.leftArmController.handController.fingerControllers[i];
-                   Vector3 position = new Vector3(-configuration.positions[i].x, configuration.positions[i].y, configuration.positions[i].z);
-                   fingerController.setTarget(position);
-               }
-           }
-       }
+    public void loadLeftHandData(HandData handData) {
+        currentLeftHandFingersMovementConfiguration = loadConfiguration<MovementConfiguration>(handData.fingersMovementConfigurationPath);
+        if (currentLeftHandFingersMovementConfiguration != null) {
+            currentLeftHandFingersMovementConfiguration.loadConfigurationList();
+            currentLeftHandFingersMovementConfigurationIndex = 0;
+            setLeftHandFingersMovementConfiguration();
+        }
+        else {
+            currentLeftHandConfiguration = loadConfiguration<HandConfiguration>(handData.handConfigurationPath);
+            setLeftHandConfiguration();
+        }
+    }
 
-       public void loadWristConfiguration(WristConfiguration configuration) {
-           HandController handController;
-           if (isRightHand) {
-               handController = avatarSetupScript.bodyController.rightArmController.handController;
-               if (overwriteHand) {
-                   if (currentIndex == 0) {
-                       Vector3 initialHandPosition = handController.ikScript.solver.rightHandEffector.position;
-                       Vector3 initialHandRotation = handController.ikScript.solver.rightHandEffector.rotation.eulerAngles;
-                       positionOffset = configuration.handPosition - initialHandPosition;
-                       rotationOffset = configuration.handRotation - initialHandRotation;
-                   }
-                   handController.setTarget(configuration.handPosition - positionOffset, configuration.handRotation - rotationOffset);
-               }
-               else {
-                   handController.setTarget(configuration.handPosition, configuration.handRotation);
-               }
-           }
-           else {
-               handController = avatarSetupScript.bodyController.leftArmController.handController;
-               Vector3 position = new Vector3(-configuration.handPosition.x, configuration.handPosition.y, configuration.handPosition.z);
-               Vector3 rotation = new Vector3(configuration.handRotation.x, -configuration.handRotation.y, -configuration.handRotation.z);
-               if (overwriteHand) {
-                   if (currentIndex == 0) {
-                       Vector3 initialHandPosition = handController.ikScript.solver.leftHandEffector.position;
-                       Vector3 initialHandRotation = handController.ikScript.solver.leftHandEffector.rotation.eulerAngles;
-                       positionOffset = position - initialHandPosition;
-                       rotationOffset = rotation - initialHandRotation;
-                   }
-                   handController.setTarget(position - positionOffset, rotation - rotationOffset);
-               }
-               else {
-                   handController.setTarget(position, rotation);
-               }
-           }
-       }
+    public void setWristTrajectory(MovementConfiguration configuration, bool isRightHand) {
+        HandController handController;
+        if (isRightHand) {
+            handController = avatarSetupScript.bodyController.rightArmController.handController;
+            handController.trajectoryPlane = configuration.trajectoryPlane;
+            handController.trajectoryDirection = (currentRightHandMovementConfigurationIndex == 0) ? currentRightHandMovementConfiguration.trajectoryDirections[currentRightHandMovementConfigurationIndex]
+                                                     : currentRightHandMovementConfiguration.trajectoryDirections[currentRightHandMovementConfigurationIndex - 1];
+            handController.trajectoryType = (currentRightHandMovementConfigurationIndex == 0) ? TRAJECTORY_TYPE.STRAIGHT : currentRightHandMovementConfiguration.trajectoryType;
+        }
+        else {
+            handController = avatarSetupScript.bodyController.leftArmController.handController;
+            handController.trajectoryPlane = configuration.trajectoryPlane;
+            handController.trajectoryDirection = (currentLeftHandMovementConfigurationIndex == 0) ? currentLeftHandMovementConfiguration.trajectoryDirections[currentLeftHandMovementConfigurationIndex]
+                                                     : currentLeftHandMovementConfiguration.trajectoryDirections[currentLeftHandMovementConfigurationIndex - 1];
+            handController.trajectoryType = (currentLeftHandMovementConfigurationIndex == 0) ? TRAJECTORY_TYPE.STRAIGHT : currentLeftHandMovementConfiguration.trajectoryType;
+        }
+    }
 
-       public void loadFaceConfiguration(FaceConfiguration configuration) {
-           //IMPLEMENTAR//
-           ///////////////
-           ///////////////
-           ///////////////
-           ///////////////
-       }
+    public void loadWristConfiguration(WristConfiguration configuration, bool isRightHand) {
+        HandController handController;
+        if (isRightHand) {
+            handController = avatarSetupScript.bodyController.rightArmController.handController;
+            if (overwriteRightHand) {
+                if (currentRightHandMovementConfigurationIndex == 0) {
+                    Vector3 initialHandPosition = handController.ikScript.solver.rightHandEffector.position;
+                    Vector3 initialHandRotation = handController.ikScript.solver.rightHandEffector.rotation.eulerAngles;
+                    rightHandPositionOffset = configuration.handPosition - initialHandPosition;
+                    rightHandRotationOffset = configuration.handRotation - initialHandRotation;
+                }
+                handController.setTarget(configuration.handPosition - rightHandPositionOffset, configuration.handRotation - rightHandRotationOffset);                
+            }
+            else {
+                handController.setTarget(configuration.handPosition, configuration.handRotation);
+            }
+        }
+        else {
+            handController = avatarSetupScript.bodyController.leftArmController.handController;
+            Vector3 position = new Vector3(-configuration.handPosition.x, configuration.handPosition.y, configuration.handPosition.z);
+            Vector3 rotation = new Vector3(configuration.handRotation.x, -configuration.handRotation.y, -configuration.handRotation.z);
+            if (overwriteLeftHand) {
+                if (currentLeftHandMovementConfigurationIndex == 0) {
+                    Vector3 initialHandPosition = handController.ikScript.solver.leftHandEffector.position;
+                    Vector3 initialHandRotation = handController.ikScript.solver.leftHandEffector.rotation.eulerAngles;
+                    leftHandPositionOffset = position - initialHandPosition;
+                    leftHandRotationOffset = rotation - initialHandRotation;
+                }
+                handController.setTarget(position - leftHandPositionOffset, rotation - leftHandRotationOffset);
+            }
+            else {
+                handController.setTarget(position, rotation);
+            }
+        }
+    }
 
-       public void loadBodyConfiguration(BodyConfiguration configuration) {
-           avatarSetupScript.bodyController.rightArmController.setTarget(configuration.rightShoulderPosition);
-           avatarSetupScript.bodyController.leftArmController.setTarget(configuration.leftShoulderPosition);
-           avatarSetupScript.bodyController.setTarget(configuration.spinePosition);
-       }
+    public void setRightHandMovementConfiguration() {
+        WristConfiguration wristConfiguration = (WristConfiguration) currentRightHandMovementConfiguration.configurationList[currentRightHandMovementConfigurationIndex];
+        loadWristConfiguration(wristConfiguration, true);
+        setWristTrajectory(currentRightHandMovementConfiguration, true);
+    }
 
-       public void loadHeadConfiguration(HeadConfiguration configuration) {
-           avatarSetupScript.bodyController.headController.setTarget(configuration.headPosition, configuration.headRotation);
-       }
-       */
+    public void setLeftHandMovementConfiguration() {
+        WristConfiguration wristConfiguration = (WristConfiguration) currentLeftHandMovementConfiguration.configurationList[currentLeftHandMovementConfigurationIndex];
+        loadWristConfiguration(wristConfiguration, false);
+        setWristTrajectory(currentRightHandMovementConfiguration, false);
+    }
 
+    public void loadRightHandMovementConfiguration(ArmData armData) {
+        currentRightHandMovementConfiguration = loadConfiguration<MovementConfiguration>(armData.handMovementConfigurationPath);
+        if (currentRightHandMovementConfiguration != null) {
+            currentRightHandMovementConfiguration.loadConfigurationList();
+            currentRightHandMovementConfigurationIndex = 0;
+            isPlayingRightHand = true;
+            setRightHandMovementConfiguration();            
+        }
+        else {
+            HandController handController = avatarSetupScript.bodyController.rightArmController.handController;
+            handController.setTarget(rightHandPosition, rightHandRotation);
+        }
+    }
 
-  
-    loadRightArmData(bodyData.rightArm);
-    loadLeftArmData(bodyData.leftArm);
+    public void loadLeftHandMovementConfiguration(ArmData armData) {
+        currentLeftHandMovementConfiguration = loadConfiguration<MovementConfiguration>(armData.handMovementConfigurationPath);
+        if (currentLeftHandMovementConfiguration != null) {
+            currentLeftHandMovementConfiguration.loadConfigurationList();
+            currentLeftHandMovementConfigurationIndex = 0;
+            isPlayingLeftHand = true;
+            setLeftHandMovementConfiguration();
+        }
+        else {
+            HandController handController = avatarSetupScript.bodyController.leftArmController.handController;
+            handController.setTarget(leftHandPosition, leftHandRotation);
+        }
+    }
 
+    public void loadRightArmData(ArmData armData) {
+        overwriteRightHand = armData.overwriteHand;
+        rightHandPosition = armData.handPosition;
+        rightHandRotation = armData.handRotation;
+        loadRightHandMovementConfiguration(armData);
+
+        loadRightHandData(armData.handData);
+    }
+
+    public void loadLeftArmData(ArmData armData) {
+        overwriteLeftHand = armData.overwriteHand;
+        leftHandPosition = armData.handPosition;
+        leftHandRotation = armData.handRotation;
+        loadLeftHandMovementConfiguration(armData);
+
+        loadLeftHandData(armData.handData);
+    }
 
     public void loadHeadConfiguration(HeadConfiguration configuration) {
         avatarSetupScript.bodyController.headController.setTarget(configuration.headPosition, configuration.headRotation);
     }
 
     public void setHeadMovementConfiguration() {
-        HeadConfiguration headConfiguration = (HeadConfiguration)currentHeadMovementConfiguration.configurationList[currentHeadMovementConfigurationIndex];
+        HeadConfiguration headConfiguration = (HeadConfiguration) currentHeadMovementConfiguration.configurationList[currentHeadMovementConfigurationIndex];
         loadHeadConfiguration(headConfiguration);
     }
 
@@ -237,6 +304,7 @@ public class SignalingSystemController : MonoBehaviour {
         if(currentHeadMovementConfiguration != null){
             currentHeadMovementConfiguration.loadConfigurationList();
             currentHeadMovementConfigurationIndex = 0;
+            isPlayingHead = true;
             setHeadMovementConfiguration();
         }
     }
@@ -282,7 +350,8 @@ public class SignalingSystemController : MonoBehaviour {
             }
         }
         catch(IOException e) {
-            return;
+            Debug.Log(e);
+            return default(T);
         }
     }
 

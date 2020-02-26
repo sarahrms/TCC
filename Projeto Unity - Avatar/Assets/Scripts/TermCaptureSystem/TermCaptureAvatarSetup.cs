@@ -13,7 +13,7 @@ public class TermCaptureAvatarSetup : MonoBehaviour {
     }
 
     public void update() {
-       bodyController.update();
+        bodyController.update();
     }
 
     public void reset() {
