@@ -51,9 +51,18 @@ public class FingerComponent : BasicBodyComponent {
     }
 
     public void addLimits() {
-       // RootMotion.FinalIK.RotationLimit limits = distalPhalange.gameObject.AddComponent<RootMotion.FinalIK.RotationLimit>();
-        // intermediatePhalange;
-        //  proximalPhalange;
+        RootMotion.FinalIK.RotationLimitAngle limits;
+        limits = distalPhalange.gameObject.AddComponent<RootMotion.FinalIK.RotationLimitAngle>();
+        setLimits(limits, 45);
+        limits = intermediatePhalange.gameObject.AddComponent<RootMotion.FinalIK.RotationLimitAngle>();
+        setLimits(limits, 45);
+        limits = proximalPhalange.gameObject.AddComponent<RootMotion.FinalIK.RotationLimitAngle>();
+        setLimits(limits, 45);
+    }
+
+    public void setLimits(RootMotion.FinalIK.RotationLimitAngle limits, float angle) {
+        limits.axis = new Vector3(0, 0.5f, 0.5f);
+        limits.limit = angle;
     }
 
     public void createGizmo() {

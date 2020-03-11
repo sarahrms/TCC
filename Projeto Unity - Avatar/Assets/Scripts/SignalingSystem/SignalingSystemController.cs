@@ -202,12 +202,10 @@ public class SignalingSystemController : MonoBehaviour {
             handController = avatarSetupScript.bodyController.rightArmController.handController;
             if (overwriteRightHand) {
                 if (currentRightHandMovementConfigurationIndex == 0) {
-                    Vector3 initialHandPosition = handController.ikScript.solver.rightHandEffector.position;
-                    Vector3 initialHandRotation = handController.ikScript.solver.rightHandEffector.rotation.eulerAngles;
-                    rightHandPositionOffset = configuration.handPosition - initialHandPosition;
-                    rightHandRotationOffset = configuration.handRotation - initialHandRotation;
+                    rightHandPositionOffset = rightHandPosition - configuration.handPosition;
+                    rightHandRotationOffset = rightHandRotation - configuration.handRotation;
                 }
-                handController.setTarget(configuration.handPosition - rightHandPositionOffset, configuration.handRotation - rightHandRotationOffset);                
+                handController.setTarget(configuration.handPosition + rightHandPositionOffset, configuration.handRotation + rightHandRotationOffset);                
             }
             else {
                 handController.setTarget(configuration.handPosition, configuration.handRotation);
@@ -219,12 +217,10 @@ public class SignalingSystemController : MonoBehaviour {
             Vector3 rotation = new Vector3(configuration.handRotation.x, -configuration.handRotation.y, -configuration.handRotation.z);
             if (overwriteLeftHand) {
                 if (currentLeftHandMovementConfigurationIndex == 0) {
-                    Vector3 initialHandPosition = handController.ikScript.solver.leftHandEffector.position;
-                    Vector3 initialHandRotation = handController.ikScript.solver.leftHandEffector.rotation.eulerAngles;
-                    leftHandPositionOffset = position - initialHandPosition;
-                    leftHandRotationOffset = rotation - initialHandRotation;
+                    leftHandPositionOffset = leftHandPosition - position;
+                    leftHandRotationOffset = leftHandRotation - rotation;
                 }
-                handController.setTarget(position - leftHandPositionOffset, rotation - leftHandRotationOffset);
+                handController.setTarget(position + leftHandPositionOffset, rotation + leftHandRotationOffset);
             }
             else {
                 handController.setTarget(position, rotation);

@@ -16,7 +16,7 @@ public class RotationScript : MonoBehaviour {
         handTarget = rightHand ? GameObject.Find("mixamorig:RightHand - Target").transform : GameObject.Find("mixamorig:LeftHand - Target").transform;
         lastXValue = sliderX.value;
         lastYValue = sliderY.value;
-        lastZValue = sliderZ.value;
+        lastZValue = rightHand? sliderZ.value : -sliderZ.value;
     }
 
     public void rotacionarX() {
@@ -32,7 +32,7 @@ public class RotationScript : MonoBehaviour {
     }
 
     public void rotacionarZ() {
-        float currentSliderValue = sliderZ.value;
+        float currentSliderValue = rightHand ? sliderZ.value : -sliderZ.value;
         handTarget.Rotate(0, 0, currentSliderValue - lastZValue);
         lastZValue = currentSliderValue;
     }

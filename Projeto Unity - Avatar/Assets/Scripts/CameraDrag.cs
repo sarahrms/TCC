@@ -55,6 +55,24 @@ public class CameraDrag : MonoBehaviour {
             velocityX = Mathf.Lerp(velocityX, 0, Time.deltaTime * smoothTime);
             velocityY = Mathf.Lerp(velocityY, 0, Time.deltaTime * smoothTime);
         }
+
+      /*  if (Input.GetAxis("Mouse ScrollWheel") != 0) {
+            RaycastHit hit;
+            Ray ray = this.transform.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+            Vector3 desiredPosition;
+
+            if (Physics.Raycast(ray, out hit)){
+                desiredPosition = hit.point;
+            }
+            else {
+                desiredPosition = target.position;
+            }
+            float distance = Vector3.Distance(desiredPosition, target.position);
+            Vector3 direction = Vector3.Normalize(desiredPosition - target.position) * (distance * Input.GetAxis("Mouse ScrollWheel"));
+
+            target.position += direction;
+
+        }*/
     }
     public static float ClampAngle(float angle, float min, float max) {
         if (angle < -360F)

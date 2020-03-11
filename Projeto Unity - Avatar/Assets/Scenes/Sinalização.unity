@@ -2387,11 +2387,6 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.InputField+SubmitEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_OnValueChanged:
-    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1196022079}
         m_MethodName: changeWord
@@ -2404,6 +2399,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+    m_TypeName: UnityEngine.UI.InputField+SubmitEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
     m_TypeName: UnityEngine.UI.InputField+OnChangeEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
@@ -2829,14 +2829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0670fd9dafaaa45989e842d8ce2076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontCameraPosition: {x: 0, y: 0, z: 0}
-  frontCameraRotation: {x: 0, y: 0, z: 0}
-  topCameraPosition: {x: 0, y: 0, z: 0}
-  topCameraRotation: {x: 0, y: 0, z: 0}
-  rightCameraPosition: {x: 0, y: 0, z: 0}
-  rightCameraRotation: {x: 0, y: 0, z: 0}
-  leftCameraPosition: {x: 0, y: 0, z: 0}
-  leftCameraRotation: {x: 0, y: 0, z: 0}
   frontCamera: {fileID: 534669904}
   topCamera: {fileID: 176174853}
   rightCamera: {fileID: 933490464}
@@ -2862,7 +2854,6 @@ MonoBehaviour:
   currentWord:
     name: 
     termList: []
-  isPlaying: 0
   currentTerm:
     name: 
     bodyData:
@@ -2870,7 +2861,7 @@ MonoBehaviour:
       headMovementConfigurationPath: 
       bodyConfigurationPath: 
       rightArm:
-        overwritetHand: 0
+        overwriteHand: 0
         handPosition: {x: 0, y: 0, z: 0}
         handRotation: {x: 0, y: 0, z: 0}
         handMovementConfigurationPath: 
@@ -2878,29 +2869,7 @@ MonoBehaviour:
           handConfigurationPath: 
           fingersMovementConfigurationPath: 
       leftArm:
-        overwritetHand: 0
-        handPosition: {x: 0, y: 0, z: 0}
-        handRotation: {x: 0, y: 0, z: 0}
-        handMovementConfigurationPath: 
-        handData:
-          handConfigurationPath: 
-          fingersMovementConfigurationPath: 
-  termList:
-    name: 
-    bodyData:
-      faceConfigurationPath: 
-      headMovementConfigurationPath: 
-      bodyConfigurationPath: 
-      rightArm:
-        overwritetHand: 0
-        handPosition: {x: 0, y: 0, z: 0}
-        handRotation: {x: 0, y: 0, z: 0}
-        handMovementConfigurationPath: 
-        handData:
-          handConfigurationPath: 
-          fingersMovementConfigurationPath: 
-      leftArm:
-        overwritetHand: 0
+        overwriteHand: 0
         handPosition: {x: 0, y: 0, z: 0}
         handRotation: {x: 0, y: 0, z: 0}
         handMovementConfigurationPath: 
@@ -2908,6 +2877,31 @@ MonoBehaviour:
           handConfigurationPath: 
           fingersMovementConfigurationPath: 
   currentTermIndex: 0
+  isPlaying: 0
+  isPlayingHead: 0
+  isPlayingRightHand: 0
+  isPlayingLeftHand: 0
+  isPlayingRightHandFingers: 0
+  isPlayingLeftHandFingers: 0
+  currentHeadMovementConfigurationIndex: 0
+  overwriteRightHand: 0
+  overwriteLeftHand: 0
+  rightHandPosition: {x: 0, y: 0, z: 0}
+  leftHandPosition: {x: 0, y: 0, z: 0}
+  rightHandRotation: {x: 0, y: 0, z: 0}
+  leftHandRotation: {x: 0, y: 0, z: 0}
+  rightHandPositionOffset: {x: 0, y: 0, z: 0}
+  leftHandPositionOffset: {x: 0, y: 0, z: 0}
+  rightHandRotationOffset: {x: 0, y: 0, z: 0}
+  leftHandRotationOffset: {x: 0, y: 0, z: 0}
+  currentRightHandMovementConfigurationIndex: 0
+  currentLeftHandMovementConfigurationIndex: 0
+  currentRightHandFingersMovementConfigurationIndex: 0
+  currentLeftHandFingersMovementConfigurationIndex: 0
+  currentRightHandConfiguration:
+    positions: []
+  currentLeftHandConfiguration:
+    positions: []
 --- !u!1 &1199901270
 GameObject:
   m_ObjectHideFlags: 0

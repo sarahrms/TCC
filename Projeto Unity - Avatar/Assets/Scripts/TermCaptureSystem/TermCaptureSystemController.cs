@@ -34,6 +34,7 @@ public class TermCaptureSystemController : MonoBehaviour {
                     if(isRightHand) {
                         if (avatarSetupScript.bodyController.rightArmController.handController.isWristArrived()) {
                             if(++currentIndex < currentConfiguration.configurationList.Count) {
+                                Debug.Log(currentIndex);
                                 loadHandMovementConfiguration();
                             }
                             else {
@@ -47,6 +48,7 @@ public class TermCaptureSystemController : MonoBehaviour {
                     else {
                         if (avatarSetupScript.bodyController.leftArmController.handController.isWristArrived()) {
                             if (++currentIndex < currentConfiguration.configurationList.Count) {
+                                Debug.Log(currentIndex);
                                 loadHandMovementConfiguration();
                             }
                             else {

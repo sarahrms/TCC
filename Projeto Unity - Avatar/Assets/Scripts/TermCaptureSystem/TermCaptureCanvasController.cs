@@ -510,7 +510,7 @@ public class TermCaptureCanvasController : MonoBehaviour {
         Word palavra = new Word();
         palavra.name = nomeTermoComposto.text;
         palavra.termList = new List<string>();
-        Transform termAggregator = compositeCanvas.transform.GetChild(3);
+        Transform termAggregator = compositeCanvas.transform.GetChild(2);
         for(int i=1; i<termAggregator.childCount; i++) { 
             Transform termo = termAggregator.GetChild(i).GetChild(0);
             palavra.termList.Add(termo.GetComponent<Dropdown>().options[termo.GetComponent<Dropdown>().value].text);

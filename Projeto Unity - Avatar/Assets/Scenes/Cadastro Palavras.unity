@@ -274,7 +274,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Nome do Termo:'
+  m_Text: 'Palavra:'
 --- !u!222 &195255452
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -457,7 +457,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1196022079}
-        m_MethodName: salvarTermoComposto
+        m_MethodName: salvarPalavra
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

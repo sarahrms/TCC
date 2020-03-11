@@ -57,10 +57,20 @@ public class FingerController : BasicBodyController {
 
 
     public void addLimits() {
-        //RootMotion.FinalIK.RotationLimit limits = distalPhalange.gameObject.AddComponent<RootMotion.FinalIK.RotationLimit>();
-       // intermediatePhalange;
-      //  proximalPhalange;
+        RootMotion.FinalIK.RotationLimitAngle limits;
+        limits = distalPhalange.gameObject.AddComponent<RootMotion.FinalIK.RotationLimitAngle>();
+        setLimits(limits, 45);
+        limits = intermediatePhalange.gameObject.AddComponent<RootMotion.FinalIK.RotationLimitAngle>();
+        setLimits(limits, 45);
+        limits = proximalPhalange.gameObject.AddComponent<RootMotion.FinalIK.RotationLimitAngle>();
+        setLimits(limits, 45);
     }
+
+    public void setLimits(RootMotion.FinalIK.RotationLimitAngle limits, float angle) {
+        limits.axis = new Vector3(0, 0.5f, 0.5f);
+        limits.limit = angle;
+    }
+
     public void update() {
         fingerNailTarget.transform.localPosition = Vector3.Lerp(fingerNailTarget.transform.localPosition, fingerNailTargetPosition, constant * speed);
     }
@@ -71,7 +81,7 @@ public class FingerController : BasicBodyController {
 
     public bool isArrived() {
         Vector3 distance = fingerNailTarget.transform.localPosition - fingerNailTargetPosition;
-        if(distance.sqrMagnitude < 0.2f) {
+        if(distance.sqrMagnitude < 0.05f) {
             return true;
         }
         return false;

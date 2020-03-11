@@ -192,7 +192,7 @@ public class HandController : BasicBodyController {
             distancePosition = ikScript.solver.leftHandEffector.position - wristTarget.position;
             distanceRotation = ikScript.solver.leftHandEffector.rotation.eulerAngles - wristTarget.rotation.eulerAngles;
         }
-        return (distancePosition.sqrMagnitude < 1 && distanceRotation.sqrMagnitude < 1);
+        return (distancePosition.sqrMagnitude < 0.25f && distanceRotation.sqrMagnitude < 0.25f);
     }
 
     public bool isFingersArrived() {
