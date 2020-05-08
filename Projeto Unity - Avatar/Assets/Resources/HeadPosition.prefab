@@ -1303,7 +1303,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Atribuir
+  m_Text: Registrar
 --- !u!1 &2909745550609747597
 GameObject:
   m_ObjectHideFlags: 0
@@ -1692,8 +1692,8 @@ MonoBehaviour:
   canvasPositionComponent: {fileID: 0}
   canvasRotationComponent: {fileID: 0}
   headTarget: {fileID: 0}
-  handPosition: {x: 0, y: 0, z: 0}
-  handRotation: {x: 0, y: 0, z: 0}
+  headPosition: {x: 0, y: 0, z: 0}
+  headRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &3289540972607846776
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,6 +25,8 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
         currentInterface = handConfigurationInterface;
         getInitialCameraPositions();
         setCameras();
+        controller = gameObject.GetComponent<SymbolCaptureSystemController>();
+        Debug.Log(controller);
         controller.disableAllTargets();
         addGroupOptions();
     }
