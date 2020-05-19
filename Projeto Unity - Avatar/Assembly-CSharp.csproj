@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{6211DC47-0344-A8B9-6D0F-69E59411A36C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -107,6 +106,7 @@
     <Compile Include="Assets\Scripts\TermCaptureSystem\TermCaptureAvatarSetup.cs" />
     <Compile Include="Assets\Scripts\TermCaptureSystem\TermCaptureCanvasController.cs" />
     <Compile Include="Assets\Scripts\TermCaptureSystem\TermCaptureSystemController.cs" />
+    <None Include="Assets\Scripts\Notation\Symbol\ClassDiagram1.cd" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Sarah/Documents/GitHub/TCC-I/Projeto Unity - Avatar/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -710,9 +710,6 @@
       <Project>{317781F3-13B8-04BF-7ACE-35B92CB231DD}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\Scripts\Notation\Symbol\ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

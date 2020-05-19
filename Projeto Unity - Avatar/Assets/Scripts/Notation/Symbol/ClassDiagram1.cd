@@ -1,2 +1,131 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Symbol">
+    <Position X="3.25" Y="0.5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>REEAAAAAAAAAAAAIIAAAAAAAAACBAAIAAAAAAIAAAgA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\Symbol.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="configurationObj" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Configuration">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\Configuration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FaceConfiguration">
+    <Position X="13.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\FaceConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HandConfiguration">
+    <Position X="10.75" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\HandConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HeadConfiguration">
+    <Position X="9.75" Y="4.5" Width="1.75" />
+    <InheritanceLine Type="Configuration" ManuallyRouted="true">
+      <Path>
+        <Point X="12.75" Y="1.603" />
+        <Point X="12.75" Y="1.875" />
+        <Point X="10.625" Y="1.875" />
+        <Point X="10.625" Y="4.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAMAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\HeadConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MovementConfiguration">
+    <Position X="15" Y="2.25" Width="2" />
+    <AssociationLine Name="configurationList" Type="Configuration" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="16.438" Y="2.25" />
+        <Point X="16.438" Y="1.052" />
+        <Point X="13.5" Y="1.052" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAgABAAAAAACABQAAAAAAAAAAAQBABA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\MovementConfiguration.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="configurationList" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WristConfiguration">
+    <Position X="12" Y="4.25" Width="2" />
+    <InheritanceLine Type="Configuration" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.75" Y="1.603" />
+        <Point X="12.75" Y="1.875" />
+        <Point X="13" Y="1.875" />
+        <Point X="13" Y="4.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAGAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\WristConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BodyConfiguration">
+    <Position X="8.25" Y="2.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAgAAAAAAAAAAAAAAAQAAAAQAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\BodyConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="TYPE">
+    <Position X="3.25" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgEAAAAAAQAgAAAAAAAAAgA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\Symbol.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="GROUP">
+    <Position X="0.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ABIAAEECAACAEAAAAAAkCAAgRCAAoSEgAEhABAAIFgI=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\Symbol.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MOVEMENT_TYPE">
+    <Position X="5.5" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAABAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\MovementConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TRAJECTORY_PLANE">
+    <Position X="5.5" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAMAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\MovementConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TRAJECTORY_DIRECTION">
+    <Position X="3.25" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Symbol\MovementConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TRAJECTORY_TYPE">
+    <Position X="7.5" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TermCaptureSystem\BodyControllers\HandController.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
