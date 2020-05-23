@@ -159,11 +159,15 @@ public class TermCaptureSystemController : MonoBehaviour {
     public void loadHandConfiguration(HandConfiguration configuration, bool right) {
         for (int i = 0; i < configuration.positions.Count; i++) {
             if (right) {
+                Debug.Log("positions count: " + configuration.positions.Count);
+
                 FingerController fingerController = avatarSetupScript.bodyController.rightArmController.handController.fingerControllers[i];
                 Vector3 position = configuration.positions[i];
                 fingerController.setTarget(position);
             }
             else {
+                Debug.Log("positions count: " + configuration.positions.Count);
+
                 FingerController fingerController = avatarSetupScript.bodyController.leftArmController.handController.fingerControllers[i];
                 Vector3 position = new Vector3(-configuration.positions[i].x, configuration.positions[i].y, configuration.positions[i].z);
                 fingerController.setTarget(position);

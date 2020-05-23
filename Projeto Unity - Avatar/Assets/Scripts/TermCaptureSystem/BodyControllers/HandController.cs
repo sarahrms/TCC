@@ -15,7 +15,7 @@ public class HandController : BasicBodyController {
     public Transform wrist, wristTarget;
     public List<FingerController> fingerControllers;
     public RootMotion.FinalIK.FullBodyBipedIK ikScript;
-    public float speed = 1, radius = 1.0f, constant = 5f;
+    public float speed = 0.25f, radius = 1.0f, constant = 5f;
 
     public HandController(Transform wrist) {
         this.wrist = wrist;

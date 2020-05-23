@@ -39,6 +39,9 @@ public class AddHandPosition : MonoBehaviour {
                 addOption(positionAggregator.GetChild(positionAggregator.childCount - 2).gameObject);
                 removeOption(obj);
             }
+            else {
+                removeCurveTrajectoryOptions();
+            }
             addButton.transform.position -= offset;            
         }
         if (positionAggregator.childCount == 5) {

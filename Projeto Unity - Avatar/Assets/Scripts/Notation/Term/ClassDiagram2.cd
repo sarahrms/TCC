@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Term">
+    <Position X="2.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAEACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Term\Term.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="bodyData" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Word">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAEAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Term\Term.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BodyData">
+    <Position X="6" Y="0.5" Width="2.75" />
+    <AssociationLine Name="rightArm" Type="ArmData" FixedFromPoint="true">
+      <Path>
+        <Point X="8.062" Y="1.988" />
+        <Point X="8.062" Y="2.5" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="leftArm" Type="ArmData" FixedFromPoint="true">
+      <Path>
+        <Point X="6.688" Y="1.988" />
+        <Point X="6.688" Y="2.5" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAEAAAAAAAAABAAAAAABAAAAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Term\Term.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="rightArm" />
+      <Field Name="leftArm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ArmData">
+    <Position X="6" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAGAAEAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Assets\Scripts\Notation\Term\Term.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="handData" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HandData">
+    <Position X="1.25" Y="2.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Notation\Term\Term.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

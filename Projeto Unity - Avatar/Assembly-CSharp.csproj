@@ -106,6 +106,7 @@
     <Compile Include="Assets\Scripts\TermCaptureSystem\TermCaptureAvatarSetup.cs" />
     <Compile Include="Assets\Scripts\TermCaptureSystem\TermCaptureCanvasController.cs" />
     <Compile Include="Assets\Scripts\TermCaptureSystem\TermCaptureSystemController.cs" />
+    <None Include="Assets\Scripts\Notation\Term\ClassDiagram2.cd" />
     <None Include="Assets\Scripts\Notation\Symbol\ClassDiagram1.cd" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Sarah/Documents/GitHub/TCC-I/Projeto Unity - Avatar/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

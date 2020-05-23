@@ -5,7 +5,7 @@ public class ArmController : BasicBodyController {
     public Transform shoulder, shoulderTarget; 
     public HandController handController;
     public RootMotion.FinalIK.FullBodyBipedIK ikScript;
-    public float speed = 1;
+    public float speed = 1f;
 
     public ArmController(Transform shoulderTransform) {
         shoulder = shoulderTransform;
