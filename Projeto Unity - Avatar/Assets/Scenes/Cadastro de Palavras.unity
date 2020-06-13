@@ -1821,7 +1821,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Cadastro de Termos
+  m_Text: Cadastro de Palavras
 --- !u!222 &1924236654
 CanvasRenderer:
   m_ObjectHideFlags: 0
