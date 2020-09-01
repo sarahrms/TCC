@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name: Escovar Dentes
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -17,21 +17,51 @@ AnimationClip:
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
-  m_PPtrCurves: []
+  m_PPtrCurves:
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 12d4db0b8baa44d49a8eb93a628ff71f, type: 2}
+    - time: 0.28333333
+      value: {fileID: 2100000, guid: be72982573638e64c88e8984b82af076, type: 2}
+    - time: 0.53333336
+      value: {fileID: 2100000, guid: 8041b0ea48abf08408a80191dd4949c7, type: 2}
+    - time: 0.81666666
+      value: {fileID: 2100000, guid: 8debf6bf7abad92428307693b4c045a8, type: 2}
+    - time: 1.1
+      value: {fileID: 2100000, guid: 884d682d03c037a408663323f9955f14, type: 2}
+    - time: 8.166667
+      value: {fileID: 2100000, guid: 884d682d03c037a408663323f9955f14, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Head
+    classID: 137
+    script: {fileID: 0}
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings: []
-    pptrCurveMapping: []
+    genericBindings:
+    - serializedVersion: 2
+      path: 130111906
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 137
+      customType: 21
+      isPPtrCurve: 1
+    pptrCurveMapping:
+    - {fileID: 2100000, guid: 12d4db0b8baa44d49a8eb93a628ff71f, type: 2}
+    - {fileID: 2100000, guid: be72982573638e64c88e8984b82af076, type: 2}
+    - {fileID: 2100000, guid: 8041b0ea48abf08408a80191dd4949c7, type: 2}
+    - {fileID: 2100000, guid: 8debf6bf7abad92428307693b4c045a8, type: 2}
+    - {fileID: 2100000, guid: 884d682d03c037a408663323f9955f14, type: 2}
+    - {fileID: 2100000, guid: 884d682d03c037a408663323f9955f14, type: 2}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 8.183333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
