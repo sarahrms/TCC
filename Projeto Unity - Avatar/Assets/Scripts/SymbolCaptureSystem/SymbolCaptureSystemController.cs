@@ -15,18 +15,18 @@ public class SymbolCaptureSystemController : MonoBehaviour {
         avatarSetupScript = GameObject.Find("Avatar").GetComponent<SymbolCaptureAvatarSetup>();
         avatarSetupScript.init();
         Symbol.setTypeMap();
-        symbol = new Symbol(0, GROUP.INDEX);
+        symbol = new Symbol("", GROUP.INDEX);
         setTargetObjects();
     }
 
-    public TYPE changeGroup(int id, GROUP selectedGroup) {
+    public TYPE changeGroup(string id, GROUP selectedGroup) {
         symbol = new Symbol(id, selectedGroup);
         return symbol.type;
     }
 
     public void save(GameObject currentInterface) {
         symbol.setupConfiguration(currentInterface);
-        string filePath = Path.Combine("Assets\\Symbols\\" + symbol.type + "\\" + symbol.group + "\\", symbol.id.ToString("D3") + ".json");
+        string filePath = Path.Combine("Assets\\Symbols\\" + symbol.type + "\\" + symbol.group + "\\", symbol.id + ".json");
         string jsonString = JsonUtility.ToJson(symbol);
         Debug.Log(jsonString);
         using (StreamWriter streamWriter = File.CreateText(filePath)) {

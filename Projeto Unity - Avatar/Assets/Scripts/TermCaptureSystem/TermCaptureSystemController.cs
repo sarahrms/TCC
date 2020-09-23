@@ -7,16 +7,20 @@ public class TermCaptureSystemController : MonoBehaviour {
     public TermCaptureAvatarSetup avatarSetupScript;
     public HandComponent rightHand, leftHand;
     public MovementConfiguration currentConfiguration;
+    public RuntimeAnimatorController animatorController;
+    public Animator animator;
     public int currentIndex;
     public bool isRightHand = false, isPlaying = false, overwriteHand = false;
     Vector3 positionOffset, rotationOffset;
-    //Vector3 initialLeftHandTargetRotation = new Vector3(16.911f, 54.966f, 157.637f);
-    //Vector3 initialRightHandTargetRotation = new Vector3(18.148f, -54.532f, -157.141f);
 
-    void Start() {       
-        if(GameObject.Find("Avatar") != null){
-            avatarSetupScript = GameObject.Find("Avatar").GetComponent<TermCaptureAvatarSetup>();
-            avatarSetupScript.init(); 
+    void Start() {
+        GameObject avatar = GameObject.Find("Avatar");
+        if (avatar != null){
+            avatarSetupScript = avatar.GetComponent<TermCaptureAvatarSetup>();
+            avatarSetupScript.init();
+            animatorController = Resources.Load("AvatarController") as RuntimeAnimatorController;
+            animator = avatar.GetComponent<Animator>();
+            animator.runtimeAnimatorController = animatorController;
         }
     }
 
@@ -212,11 +216,16 @@ public class TermCaptureSystemController : MonoBehaviour {
     }
 
     public void loadFaceConfiguration(FaceConfiguration configuration) {
-        //IMPLEMENTAR//
-        ///////////////
-        ///////////////
-        ///////////////
-        ///////////////
+        AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+        animator.runtimeAnimatorController = animatorOverrideController;
+
+        AnimationClip clip = Resources.Load("/Animations/ " + configuration.animation, typeof(AnimationClip)) as AnimationClip; 
+
+        if (clip == null) {
+            Debug.Log("Animation " + name + " not found.");
+        }
+
+        animatorOverrideController["Current"] = clip;
     }
 
     public void loadBodyConfiguration(BodyConfiguration configuration) {

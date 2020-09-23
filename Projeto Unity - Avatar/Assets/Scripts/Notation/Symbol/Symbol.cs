@@ -46,7 +46,7 @@ public enum GROUP {
 
 [System.Serializable]
 public class Symbol {
-    public int id;
+    public string id;
     public TYPE type;
     public GROUP group;
     public string configuration;
@@ -93,7 +93,7 @@ public class Symbol {
                                                              GROUP.LOCATION_FOR_SORTING});
     }
     
-    public Symbol(int id, GROUP group) {
+    public Symbol(string id, GROUP group) {
         this.id = id;
         this.group = group;
         type = getTypeByGroup(group);

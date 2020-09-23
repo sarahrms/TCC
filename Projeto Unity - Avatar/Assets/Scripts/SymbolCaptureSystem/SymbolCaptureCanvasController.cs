@@ -239,13 +239,8 @@ public class SymbolCaptureCanvasController : MonoBehaviour {
        }
     }
 
-    public int getId() {
-        try{ 
-            return Convert.ToInt32(idInputField.text);
-        }
-        catch {
-            return 0;
-        }
+    public string getId() {
+        return idInputField.text;
     }
 
     public void save() {
