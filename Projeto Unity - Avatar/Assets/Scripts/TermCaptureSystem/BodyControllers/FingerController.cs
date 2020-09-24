@@ -44,7 +44,7 @@ public class FingerController : BasicBodyController {
         script.solver.bones = bones;
         script.enabled = true;
 
-        addLimits();
+       // addLimits();
     }
 
     public void reset() {
@@ -81,7 +81,7 @@ public class FingerController : BasicBodyController {
 
     public bool isArrived() {
         Vector3 distance = fingerNailTarget.transform.localPosition - fingerNailTargetPosition;
-        if(distance.sqrMagnitude < 0.05f) {
+        if(distance.sqrMagnitude < 0.0005f) {
             return true;
         }
         return false;

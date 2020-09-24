@@ -6530,10 +6530,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1524567492}
   m_HandleRect: {fileID: 1626507041}
   m_Direction: 2
-  m_MinValue: 0
+  m_MinValue: -180
   m_MaxValue: 180
   m_WholeNumbers: 0
-  m_Value: 90
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -9669,10 +9669,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1450015666}
   m_HandleRect: {fileID: 1619556711}
   m_Direction: 2
-  m_MinValue: 40
-  m_MaxValue: 220
+  m_MinValue: -180
+  m_MaxValue: 180
   m_WholeNumbers: 0
-  m_Value: 70
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -13115,6 +13115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avatarSetupScript: {fileID: 0}
+  animatorController: {fileID: 0}
   animator: {fileID: 0}
   currentIndex: 0
   isRightHand: 0
@@ -20502,10 +20503,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 858179864}
   m_HandleRect: {fileID: 2126384969}
   m_Direction: 2
-  m_MinValue: 0
+  m_MinValue: -180
   m_MaxValue: 180
   m_WholeNumbers: 0
-  m_Value: 90
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -24950,10 +24951,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 8869785424477622438}
   m_HandleRect: {fileID: 8869785424129892568}
   m_Direction: 2
-  m_MinValue: 0
+  m_MinValue: -180
   m_MaxValue: 180
   m_WholeNumbers: 0
-  m_Value: 90
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -25163,10 +25164,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 8869785423907269229}
   m_HandleRect: {fileID: 8869785422663091486}
   m_Direction: 2
-  m_MinValue: 0
+  m_MinValue: -180
   m_MaxValue: 180
   m_WholeNumbers: 0
-  m_Value: 90
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -25647,10 +25648,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 8869785423418932059}
   m_HandleRect: {fileID: 8869785423435564065}
   m_Direction: 2
-  m_MinValue: 40
-  m_MaxValue: 220
+  m_MinValue: -180
+  m_MaxValue: 180
   m_WholeNumbers: 0
-  m_Value: 70
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
