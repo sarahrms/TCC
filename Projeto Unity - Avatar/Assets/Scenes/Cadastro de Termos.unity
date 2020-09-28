@@ -4381,7 +4381,7 @@ MonoBehaviour:
     IKPosition: {x: 0, y: 0, z: 0}
     IKPositionWeight: 1
     root: {fileID: 406380879}
-    iterations: 4
+    iterations: 10
     chain:
     - pin: 0
       pull: 1
@@ -4476,7 +4476,7 @@ MonoBehaviour:
         bendGoal: {fileID: 0}
         direction: {x: 1, y: 0, z: 0}
         rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-        weight: 0
+        weight: 0.95
         defaultLocalDirection: {x: 0, y: 0, z: 0}
         defaultChildDirection: {x: 0, y: 0, z: 0}
     - pin: 0
@@ -4526,7 +4526,7 @@ MonoBehaviour:
         bendGoal: {fileID: 0}
         direction: {x: 1, y: 0, z: 0}
         rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-        weight: 0
+        weight: 0.95
         defaultLocalDirection: {x: 0, y: 0, z: 0}
         defaultChildDirection: {x: 0, y: 0, z: 0}
     - pin: 0
@@ -4662,7 +4662,7 @@ MonoBehaviour:
       planeRotationOffset: {x: 0, y: 0, z: 0, w: 1}
     - bone: {fileID: 289993102}
       target: {fileID: 0}
-      positionWeight: 1
+      positionWeight: 0
       rotationWeight: 0
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -4704,13 +4704,13 @@ MonoBehaviour:
       planeRotationOffset: {x: 0, y: 0, z: 0, w: 1}
     - bone: {fileID: 536494221}
       target: {fileID: 0}
-      positionWeight: 0
-      rotationWeight: 0
+      positionWeight: 1
+      rotationWeight: 1
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       positionOffset: {x: 0, y: 0, z: 0}
       effectChildNodes: 1
-      maintainRelativePositionWeight: 0
+      maintainRelativePositionWeight: 1
       childBones: []
       planeBone1: {fileID: 794529724}
       planeBone2: {fileID: 289993102}
@@ -4719,12 +4719,12 @@ MonoBehaviour:
     - bone: {fileID: 327788896}
       target: {fileID: 0}
       positionWeight: 1
-      rotationWeight: 0
+      rotationWeight: 1
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       positionOffset: {x: 0, y: 0, z: 0}
       effectChildNodes: 1
-      maintainRelativePositionWeight: 0
+      maintainRelativePositionWeight: 1
       childBones: []
       planeBone1: {fileID: 289993102}
       planeBone2: {fileID: 794529724}

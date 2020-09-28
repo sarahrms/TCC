@@ -1551,7 +1551,7 @@ MonoBehaviour:
     IKPosition: {x: 0, y: 0, z: 0}
     IKPositionWeight: 1
     root: {fileID: 1039902036}
-    iterations: 4
+    iterations: 10
     chain:
     - pin: 0
       pull: 1
@@ -1646,7 +1646,7 @@ MonoBehaviour:
         bendGoal: {fileID: 0}
         direction: {x: 1, y: 0, z: 0}
         rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-        weight: 0
+        weight: 0.95
         defaultLocalDirection: {x: 0, y: 0, z: 0}
         defaultChildDirection: {x: 0, y: 0, z: 0}
     - pin: 0
@@ -1696,7 +1696,7 @@ MonoBehaviour:
         bendGoal: {fileID: 0}
         direction: {x: 1, y: 0, z: 0}
         rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-        weight: 0
+        weight: 0.95
         defaultLocalDirection: {x: 0, y: 0, z: 0}
         defaultChildDirection: {x: 0, y: 0, z: 0}
     - pin: 0
@@ -1874,13 +1874,13 @@ MonoBehaviour:
       planeRotationOffset: {x: 0, y: 0, z: 0, w: 1}
     - bone: {fileID: 1524793682}
       target: {fileID: 0}
-      positionWeight: 0
-      rotationWeight: 0
+      positionWeight: 1
+      rotationWeight: 1
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       positionOffset: {x: 0, y: 0, z: 0}
       effectChildNodes: 1
-      maintainRelativePositionWeight: 0
+      maintainRelativePositionWeight: 1
       childBones: []
       planeBone1: {fileID: 1314846869}
       planeBone2: {fileID: 475385331}
@@ -1888,13 +1888,13 @@ MonoBehaviour:
       planeRotationOffset: {x: 0, y: 0, z: 0, w: 1}
     - bone: {fileID: 193703358}
       target: {fileID: 0}
-      positionWeight: 0
-      rotationWeight: 0
+      positionWeight: 1
+      rotationWeight: 1
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       positionOffset: {x: 0, y: 0, z: 0}
       effectChildNodes: 1
-      maintainRelativePositionWeight: 0
+      maintainRelativePositionWeight: 1
       childBones: []
       planeBone1: {fileID: 475385331}
       planeBone2: {fileID: 1314846869}

@@ -7,7 +7,6 @@ public class TermCaptureSystemController : MonoBehaviour {
     public TermCaptureAvatarSetup avatarSetupScript;
     public HandComponent rightHand, leftHand;
     public MovementConfiguration currentConfiguration;
-    public RuntimeAnimatorController animatorController;
     public Animator animator;
     public int currentIndex;
     public bool isRightHand = false, isPlaying = false, overwriteHand = false;
@@ -18,9 +17,7 @@ public class TermCaptureSystemController : MonoBehaviour {
         if (avatar != null){
             avatarSetupScript = avatar.GetComponent<TermCaptureAvatarSetup>();
             avatarSetupScript.init();
-            animatorController = Resources.Load("AvatarController") as RuntimeAnimatorController;
             animator = avatar.GetComponent<Animator>();
-            animator.runtimeAnimatorController = animatorController;
         }
     }
 
@@ -215,17 +212,19 @@ public class TermCaptureSystemController : MonoBehaviour {
         }
     }
 
-    public void loadFaceConfiguration(FaceConfiguration configuration) {
-        AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
-        animator.runtimeAnimatorController = animatorOverrideController;
-
-        AnimationClip clip = Resources.Load("/Animations/ " + configuration.animation, typeof(AnimationClip)) as AnimationClip; 
+    public void loadFaceConfiguration(FaceConfiguration configuration) {     
+        AnimationClip clip = Resources.Load<AnimationClip>("Animations/" + configuration.animation); 
 
         if (clip == null) {
-            Debug.Log("Animation " + name + " not found.");
+            Debug.Log("Animation " + configuration.animation + " not found.");
         }
 
-        animatorOverrideController["Current"] = clip;
+        //aqui é onde o override é feito
+        AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+        animatorOverrideController["Empty"] = clip;
+        animator.runtimeAnimatorController = animatorOverrideController;
+
+        animator.SetBool("sinalizacaoFacial", true);
     }
 
     public void loadBodyConfiguration(BodyConfiguration configuration) {

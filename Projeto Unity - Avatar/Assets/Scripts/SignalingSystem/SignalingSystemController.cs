@@ -9,6 +9,7 @@ public class SignalingSystemController : MonoBehaviour {
     public List<Term> currentTermList;
     public Word currentWord;
     public Term currentTerm;
+    public Animator animator;
     public int currentTermIndex = 0;
 
     public bool isPlaying = false, isPlayingHead = false, isPlayingRightHand = false, isPlayingLeftHand = false,
@@ -29,8 +30,12 @@ public class SignalingSystemController : MonoBehaviour {
     public HandConfiguration currentRightHandConfiguration, currentLeftHandConfiguration;
 
     void Start() {
-        avatarSetupScript = GameObject.Find("Avatar").GetComponent<SignalingAvatarSetup>();
-        avatarSetupScript.init();
+        GameObject avatar = GameObject.Find("Avatar");
+        if (avatar != null) {
+            avatarSetupScript = avatar.GetComponent<SignalingAvatarSetup>();
+            avatarSetupScript.init();
+            animator = avatar.GetComponent<Animator>();
+        }
     }
 
     private void Update() {
@@ -306,9 +311,18 @@ public class SignalingSystemController : MonoBehaviour {
     }
 
     public void setFaceConfiguration(FaceConfiguration faceConfiguration) {
-        //////////////////////////
-        //////IMPLEMENTAR/////////
-        //////////////////////////
+        AnimationClip clip = Resources.Load<AnimationClip>("Animations/" + faceConfiguration.animation);
+
+        if (clip == null) {
+            Debug.Log("Animation " + faceConfiguration.animation + " not found.");
+        }
+
+        //aqui é onde o override é feito
+        AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+        animatorOverrideController["Empty"] = clip;
+        animator.runtimeAnimatorController = animatorOverrideController;
+
+        animator.SetBool("sinalizacaoFacial", true);        
     }
 
     public void loadFaceConfiguration(BodyData bodyData) {
